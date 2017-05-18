@@ -2,7 +2,7 @@
  * Google Authentication Helper (gaHelper)
  */
 import $ from 'jquery';
-import core from './core';
+import core from './core/authenticator';
 import { config } from './config';
 
 const gaHelper = {
@@ -38,11 +38,11 @@ const gaHelper = {
     });
   },
 
-  signIn: () => {
+  signIn() {
     gaHelper.gapi.auth2.getAuthInstance().signIn();
   },
 
-  signOut: function signOut() {
+  signOut() {
     gaHelper.gapi.auth2.getAuthInstance().signOut();
   }
 };
