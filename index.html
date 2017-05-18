@@ -1,60 +1,11 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Google Calendar API Quickstart</title>
-    <meta charset='utf-8' />
-    <link rel="stylesheet" href="styles.css">
+    <meta charset="utf-8">
+    <title>todo-calendar</title>
   </head>
   <body>
-    <div class="container">
-      <div id="app">
-
-        <div class="navigation">
-          <div class="col">
-            <div class="brand">  
-              ToDo - Cal
-            </div>
-          </div>
-          <div class="col authentication">
-            <button v-on:click="update">Load</button>
-            <!--Add buttons to initiate auth sequence and sign out-->
-            <button v-on:click="signOut" v-if="isSignedIn">Sign Out</button>
-            <button v-on:click="signIn"  v-else>Authorize</button>
-          </div>
-        </div>
-
-        <form id="command-form">
-          <input class="command-input" placeholder="Type commands here...">
-          <div class="command-history">Previously entered command will be shown here.</div>
-        </form>
-
-        <div class="calendar__container">
-          <div v-for="event in processed" class="calendar__item">
-            <div>
-              <div class="content date-time">{{ event.todoCal.start.dateTime }}</div>
-              <div class="content date-time">{{ event.todoCal.end.dateTime }}</div>              
-            </div>
-            <div class="content">{{ event.summary }}</div>            
-          </div>
-        </div>
-      </div>
-    </div>
-
-
-
-<!--
-    <script src="authentication.js"></script>
-    <script src="calendar.js"></script>
-    
-    <script async defer src="https://apis.google.com/js/api.js"
-      onload="this.onload=function(){};handleClientLoad()"
-      onreadystatechange="if (this.readyState === 'complete') this.onload()">
-    </script>
--->
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/locale/en-gb.js"></script>
-    <script src="https://unpkg.com/vue"></script>
-    <script src="app.js"></script>
+    <div id="app"></div>
+    <!-- built files will be auto injected -->
   </body>
 </html>
