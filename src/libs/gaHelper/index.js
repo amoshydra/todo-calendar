@@ -12,44 +12,38 @@ const gaHelper = {
     const clientId = core.getToken().google.client_id;
 
     function gaHelperOnLoad() {
-      this.gapi = window.gapi;
-      this.gapi.load('client:auth2', initClient);
+      gaHelper.gapi = window.gapi;
+      gaHelper.gapi.load('client:auth2', initClient);
     }
 
     function initClient() {
-      this.gapi.client.init({
+      gaHelper.gapi.client.init({
         clientId,
         discoveryDocs: config.DISCOVERY_DOCS,
         scope: config.SCOPES
       }).then(() => {
         // Listen for sign-in state changes.
-        this.gapi.auth2.getAuthInstance().isSignedIn.listen(signInCallback);
+        gaHelper.gapi.auth2.getAuthInstance().isSignedIn.listen(signInCallback);
 
         // Handle the initial sign-in state.
-        signInCallback(this.gapi.auth2.getAuthInstance().isSignedIn.get());
+        signInCallback(gaHelper.gapi.auth2.getAuthInstance().isSignedIn.get());
       });
     }
 
-    // Expose the on load function so that Google API can access it
-    window.gaHelperOnLoad = gaHelperOnLoad;
-
     // Load gapi script
-    const gapiScriptLink = $('<script />', {
-      async: '',
-      defer: '',
-      src: 'https://apis.google.com/js/api.js',
-      onload: 'this.onload=function(){};gaHelperOnLoad()',
-      onreadystatechange: 'if (this.readyState === \'complete\') this.onload()',
+    $.ajax({
+      url: 'https://apis.google.com/js/api.js',
+      dataType: 'script',
+      success: gaHelperOnLoad
     });
-    $('body').append(gapiScriptLink);
   },
 
-  signIn() {
-    this.gapi.auth2.getAuthInstance().signIn();
+  signIn: () => {
+    gaHelper.gapi.auth2.getAuthInstance().signIn();
   },
 
-  signOut() {
-    this.gapi.auth2.getAuthInstance().signOut();
+  signOut: function signOut() {
+    gaHelper.gapi.auth2.getAuthInstance().signOut();
   }
 };
 
