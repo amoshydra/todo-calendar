@@ -63,6 +63,7 @@ module.exports = {
     ],
     "radix": "off",
     "space-infix-ops": "off",
+    "no-use-before-define": "off",
     "no-unused-vars": [
       "warn",
       {
