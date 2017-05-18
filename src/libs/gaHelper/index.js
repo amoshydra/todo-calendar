@@ -1,30 +1,32 @@
 /**
  * Google Authentication Helper (gaHelper)
  */
+import $ from 'jquery';
 import core from './core';
 import { config } from './config';
 
 const gaHelper = {
-  init(callback) {
+  gapi: null,
+
+  init(signInCallback) {
     const clientId = core.getToken().google.client_id;
 
     function gaHelperOnLoad() {
-      const gapi = window.gapi;
-      gapi.load('client:auth2', initClient);
+      this.gapi = window.gapi;
+      this.gapi.load('client:auth2', initClient);
     }
 
     function initClient() {
-      const gapi = window.gapi;
-      gapi.client.init({
+      this.gapi.client.init({
         clientId,
         discoveryDocs: config.DISCOVERY_DOCS,
         scope: config.SCOPES
       }).then(() => {
         // Listen for sign-in state changes.
-        gapi.auth2.getAuthInstance().isSignedIn.listen(callback);
+        this.gapi.auth2.getAuthInstance().isSignedIn.listen(signInCallback);
 
         // Handle the initial sign-in state.
-        callback(gapi.auth2.getAuthInstance().isSignedIn.get());
+        signInCallback(this.gapi.auth2.getAuthInstance().isSignedIn.get());
       });
     }
 
@@ -32,14 +34,22 @@ const gaHelper = {
     window.gaHelperOnLoad = gaHelperOnLoad;
 
     // Load gapi script
-    const gapiScriptLink = document.createElement('script');
-    gapiScriptLink.setAttribute('async', '');
-    gapiScriptLink.setAttribute('defer', '');
-    gapiScriptLink.setAttribute('src', 'https://apis.google.com/js/api.js');
-    gapiScriptLink.setAttribute('onload', 'this.onload=function(){};gaHelperOnLoad()');
-    gapiScriptLink.setAttribute('onreadystatechange', 'if (this.readyState === \'complete\') this.onload()');
+    const gapiScriptLink = $('<script />', {
+      async: '',
+      defer: '',
+      src: 'https://apis.google.com/js/api.js',
+      onload: 'this.onload=function(){};gaHelperOnLoad()',
+      onreadystatechange: 'if (this.readyState === \'complete\') this.onload()',
+    });
+    $('body').append(gapiScriptLink);
+  },
 
-    document.body.appendChild(gapiScriptLink);
+  signIn() {
+    this.gapi.auth2.getAuthInstance().signIn();
+  },
+
+  signOut() {
+    this.gapi.auth2.getAuthInstance().signOut();
   }
 };
 
