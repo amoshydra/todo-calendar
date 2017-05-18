@@ -1,0 +1,31 @@
+// Place your settings in this file to overwrite default and user settings.
+{
+  "editor.tabSize": 2,
+  "editor.renderWhitespace": "boundary",
+
+   //-------- ESLint configuration --------
+  "eslint.workingDirectories": [
+    "./sashimi-platform", "./sashimi-webapp"
+  ],
+
+  // Emmet
+  "emmet.syntaxProfiles": {
+    "vue-html": "html",
+    "vue": "html"
+  },
+
+  // Aggressive eslint auto fix
+  "eslint.autoFixOnSave": true,
+
+  "eslint.options": {
+    "extensions": [
+      ".js", ".vue"
+    ]
+  },
+  "eslint.validate": [
+    "javascript", "html",
+    "javascriptreact",
+    "vue"
+  ],
+  "vsicons.presets.angular": false
+}
