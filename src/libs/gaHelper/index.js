@@ -44,6 +44,18 @@ const gaHelper = {
 
   signOut() {
     gaHelper.gapi.auth2.getAuthInstance().signOut();
+  },
+
+  // Calendars related api
+  listUpcomingEvents(calendarId = 'primary') {
+    return gaHelper.gapi.client.calendar.events.list({
+      calendarId,
+      timeMin: (new Date()).toISOString(),
+      showDeleted: false,
+      singleEvents: true,
+      maxResults: 10,
+      orderBy: 'startTime'
+    }).then(response => response.result.items);
   }
 };
 

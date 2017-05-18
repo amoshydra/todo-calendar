@@ -7,11 +7,11 @@
         </div>
       </div>
       <div class="col authentication">
-        <!--<button v-on:click="update">Load</button>-->
+        <button v-on:click="update">Load</button>
 
         <!--Add buttons to initiate auth sequence and sign out-->
         <button v-on:click="signOut" v-if="isSignedIn">Sign Out</button>
-        <button v-on:click="signIn"  v-else>Authorize</button>
+        <button v-on:click="signIn"  v-else>Sign In</button>
       </div>
     </div>
 
@@ -20,7 +20,7 @@
       <div class="command-history">Previously entered command will be shown here.</div>
     </form>
 
-    <!--<div class="calendar__container">
+    <div class="calendar__container">
       <div v-for="event in processed" class="calendar__item">
         <div>
           <div class="content date-time">{{ event.todoCal.start.dateTime }}</div>
@@ -28,11 +28,13 @@
         </div>
         <div class="content">{{ event.summary }}</div>
       </div>
-    </div>-->
+    </div>
   </div>
 </template>
 
 <script>
+import moment from 'moment';
+import Vue from 'vue';
 import gaHelper from '@/libs/gaHelper/index';
 
 export default {
@@ -40,15 +42,37 @@ export default {
   data() {
     return {
       isSignedIn: false,
+      events: [],
     };
   },
   methods: {
     signIn: gaHelper.signIn,
     signOut: gaHelper.signOut,
+    update: function update() {
+      gaHelper.listUpcomingEvents()
+      .then((events) => {
+        this.events = events;
+      });
+    }
+  },
+  computed: {
+    processed() {
+      this.events.forEach((event) => {
+        event.todoCal = {
+          start: { dateTime: moment(event.start.dateTime).startOf('hour').fromNow() },
+          end: { dateTime: moment(event.end.dateTime).startOf('hour').fromNow() }
+        };
+      });
+      return this.events;
+    }
   },
   mounted() {
     gaHelper.init((signInStatus) => {
+      // Update sign in status
       this.isSignedIn = signInStatus;
+
+      // Get upcoming events
+      this.update();
     });
 
     const commandForm = this.$refs['command-form'];
@@ -100,7 +124,8 @@ body {
 }
 
 .calendar__item .content.date-time {
-  width: 72px;
+  width: 85px;
+  font-size: 0.75em;
 }
 
 .command-input {
