@@ -1,8 +1,10 @@
+import gaHelper from '@/libs/gaHelper';
 import Vue from 'vue';
 import App from './App';
 
-Vue.config.productionTip = false;
+gaHelper.init();
 
+Vue.config.productionTip = false;
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
