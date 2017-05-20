@@ -1,5 +1,8 @@
-src/config/keys.js
+# Keys that should not be commited
+src/secrets/keys.json
+config/secrets/**
 
+# General node project gitignore
 .DS_Store
 node_modules/
 dist/

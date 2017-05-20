@@ -22,7 +22,17 @@
     "unit": "cross-env BABEL_ENV=test karma start test/unit/karma.conf.js --single-run",
     "e2e": "node test/e2e/runner.js",
     "test": "npm run unit && npm run e2e",
-    "lint": "eslint --ext .js,.vue src test/unit/specs test/e2e/specs"
+    "lint": "eslint --ext .js,.vue src test/unit/specs test/e2e/specs",
+
+    "init-secret-warn": "node scripts/secretHelper/init-warn",
+    "init-secret-gentle": "node scripts/secretHelper/init-gentle",
+
+    "predev": "npm run init-secret-warn",
+    "prestart": "npm run init-secret-warn",
+    "predeploy": "cross-env NODE_ENV=production npm run init-secret-warn",
+    "prebuild": "cross-env NODE_ENV=production npm run init-secret",
+
+    "postinstall": "npm run init-secret-gentle"
   },
   "dependencies": {
     "jquery": "^3.2.1",
