@@ -1,7 +1,7 @@
 // see http://vuejs-templates.github.io/webpack for documentation.
-var path = require('path')
+const path = require('path')
 
-module.exports = {
+const config = {
   build: {
     env: require('./prod.env'),
     index: path.resolve(__dirname, '../dist/index.html'),
@@ -34,5 +34,11 @@ module.exports = {
     // In our experience, they generally work as expected,
     // just be aware of this issue when enabling this option.
     cssSourceMap: false
+  },
+  deploy: {
+    get distPath() { return config.build.assetsRoot },
+    domain: 'todo-calendar.surge.sh',
   }
 }
+
+module.exports = config;

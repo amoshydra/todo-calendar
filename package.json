@@ -2,12 +2,23 @@
   "name": "todo-calendar",
   "version": "1.0.0",
   "description": "A tool that transform calender into a To-do planner",
-  "author": "Amos Wong <amoswwj@gmail.com>",
+  "contributors": [
+    "Amos Wong <amoswwj@gmail.com> (https://github.com/amoshydra)",
+    "Tay Jie Hao <tayjiehao@hotmail.com> (https://github.com/tayjiehao)"
+  ],
+  "homepage": "http://github.com/amoshydra/todo-cal",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/amoshydra/todo-cal.git"
+  },
   "private": true,
   "scripts": {
     "dev": "node build/dev-server.js",
     "start": "node build/dev-server.js",
+
+    "deploy": "node scripts/deploy.js",
     "build": "node build/build.js",
+
     "unit": "cross-env BABEL_ENV=test karma start test/unit/karma.conf.js --single-run",
     "e2e": "node test/e2e/runner.js",
     "test": "npm run unit && npm run e2e",
@@ -73,6 +84,7 @@
     "shelljs": "^0.7.6",
     "sinon": "^2.1.0",
     "sinon-chai": "^2.8.0",
+    "surge": "^0.19.0",
     "url-loader": "^0.5.8",
     "vue-loader": "^11.3.4",
     "vue-style-loader": "^2.0.5",
