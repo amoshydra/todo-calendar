@@ -2,7 +2,7 @@
  * Sample config file
  *
  * Step 1:
- *   Make a copy of this file and name it as "config.js" in the same folder
+ *   Make a copy of this file and name it as "keys.js" in the same folder
  *
  * Step 2:
  *   Get your google api key here:
