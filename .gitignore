@@ -1,5 +1,5 @@
 # Keys that should not be commited
-src/secrets/keys.json
+src/secrets/**
 config/secrets/**
 
 # General node project gitignore

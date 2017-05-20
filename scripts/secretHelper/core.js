@@ -79,8 +79,7 @@ function getStatus(env) {
   return keysStatus;
 }
 
-function getMessages(keysStatus = { conclusion: 'READY_FOR_NONE' }, env) {
-  const messages = [];
+function getMessages(keysStatus = { conclusion: 'READY_FOR_NONE' }, env, messages = []) {
   switch (keysStatus.conclusion) {
     case 'READY_FOR_BOTH':
       messages.push('Well done! You have changed the keys for both production and development.');
@@ -95,11 +94,6 @@ function getMessages(keysStatus = { conclusion: 'READY_FOR_NONE' }, env) {
 
   if (keysStatus.conclusion !== 'READY_FOR_NONE') {
     messages.push('');
-    messages.push(`The secret key for [${env.nodeEnv}] has been injected.`);
-    messages.push('');
-    messages.push('If you see error with your client_id, double check your');
-    messages.push('settings in the Google Developer Console.');
-    messages.push('');
   } else {
     messages.push(`Unable to proceed. You must configure your ${env.nodeEnv} key.`);
     messages.push('Please check the instruction in \'config/secrets/keys\'.');
@@ -108,7 +102,7 @@ function getMessages(keysStatus = { conclusion: 'READY_FOR_NONE' }, env) {
   return messages;
 }
 
-function updateSourceCode(nodeEnv) {
+function updateSourceCode(nodeEnv, messages = []) {
   const secretsJson = require(path.join(secretsHelper.secretsPath, 'keys.js'));
 
   nodeEnv = nodeEnv || 'development';
@@ -121,12 +115,15 @@ function updateSourceCode(nodeEnv) {
   const sourceCodeKeyString = JSON.stringify(sourceCodeKey);
 
   // Update source code's key
-  const srcSecretPath = path.join(__dirname, '../src/secret');
-  const secretFilename = 'keys.json';
+  const srcSecretPath = path.join(__dirname, '../../src/secrets');
+  const secretFilepath = path.join(srcSecretPath, 'keys.json');
 
   shell.mkdir('-p', srcSecretPath);
-  shell.rm('-f', path.join(srcSecretPath, secretFilename));
-  shell.ShellString(sourceCodeKeyString).to(path.join(srcSecretPath, secretFilename));
+  shell.rm('-f', secretFilepath);
+  shell.ShellString(sourceCodeKeyString).to(secretFilepath);
+
+  messages.push(`The secret key for [${nodeEnv}] has been injected.`);
+  messages.push('');
 }
 
 const secretsHelper = {

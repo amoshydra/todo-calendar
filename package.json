@@ -24,15 +24,15 @@
     "test": "npm run unit && npm run e2e",
     "lint": "eslint --ext .js,.vue src test/unit/specs test/e2e/specs",
 
-    "init-secret-warn": "node scripts/secretHelper/init-warn",
-    "init-secret-gentle": "node scripts/secretHelper/init-gentle",
+    "init-secrets-warn": "node scripts/secretHelper/init-warn",
+    "init-secrets-gentle": "node scripts/secretHelper/init-gentle",
 
-    "predev": "npm run init-secret-warn",
-    "prestart": "npm run init-secret-warn",
-    "predeploy": "cross-env NODE_ENV=production npm run init-secret-warn",
-    "prebuild": "cross-env NODE_ENV=production npm run init-secret",
+    "predev": "npm run init-secrets-warn",
+    "prestart": "npm run init-secrets-warn",
+    "predeploy": "cross-env NODE_ENV=production npm run init-secrets-warn",
+    "prebuild": "cross-env NODE_ENV=production npm run init-secrets-warn",
 
-    "postinstall": "npm run init-secret-gentle"
+    "postinstall": "npm run init-secrets-gentle"
   },
   "dependencies": {
     "jquery": "^3.2.1",
