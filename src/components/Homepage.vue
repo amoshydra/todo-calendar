@@ -34,7 +34,6 @@
 
 <script>
 import moment from 'moment';
-import Vue from 'vue';
 import gaHelper from '@/libs/gaHelper/index';
 
 export default {
