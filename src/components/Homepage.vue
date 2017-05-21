@@ -28,6 +28,10 @@
         </div>
         <div class="content">{{ event.summary }}</div>
       </div>
+      <div v-if="processed.length == 0" class="calendar__empty-state">
+        <p>No event here!</p>
+        <p>Seems like you have nothing to do for the rest of the day!</p>
+      </div>
     </div>
   </div>
 </template>
@@ -125,6 +129,10 @@ body {
 .calendar__item .content.date-time {
   width: 85px;
   font-size: 0.75em;
+}
+
+.calendar__empty-state {
+  padding: 0 12px;
 }
 
 .command-form__input {
