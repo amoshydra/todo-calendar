@@ -4,7 +4,7 @@ const web = {
 
   // Authorization scopes required by the API; multiple scopes can be
   // included, separated by spaces.
-  SCOPES: 'https://www.googleapis.com/auth/calendar.readonly'
+  SCOPES: 'https://www.googleapis.com/auth/calendar.readonly https://www.googleapis.com/auth/calendar'
 };
 
 /* eslint import/prefer-default-export: 0 */

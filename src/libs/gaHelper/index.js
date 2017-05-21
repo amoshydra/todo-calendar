@@ -56,6 +56,12 @@ const gaHelper = {
       maxResults: 10,
       orderBy: 'startTime'
     }).then(response => response.result.items);
+  },
+  addEvent(resource, calendarId = 'primary') {
+    return gaHelper.gapi.client.calendar.events.insert({
+      calendarId,
+      resource
+    }).then(response => response.result.items);
   }
 };
 

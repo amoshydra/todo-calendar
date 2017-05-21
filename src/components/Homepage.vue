@@ -49,6 +49,11 @@
 <script>
 import moment from 'moment';
 import gaHelper from '@/libs/gaHelper/index';
+import InputParser from '@/libs/InputParser';
+import Commander from '@/libs/Commander';
+
+const inputParser = new InputParser();
+const commander = new Commander();
 
 export default {
   name: 'homepage',
@@ -78,8 +83,14 @@ export default {
       event.preventDefault();
       const value = event.target.value;
       event.target.value = '';
-
       this.$refs['command-form__history'].textContent = value;
+
+      const actionPackage = inputParser.parse(value);
+      if (commander.execute(actionPackage)) {
+        setTimeout(() => {
+          this.update();
+        }, 2000);
+      }
     }
   },
   mounted() {
