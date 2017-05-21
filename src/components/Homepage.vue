@@ -30,14 +30,14 @@
       </div>
 
       <div class="calendar__container">
-        <div v-for="event in processed" class="calendar__item">
+        <div v-for="event in events" class="calendar__item">
           <div>
             <div class="content date-time">{{ event.todoCal.start.dateTime }}</div>
             <div class="content date-time">{{ event.todoCal.end.dateTime }}</div>
           </div>
           <div class="content">{{ event.summary }}</div>
         </div>
-        <div v-if="processed.length == 0" class="calendar__empty-state">
+        <div v-if="events.length == 0" class="calendar__empty-state">
           <p>No event here!</p>
           <p>Seems like you have nothing to do for the rest of the day!</p>
         </div>
@@ -59,11 +59,18 @@ export default {
     };
   },
   methods: {
+    inputParser: new InputParser(),
     signIn: gaHelper.signIn,
     signOut: gaHelper.signOut,
     update() {
       gaHelper.listUpcomingEvents()
       .then((events) => {
+        events.forEach((event) => {
+          event.todoCal = {
+            start: { dateTime: moment(event.start.dateTime).fromNow() },
+            end: { dateTime: moment(event.end.dateTime).fromNow() }
+          };
+        });
         this.events = events;
       });
     },
@@ -71,18 +78,8 @@ export default {
       event.preventDefault();
       const value = event.target.value;
       event.target.value = '';
+
       this.$refs['command-form__history'].textContent = value;
-    }
-  },
-  computed: {
-    processed() {
-      this.events.forEach((event) => {
-        event.todoCal = {
-          start: { dateTime: moment(event.start.dateTime).startOf('hour').fromNow() },
-          end: { dateTime: moment(event.end.dateTime).startOf('hour').fromNow() }
-        };
-      });
-      return this.events;
     }
   },
   mounted() {
