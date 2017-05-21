@@ -3,7 +3,7 @@
     <div class="navigation">
       <div class="col">
         <div class="brand">  
-          ToDo - Cal
+          ToDoCal
         </div>
       </div>
       <div class="col authentication">
