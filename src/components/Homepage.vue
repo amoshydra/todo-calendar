@@ -16,8 +16,8 @@
     </div>
 
     <form ref="command-form">
-      <input class="command-input" placeholder="Type commands here...">
-      <div class="command-history">Previously entered command will be shown here.</div>
+      <input class="command-form__input" placeholder="Type commands here...">
+      <div class="command-form__history">Previously entered command will be shown here.</div>
     </form>
 
     <div class="calendar__container">
@@ -75,8 +75,8 @@ export default {
     });
 
     const commandForm = this.$refs['command-form'];
-    const inputField = commandForm.querySelector('.command-input');
-    const inputHistory = commandForm.querySelector('.command-history');
+    const inputField = commandForm.querySelector('.command-form__input');
+    const inputHistory = commandForm.querySelector('.command-form__history');
     commandForm.addEventListener('submit', (event) => {
       event.preventDefault();
       inputHistory.textContent = inputField.value;
@@ -127,14 +127,14 @@ body {
   font-size: 0.75em;
 }
 
-.command-input {
+.command-form__input {
   width: 100%;
   font-size: 1.2em;
   margin: 10px 0;
   padding: 10px;
   box-sizing: border-box;
 }
-.command-history {
+.command-form__history {
   font-size: 0.65em;
   opacity: 0.5;
   margin-left: 12px;
