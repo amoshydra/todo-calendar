@@ -7,7 +7,10 @@
         </div>
       </div>
       <div class="col authentication">
-        <button v-on:click="update">Load</button>
+        <button v-on:click="update"
+                v-if="isSignedIn">
+          Load
+        </button>
 
         <!--Add buttons to initiate auth sequence and sign out-->
         <button v-on:click="signOut" v-if="isSignedIn">Sign Out</button>
@@ -24,11 +27,20 @@
              class="command-form__history">
           Previously entered command will be shown here.
         </div>
-        <div class="content">{{ event.summary }}</div>
       </div>
-      <div v-if="processed.length == 0" class="calendar__empty-state">
-        <p>No event here!</p>
-        <p>Seems like you have nothing to do for the rest of the day!</p>
+
+      <div class="calendar__container">
+        <div v-for="event in processed" class="calendar__item">
+          <div>
+            <div class="content date-time">{{ event.todoCal.start.dateTime }}</div>
+            <div class="content date-time">{{ event.todoCal.end.dateTime }}</div>
+          </div>
+          <div class="content">{{ event.summary }}</div>
+        </div>
+        <div v-if="processed.length == 0" class="calendar__empty-state">
+          <p>No event here!</p>
+          <p>Seems like you have nothing to do for the rest of the day!</p>
+        </div>
       </div>
     </div>
   </div>
