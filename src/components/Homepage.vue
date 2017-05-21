@@ -15,16 +15,14 @@
       </div>
     </div>
 
-    <form ref="command-form">
-      <input class="command-form__input" placeholder="Type commands here...">
-      <div class="command-form__history">Previously entered command will be shown here.</div>
-    </form>
-
-    <div class="calendar__container">
-      <div v-for="event in processed" class="calendar__item">
-        <div>
-          <div class="content date-time">{{ event.todoCal.start.dateTime }}</div>
-          <div class="content date-time">{{ event.todoCal.end.dateTime }}</div>
+    <div v-if="isSignedIn">
+      <div ref="command-form">
+        <input v-on:keyup.enter="submit"
+               class="command-form__input"
+               placeholder="Type commands here...">
+        <div ref="command-form__history"
+             class="command-form__history">
+          Previously entered command will be shown here.
         </div>
         <div class="content">{{ event.summary }}</div>
       </div>
@@ -51,11 +49,17 @@ export default {
   methods: {
     signIn: gaHelper.signIn,
     signOut: gaHelper.signOut,
-    update: function update() {
+    update() {
       gaHelper.listUpcomingEvents()
       .then((events) => {
         this.events = events;
       });
+    },
+    submit(event) {
+      event.preventDefault();
+      const value = event.target.value;
+      event.target.value = '';
+      this.$refs['command-form__history'].textContent = value;
     }
   },
   computed: {
@@ -76,15 +80,6 @@ export default {
 
       // Get upcoming events
       this.update();
-    });
-
-    const commandForm = this.$refs['command-form'];
-    const inputField = commandForm.querySelector('.command-form__input');
-    const inputHistory = commandForm.querySelector('.command-form__history');
-    commandForm.addEventListener('submit', (event) => {
-      event.preventDefault();
-      inputHistory.textContent = inputField.value;
-      inputField.value = '';
     });
   }
 };
