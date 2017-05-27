@@ -12,7 +12,7 @@ Commander.prototype.execute = ({ action, task }) => {
           dateTime: moment().add(1, 'hours').format() },
         summary: task.name
       };
-      gaHelper.addEvent(eventEntry);
+      gaHelper.events.insert('primary', eventEntry);
       return true;
     }
     default: return false;

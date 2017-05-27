@@ -64,11 +64,10 @@ export default {
     };
   },
   methods: {
-    inputParser: new InputParser(),
-    signIn: gaHelper.signIn,
-    signOut: gaHelper.signOut,
+    signIn: gaHelper.auth.signIn,
+    signOut: gaHelper.auth.signOut,
     update() {
-      gaHelper.listUpcomingEvents()
+      gaHelper.events.list('primary')
       .then((events) => {
         events.forEach((event) => {
           event.todoCal = {

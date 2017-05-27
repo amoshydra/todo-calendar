@@ -38,30 +38,46 @@ const gaHelper = {
     });
   },
 
-  signIn() {
-    gaHelper.gapi.auth2.getAuthInstance().signIn();
+  auth: {
+    signIn() {
+      gaHelper.gapi.auth2.getAuthInstance().signIn();
+    },
+    signOut() {
+      gaHelper.gapi.auth2.getAuthInstance().signOut();
+    },
   },
-
-  signOut() {
-    gaHelper.gapi.auth2.getAuthInstance().signOut();
+  tasks: {
   },
-
-  // Calendars related api
-  listUpcomingEvents(calendarId = 'primary') {
-    return gaHelper.gapi.client.calendar.events.list({
-      calendarId,
-      timeMin: (new Date()).toISOString(),
-      showDeleted: false,
-      singleEvents: true,
-      maxResults: 10,
-      orderBy: 'startTime'
-    }).then(response => response.result.items);
-  },
-  addEvent(resource, calendarId = 'primary') {
-    return gaHelper.gapi.client.calendar.events.insert({
-      calendarId,
-      resource
-    }).then(response => response.result.items);
+  events: {
+    list(calendarId) {
+      return gaHelper.gapi.client.calendar.events.list({
+        calendarId,
+        timeMin: (new Date()).toISOString(),
+        showDeleted: false,
+        singleEvents: true,
+        maxResults: 10,
+        orderBy: 'startTime'
+      }).then(response => response.result.items);
+    },
+    insert(calendarId, event) {
+      return gaHelper.gapi.client.calendar.events.insert({
+        calendarId,
+        resource: event,
+      });
+    },
+    update(calendarId, eventId, event) {
+      return gaHelper.gapi.client.calendar.events.update({
+        calendarId,
+        eventId,
+        resource: event,
+      });
+    },
+    delete(calendarId, eventId, event) {
+      return gaHelper.gapi.client.calendar.events.update({
+        calendarId,
+        eventId,
+      });
+    }
   }
 };
 
