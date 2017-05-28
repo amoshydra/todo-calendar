@@ -30,13 +30,11 @@
       </div>
 
       <div class="calendar__container">
-        <div v-for="event in events" class="calendar__item">
-          <div>
-            <div class="content date-time">{{ event.todoCal.start.dateTime }}</div>
-            <div class="content date-time">{{ event.todoCal.end.dateTime }}</div>
-          </div>
-          <div class="content">{{ event.summary }}</div>
-        </div>
+        <event-item
+          v-for="event in events"
+          :key="event.id"
+          :event="event">
+        </event-item>
         <div v-if="events.length == 0" class="calendar__empty-state">
           <p>No event here!</p>
           <p>Seems like you have nothing to do for the rest of the day!</p>
@@ -47,10 +45,10 @@
 </template>
 
 <script>
-import moment from 'moment';
 import gaHelper from '@/libs/gaHelper/index';
 import InputParser from '@/libs/InputParser';
 import Commander from '@/libs/Commander';
+import eventVue from '@/components/Event';
 
 const inputParser = new InputParser();
 const commander = new Commander();
@@ -69,12 +67,6 @@ export default {
     update() {
       gaHelper.events.list('primary')
       .then((events) => {
-        events.forEach((event) => {
-          event.todoCal = {
-            start: { dateTime: moment(event.start.dateTime).fromNow() },
-            end: { dateTime: moment(event.end.dateTime).fromNow() }
-          };
-        });
         this.events = events;
       });
     },
@@ -92,6 +84,9 @@ export default {
         }, 2000);
       });
     }
+  },
+  components: {
+    'event-item': eventVue
   },
   mounted() {
     gaHelper.init((signInStatus) => {
@@ -122,28 +117,6 @@ body {
   padding-left: 0;
   margin-top: 24px;
   margin-bottom: 96px;
-}
-
-.calendar__item {
-  display: flex;
-  border-top: 1px solid rgba(0,0,0,0.1);
-  padding: 12px 0;
-}
-.calendar__item:last-child {
-  border-bottom: 1px solid rgba(0,0,0,0.1);
-}
-
-.calendar__item:hover {
-  background: rgba(0,0,0,0.02);
-}
-
-.calendar__item .content {
-  padding: 2px 5px;
-}
-
-.calendar__item .content.date-time {
-  width: 85px;
-  font-size: 0.75em;
 }
 
 .calendar__empty-state {
