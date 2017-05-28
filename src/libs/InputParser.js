@@ -15,7 +15,7 @@ InputParser.prototype.parse = (input) => {
       end: {
         dateTime: moment().add(1, 'hours').format() },
     });
-    action = 'add';
+    action = 'insert';
   }
   return { action, task };
 };

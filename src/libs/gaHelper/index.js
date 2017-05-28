@@ -72,8 +72,8 @@ const gaHelper = {
         resource: event,
       });
     },
-    delete(calendarId, eventId, event) {
-      return gaHelper.gapi.client.calendar.events.update({
+    remove(calendarId, eventId, event) {
+      return gaHelper.gapi.client.calendar.events.delete({
         calendarId,
         eventId,
       });
