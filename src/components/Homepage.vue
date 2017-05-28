@@ -2,7 +2,7 @@
   <div class="main container">
     <div class="navigation">
       <div class="col">
-        <div class="brand">  
+        <div class="brand">
           ToDoCal
         </div>
       </div>
