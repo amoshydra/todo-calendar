@@ -85,11 +85,12 @@ export default {
       this.$refs['command-form__history'].textContent = value;
 
       const actionPackage = inputParser.parse(value);
-      if (commander.execute(actionPackage)) {
+      commander.execute(actionPackage)
+      .then((response) => {
         setTimeout(() => {
           this.update();
         }, 2000);
-      }
+      });
     }
   },
   mounted() {
