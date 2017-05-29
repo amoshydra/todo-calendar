@@ -1,0 +1,30 @@
+<template>
+  <div class="tasks-list">
+    <task-item
+      v-for="task in tasks"
+      :key="task.id"
+      :task="task">
+    </task-item>
+  </div>
+</template>
+
+<script>
+import taskVue from '@/components/Task';
+
+export default {
+  data() {
+    return {};
+  },
+  props: ['tasks'],
+  methods: {},
+  components: {
+    'task-item': taskVue
+  },
+  mounted() {}
+};
+</script>
+
+<style scoped>
+
+
+</style>
