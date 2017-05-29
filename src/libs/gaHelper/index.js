@@ -47,6 +47,29 @@ const gaHelper = {
     },
   },
   tasks: {
+    listList() {
+      return gaHelper.gapi.client.tasks.tasklists.list({
+        maxResult: 50
+      }).then(response => response.result.items);
+    },
+    list(taskListId) {
+      return Promise.resolve()
+      .then(() => {
+        if (taskListId) return [taskListId];
+        // if no taskListId is specified, query all tasks from the user
+        return gaHelper.tasks.listList()
+        .then(taskLists => taskLists.map(taskList => taskList.id));
+      })
+      .then(idList => Promise.all(
+        idList.map(tasklist => gaHelper.gapi.client.tasks.tasks.list({
+          tasklist
+        })
+      )))
+      .then((responses) => {
+        const tasksArray = responses.map(response => response.result.items);
+        return Array.prototype.concat.apply([], tasksArray);
+      });
+    }
   },
   events: {
     list(calendarId) {
