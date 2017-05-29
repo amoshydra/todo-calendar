@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import eventVue from '@/components/Event';
+import eventVue from './Event';
 
 export default {
   data() {

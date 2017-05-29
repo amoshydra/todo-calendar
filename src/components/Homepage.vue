@@ -48,7 +48,7 @@
 import gaHelper from '@/libs/gaHelper/index';
 import InputParser from '@/libs/InputParser';
 import Commander from '@/libs/Commander';
-import eventVue from '@/components/Event';
+import eventVue from '@/components/CalendarContainer/Event';
 
 const inputParser = new InputParser();
 const commander = new Commander();

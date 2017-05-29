@@ -1,32 +1,24 @@
 <template>
-  <div>
+  <div class="container">
     <div class="flex">
       <h1>ToDoCal</h1>
-      <input/>
-      <div class="col authentication">
-        <button
-          v-on:click="update"
-          v-if="isSignedIn">
-          Load
-        </button>
+      <div class="flex authentication">
+        <a class="btn" v-on:click="update"  v-if="isSignedIn">Load</a>
 
         <!--Add buttons to initiate auth sequence and sign out-->
-        <button v-on:click="signOut" v-if="isSignedIn">Sign Out</button>
-        <button v-on:click="signIn"  v-else>Sign In</button>
+        <a class="btn" v-on:click="signOut" v-if="isSignedIn">Sign Out</a>
+        <a class="btn" v-on:click="signIn"  v-else>Sign In</a>
       </div>
     </div>
+    <input/>
 
     <div class="parent-container flex">
       <div class="tasks-container flex">
-        <tasks-list :tasks="tasks"></tasks-list>
-        <div class="progress-list">
-
-        </div>
+        <todo-container :tasks="tasks"></todo-container>
+        <progress-container :tasks="tasks"></progress-container>
       </div>
       <div class="calendar-container flex">
-        <div class="calendar-view">
-          <events-list :events="events"></events-list>
-        </div>
+        <calendar-container :events="events"></calendar-container>
       </div>
     </div>
   </div>
@@ -35,8 +27,9 @@
 
 <script>
 import gaHelper from '@/libs/gaHelper/index';
-import taskList from '@/components/TaskList';
-import eventList from '@/components/EventList';
+import todoContainer from '@/components/TodoContainer';
+import progressContainer from '@/components/ProgressContainer';
+import calendarContainer from '@/components/CalendarContainer';
 
 export default {
   name: 'parent',
@@ -62,8 +55,9 @@ export default {
     },
   },
   components: {
-    'tasks-list': taskList,
-    'events-list': eventList,
+    'todo-container': todoContainer,
+    'progress-container': progressContainer,
+    'calendar-container': calendarContainer,
   },
   mounted() {
     gaHelper.init((signInStatus) => {
@@ -77,13 +71,27 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
+
+body, html {
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 15px;
+}
+
 .flex {
   display: flex;
 }
-</style>
 
-<style scoped>
+h1, h2, h3 {
+  margin: 0;
+}
 
 .parent-container,
 .tasks-container,
@@ -101,14 +109,33 @@ export default {
   .calendar-container { width: 60%; }
 }
 
-.tasks-list,
-.progress-list,
-.calendar-view {
+.calendar-container,
+.progress-container,
+.todo-container {
+  margin-top: 20px;
+  margin-bottom: 40px;
+}
+
+</style>
+
+<style lang="scss" scoped>
+.authentication {
+  margin-left: auto;
+
+  a.btn {
+    margin: 6px;
+    margin-top: 12px;
+    display: inline-block;
+    background: none;
+    border: none;
+    text-decoration: underline;
+  }
+}
+
+input {
   width: 100%;
-  background-color: lightcyan;
-  height: 300px;
-  border: 2px solid white;
-  box-shadow: inset 0 0 1px 1px rgba(0,0,0,0.05);
+  padding: 4px;
+  font-size: 1em;
   box-sizing: border-box;
 }
 

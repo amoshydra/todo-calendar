@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import taskVue from '@/components/Task';
+import taskVue from './Task';
 
 export default {
   data() {
