@@ -1,5 +1,5 @@
 <template>
-  <div class="tasks-list">
+  <div class="tasks-list sketch__container">
     <task-item
       v-for="task in tasks"
       :key="task.id"

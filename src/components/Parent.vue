@@ -100,6 +100,25 @@ h1, h2, h3 {
   flex-direction: column;
 }
 
+// Common class
+.sketch__container {
+  border: 4px solid #2c3e50;
+  border-radius: 1px;
+  box-shadow: 0 0 1px 0 rgba(0,0,0,0.5);
+
+  .sketch__item {
+    border-bottom: 4px solid #2c3e50;
+    padding: 12px;
+    padding-bottom: 24px;
+    font-weight: 600;
+    color: #828284;
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+}
+
 @media screen and (min-width: 768px) {
   .parent-container {
     flex-direction: row;

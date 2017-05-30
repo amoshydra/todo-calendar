@@ -1,6 +1,6 @@
 <template>
-  <div class="task">
-    {{ task.title }}
+  <div class="task sketch__item">
+    {{ task.title }}&nbsp;
   </div>
 </template>
 
