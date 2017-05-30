@@ -138,20 +138,24 @@ h2 {
 
 // Common class
 .sketch__container {
-  border: 4px solid #2c3e50;
+  border: 2px solid #2c3e50;
   border-radius: 1px;
   box-shadow: 0 0 1px 0 rgba(0,0,0,0.5);
+  background: gray;
 
   .sketch__item {
-    border-bottom: 4px solid #2c3e50;
+    background: white;
+    border: 2px solid #2c3e50;
     padding: 12px;
     padding-bottom: 24px;
     font-weight: 600;
     color: #828284;
-
-    &:last-child {
-      border-bottom: none;
-    }
+    transition: transform  0.125s,
+                box-shadow 0.125s;
+  }
+  .sketch__item:active {
+    transform: scale(1.05);
+    box-shadow: 0px 0px 1000px 1px rgba(0,0,0,0.5);
   }
 }
 
