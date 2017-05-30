@@ -20,13 +20,14 @@ export default {
   watch: {
     events() {
       if (!calendar) return;
-      this.events.forEach((event) => {
-        calendar.fullCalendar('renderEvent', {
-          title: event.summary,
-          start: event.start.dateTime,
-          end: event.end.dateTime,
-        }, true);
-      });
+      const eventsArray = this.events.map(event => ({
+        title: event.summary,
+        start: event.start.dateTime,
+        end: event.end.dateTime,
+      }));
+
+      calendar.fullCalendar('removeEvents');
+      calendar.fullCalendar('renderEvents', eventsArray);
     }
   },
   mounted() {
