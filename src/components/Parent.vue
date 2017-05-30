@@ -10,19 +10,29 @@
         <a class="btn" v-on:click="signIn"  v-else>Sign In</a>
       </div>
     </div>
-    <input/>
 
-    <div class="parent-container flex">
-      <div class="tasks-container flex">
-        <todo-container :tasks="tasks"></todo-container>
-        <progress-container :tasks="tasks"></progress-container>
+    <div v-if="isSignedIn">
+      <div ref="command-form">
+        <input v-on:keyup.enter="submit"
+               class="command-form__input"
+               placeholder="Type commands here...">
+        <div ref="command-form__history"
+             class="command-form__history">
+          Previously entered command will be shown here.
+        </div>
       </div>
-      <div class="calendar-container flex">
-        <calendar-container :events="events"></calendar-container>
+
+      <div class="parent-container flex">
+        <div class="tasks-container flex">
+          <todo-container :tasks="tasks"></todo-container>
+          <progress-container :tasks="tasks"></progress-container>
+        </div>
+        <div class="calendar-container flex">
+          <calendar-container :events="events"></calendar-container>
+        </div>
       </div>
     </div>
   </div>
-
 </template>
 
 <script>
@@ -30,6 +40,11 @@ import gaHelper from '@/libs/gaHelper/index';
 import todoContainer from '@/components/TodoContainer';
 import progressContainer from '@/components/ProgressContainer';
 import calendarContainer from '@/components/CalendarContainer';
+import InputParser from '@/libs/InputParser';
+import Commander from '@/libs/Commander';
+
+const inputParser = new InputParser();
+const commander = new Commander();
 
 export default {
   name: 'parent',
@@ -51,6 +66,20 @@ export default {
       gaHelper.events.list('primary')
       .then((events) => {
         this.events = events;
+      });
+    },
+    submit(event) {
+      event.preventDefault();
+      const value = event.target.value;
+      event.target.value = '';
+      this.$refs['command-form__history'].textContent = value;
+
+      const actionPackage = inputParser.parse(value);
+      commander.execute(actionPackage)
+      .then((response) => {
+        setTimeout(() => {
+          this.update();
+        }, 2000);
       });
     },
   },
@@ -150,6 +179,7 @@ h2 {
 
   a.btn {
     margin: 6px;
+    margin-right: 0;
     margin-top: 12px;
     display: inline-block;
     background: none;
@@ -158,11 +188,17 @@ h2 {
   }
 }
 
-input {
+.command-form__input {
   width: 100%;
-  padding: 4px;
-  font-size: 1em;
+  font-size: 1.2em;
+  margin: 10px 0;
+  padding: 10px;
   box-sizing: border-box;
+}
+.command-form__history {
+  font-size: 0.65em;
+  opacity: 0.5;
+  margin-left: 12px;
 }
 
 </style>
