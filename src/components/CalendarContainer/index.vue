@@ -72,14 +72,17 @@ export default {
     border-radius: 0;
     transition: transform  0.125s,
                 box-shadow 0.125s,
-                height     0.125s;
+                height     0.125s,
+                left       0.125s;
   }
   .fc-time-grid-event:active {
     height: 120px;
     overflow-y: auto;
     z-index: 100 !important;
-    // box-shadow: 1px 1px 5px 1px rgba(0,0,0,0.1);
+    box-shadow: 0px 0px 1000px 1px rgba(0,0,0,0.5);
     transform: scale(1.05);
+    width: 100%;
+    left: -15% !important;
   }
 }
 
