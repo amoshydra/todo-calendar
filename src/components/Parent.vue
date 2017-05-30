@@ -92,12 +92,19 @@ body, html {
 h1, h2, h3 {
   margin: 0;
 }
+h2 {
+  margin-bottom: 12px;
+}
+
 
 .parent-container,
 .tasks-container,
 .calendar-container {
-  width: 100%;
   flex-direction: column;
+}
+.parent-container {
+  margin-left: -20px;
+  width: calc(100% + 40px);
 }
 
 // Common class
@@ -131,7 +138,7 @@ h1, h2, h3 {
 .calendar-container,
 .progress-container,
 .todo-container {
-  margin-top: 20px;
+  margin: 20px;
   margin-bottom: 40px;
 }
 

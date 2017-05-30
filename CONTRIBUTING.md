@@ -5,7 +5,7 @@
 - Use the imperative mood ("Move cursor to..." not "Moves cursor to...")
 - Limit the first line to 72 characters or less
 - Reference issues and pull requests liberally
-- Prepend the message with 
+- Prepend the message with
     - a relevant tag: `Doc: Add developer guide`, `Setup: ` or
     - the related component name: `Homepage: `, `Auth: `
 

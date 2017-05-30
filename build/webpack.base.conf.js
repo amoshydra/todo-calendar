@@ -21,7 +21,9 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.vue', '.json'],
     alias: {
-      '@': resolve('src')
+      '@': resolve('src'),
+      jquery: path.resolve(path.join(__dirname, '../..', 'node_modules', 'jquery')),
+      fullcalendar: 'fullcalendar/dist/fullcalendar'
     }
   },
   module: {
@@ -40,6 +42,8 @@ module.exports = {
         loader: 'vue-loader',
         options: vueLoaderConfig
       },
+      { test: require.resolve('jquery'), loader: 'expose?$!expose?jQuery' },
+      { test: require.resolve('moment'), loader: 'expose?moment' },
       {
         test: /\.js$/,
         loader: 'babel-loader',
