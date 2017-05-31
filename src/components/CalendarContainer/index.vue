@@ -81,10 +81,15 @@ export default {
     height: 120px;
     overflow-y: auto;
     z-index: 100 !important;
-    box-shadow: 0px 0px 1000px 1px rgba(0,0,0,0.5);
+    box-shadow: 0px 0px 200px 1px rgba(0, 0, 0, 0.1);
     transform: scale(1.05);
     width: 100%;
-    left: -15% !important;
+    left: -5% !important;
+  }
+
+  .fc-time-grid-event:active,
+  .fc-time-grid-event:hover {
+    color: black;
   }
 }
 

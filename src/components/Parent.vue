@@ -108,12 +108,20 @@ body, html {
   padding: 0;
 }
 
+body {
+  background-color: rgba(119, 136, 153, 0.1);
+}
+
 .container {
   max-width: 1200px;
   margin-left: auto;
   margin-right: auto;
   padding: 0 15px;
   margin: 0px 5px;
+
+  @media screen and (min-width: 480px) {
+    margin: 0px auto;
+  }
 }
 
 .flex {
@@ -157,11 +165,7 @@ h2 {
   }
   .sketch__item:active {
     transform: scale(1.05);
-    box-shadow: 0px 0px 1000px 1px rgba(0,0,0,0.5);
-  }
-  .sketch__item:active，
-  .sketch__item:hover {
-    color: #828284;
+    box-shadow: 0px 0px 200px 1px rgba(0, 0, 0, 0.1);
   }
 }
 
