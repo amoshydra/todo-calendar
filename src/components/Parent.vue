@@ -2,12 +2,14 @@
   <div class="container">
     <div class="flex">
       <h1>ToDoCal</h1>
-      <div class="flex authentication">
+      <div class="flex authentication" :data-signed-in="'' + isSignedIn">
         <a class="btn" v-on:click="update"  v-if="isSignedIn">Load</a>
 
         <!--Add buttons to initiate auth sequence and sign out-->
-        <a class="btn" v-on:click="signOut" v-if="isSignedIn">Sign Out</a>
-        <a class="btn" v-on:click="signIn"  v-else>Sign In</a>
+        <a class="btn">
+          <span v-on:click="signOut"  v-if="isSignedIn">Sign Out</span>
+          <span v-on:click="signIn" v-else>Sign In</span>
+        </a>
       </div>
     </div>
 
@@ -25,7 +27,6 @@
       <div class="parent-container flex">
         <div class="tasks-container flex">
           <todo-container :tasks="tasks"></todo-container>
-          <progress-container :tasks="tasks"></progress-container>
         </div>
         <div class="calendar-container flex">
           <calendar-container :events="events"></calendar-container>
@@ -112,6 +113,7 @@ body, html {
   margin-left: auto;
   margin-right: auto;
   padding: 0 15px;
+  margin: 0px 5px;
 }
 
 .flex {
@@ -157,6 +159,10 @@ h2 {
     transform: scale(1.05);
     box-shadow: 0px 0px 1000px 1px rgba(0,0,0,0.5);
   }
+  .sketch__item:active，
+  .sketch__item:hover {
+    color: #828284;
+  }
 }
 
 @media screen and (min-width: 768px) {
@@ -189,6 +195,23 @@ h2 {
     background: none;
     border: none;
     text-decoration: underline;
+    transition: all 1s;
+  }
+
+  &[data-signed-in="false"] {
+    transition: all 1s;
+    width: 180px;
+    border: 4px solid #2c3e50;
+    transform: translate(calc(-50vw + 50% + 30px), 30vh);
+    text-transform: uppercase;
+    font-weight: 500;
+
+    a {
+      transition: all 1s;
+      padding: 10px 30px 15px 48px;
+      text-decoration: none;
+      font-size: 1.2em;
+    }
   }
 }
 
