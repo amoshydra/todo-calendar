@@ -22,7 +22,8 @@ module.exports = {
     extensions: ['.js', '.vue', '.json'],
     alias: {
       '@': resolve('src'),
-      jquery: path.resolve(path.join(__dirname, '../..', 'node_modules', 'jquery')),
+      jquery: path.resolve(path.join(__dirname, '..', 'node_modules', 'jquery')),
+      'fullcalendarcss': path.resolve(path.join(__dirname, '..', 'node_modules', 'fullcalendar', 'dist', 'fullcalendar.css')),
       fullcalendar: 'fullcalendar/dist/fullcalendar'
     }
   },
@@ -42,8 +43,23 @@ module.exports = {
         loader: 'vue-loader',
         options: vueLoaderConfig
       },
-      { test: require.resolve('jquery'), loader: 'expose?$!expose?jQuery' },
-      { test: require.resolve('moment'), loader: 'expose?moment' },
+      {
+        test: require.resolve('jquery'),
+        use: [{
+            loader: 'expose-loader',
+            options: 'jquery'
+        },{
+            loader: 'expose-loader',
+            options: '$'
+        }]
+      },
+      {
+        test: require.resolve('moment'),
+        use: [{
+            loader: 'expose-loader',
+            options: 'moment'
+        }]
+      },
       {
         test: /\.js$/,
         loader: 'babel-loader',

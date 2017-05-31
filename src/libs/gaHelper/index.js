@@ -1,7 +1,8 @@
 /**
  * Google Authentication Helper (gaHelper)
  */
-import $ from 'jquery';
+/* global $ */
+
 import core from './core/authenticator';
 import { config } from './config';
 

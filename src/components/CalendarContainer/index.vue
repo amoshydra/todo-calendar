@@ -8,7 +8,9 @@
 </template>
 
 <script>
-import $ from 'jquery';
+/* global $ */
+/* eslint no-unused-vars: 0 */
+import fullCalendar from 'fullcalendar';
 
 let calendar = null;
 
