@@ -16,10 +16,12 @@ const wordMapper = {
     'halt',
     'break',
   ]),
-  join: makeWordRegex([
-    'join',
-    'continue',
+  extend: makeWordRegex([
+    'extend',
+  ]),
+  resume: makeWordRegex([
     'resume',
+    'continue',
   ]),
   push: makeWordRegex([
     'push',
@@ -28,16 +30,16 @@ const wordMapper = {
 
 const mapAction = (input) => {
   switch (true) {
-    case wordMapper.break.test(input):
-      return 'break';
-    case wordMapper.join.test(input):
-      return 'join';
-    case wordMapper.push.test(input):
-      return 'push';
-    case input.length > 0:
-      return 'insert';
-    default:
-      return null;
+    case wordMapper.break.test(input): return 'break';
+    case wordMapper.extend.test(input): return 'break';
+
+    case wordMapper.join.test(input): return 'resume';
+
+    case wordMapper.push.test(input): return 'push';
+
+    // Insert if a valid input doesn't match any command
+    case input.length > 0: return 'insert';
+    default: return null;
   }
 };
 

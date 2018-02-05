@@ -31,6 +31,25 @@ Commander.prototype.execute = ({ action, task }) => {
         return Promise.all(updatePromises);
       });
     }
+    case 'break': {
+      return store.dispatch('events/retrieve')
+      .then(() => {
+        const concerningEvent = store.getters['events/getCurrent'] || store.getters['events/getClosestPast'];
+
+        if (!concerningEvent) return Promise.resolve();
+
+        return gaHelper.events.update(
+          'primary',
+          concerningEvent.id,
+          {
+            ...concerningEvent,
+            end: {
+              dateTime: new Date().toISOString(),
+            }
+          }
+        );
+      });
+    }
     case 'update': {
       return gaHelper.events.update('primary', task);
     }
