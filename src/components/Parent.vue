@@ -51,10 +51,14 @@ export default {
   name: 'parent',
   data() {
     return {
-      events: [],
       tasks: [],
       isSignedIn: false,
     };
+  },
+  computed: {
+    events() {
+      return this.$store.state.events[0];
+    },
   },
   methods: {
     signIn: gaHelper.auth.signIn,
@@ -64,10 +68,7 @@ export default {
       .then((tasks) => {
         this.tasks = tasks;
       });
-      gaHelper.events.list('primary')
-      .then((events) => {
-        this.events = events;
-      });
+      this.$store.dispatch('events/retrieve');
     },
     submit(event) {
       event.preventDefault();
