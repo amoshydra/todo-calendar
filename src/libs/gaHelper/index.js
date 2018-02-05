@@ -81,9 +81,13 @@ const gaHelper = {
       today.setSeconds(0);
       today.setMilliseconds(0);
 
+      const tomorrow = new Date(today);
+      tomorrow.setHours(24);
+
       return gaHelper.gapi.client.calendar.events.list({
         calendarId,
         timeMin: today.toISOString(),
+        timeMax: tomorrow.toISOString(),
         showDeleted: false,
         singleEvents: true,
         orderBy: 'startTime'
