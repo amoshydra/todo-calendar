@@ -74,12 +74,17 @@ const gaHelper = {
   },
   events: {
     list(calendarId) {
+      // Setup today's midnight Date object
+      const today = new Date();
+      today.setHours(0);
+      today.setMinutes(0);
+      today.setSeconds(-1);
+
       return gaHelper.gapi.client.calendar.events.list({
         calendarId,
-        timeMin: (new Date()).toISOString(),
+        timeMin: today.toISOString(),
         showDeleted: false,
         singleEvents: true,
-        maxResults: 10,
         orderBy: 'startTime'
       }).then(response => response.result.items);
     },
