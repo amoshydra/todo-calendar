@@ -44,12 +44,17 @@ export default {
     },
   },
   actions: {
-    retrieve({ commit }, offset = 0) {
-      return gaHelper.events.list('primary', offset)
-      .then((events) => {
-        commit('update', {
-          offset,
-          events,
+    retrieve({ commit }) {
+      return Promise.all([
+        gaHelper.events.list('primary', -1),
+        gaHelper.events.list('primary', 0),
+      ])
+      .then((results) => {
+        results.forEach((events, index) => {
+          commit('update', {
+            offset: index - 1,
+            events,
+          });
         });
       });
     },

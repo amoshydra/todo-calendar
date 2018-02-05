@@ -1,3 +1,4 @@
+import Task from '@/libs/Task';
 import gaHelper from '@/libs/gaHelper/index';
 import store from '@/store';
 
@@ -10,7 +11,7 @@ Commander.prototype.execute = ({ action, task }) => {
         const currentEvent = store.getters['events/getCurrent'];
 
         const updatePromises = [
-          gaHelper.events.insert('primary', task),
+          gaHelper.events.insert('primary', new Task(task)),
         ];
 
         if (currentEvent) {
@@ -50,8 +51,18 @@ Commander.prototype.execute = ({ action, task }) => {
         );
       });
     }
-    case 'update': {
-      return gaHelper.events.update('primary', task);
+    case 'resume': {
+      return store.dispatch('events/retrieve')
+      .then(() => {
+        if (store.getters['events/getCurrent']) return Promise.resolve();
+
+        // Get closest or last night task
+        const concerningEvent = store.getters['events/getClosestPast'] || store.state.events[-1].slice(-1)[0];
+
+        if (!concerningEvent) return Promise.resolve();
+
+        return gaHelper.events.insert('primary', new Task(concerningEvent.summary || concerningEvent.title));
+      });
     }
     case 'remove': {
       return gaHelper.events.remove('primary', task);

@@ -1,7 +1,3 @@
-import Task from '@/libs/Task';
-
-const SHOULD_MAKE_TASK_REGEX = /insert/;
-
 const InputParser = () => {};
 
 const makeWordRegex = (array) => {
@@ -22,6 +18,9 @@ const wordMapper = {
   resume: makeWordRegex([
     'resume',
     'continue',
+    'copy',
+    'dup',
+    'clone',
   ]),
   push: makeWordRegex([
     'push',
@@ -33,7 +32,7 @@ const mapAction = (input) => {
     case wordMapper.break.test(input): return 'break';
     case wordMapper.extend.test(input): return 'break';
 
-    case wordMapper.join.test(input): return 'resume';
+    case wordMapper.resume.test(input): return 'resume';
 
     case wordMapper.push.test(input): return 'push';
 
@@ -47,7 +46,7 @@ InputParser.prototype.parse = (rawInput) => {
   const input = rawInput.trim();
 
   const action = mapAction(input);
-  const task = SHOULD_MAKE_TASK_REGEX.test(action) ? new Task(input) : null;
+  const task = input;
 
   return { action, task };
 };
