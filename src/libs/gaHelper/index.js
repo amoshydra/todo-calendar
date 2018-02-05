@@ -73,12 +73,13 @@ const gaHelper = {
     }
   },
   events: {
-    list(calendarId) {
+    list(calendarId, offset = 0) {
       // Setup today's midnight Date object
       const today = new Date();
-      today.setHours(0);
+      today.setHours(offset * 24);
       today.setMinutes(0);
-      today.setSeconds(-1);
+      today.setSeconds(0);
+      today.setMilliseconds(0);
 
       return gaHelper.gapi.client.calendar.events.list({
         calendarId,
