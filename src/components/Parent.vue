@@ -78,9 +78,9 @@ export default {
       const actionPackage = inputParser.parse(value);
       commander.execute(actionPackage)
       .then((response) => {
-        setTimeout(() => {
+        this.$nextTick(() => {
           this.update();
-        }, 2000);
+        });
       });
     },
   },
