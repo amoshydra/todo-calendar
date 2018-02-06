@@ -44,6 +44,8 @@ import calendarContainer from '@/components/CalendarContainer';
 import InputParser from '@/libs/InputParser';
 import Commander from '@/libs/Commander';
 
+const APP_DETECTION_REGEX = /^(.*):/;
+
 const inputParser = new InputParser();
 const commander = new Commander();
 
@@ -73,7 +75,15 @@ export default {
     submit(event) {
       event.preventDefault();
       const value = event.target.value;
-      event.target.value = '';
+
+      const matches = value.match(APP_DETECTION_REGEX);
+
+      if (matches && matches[1]) {
+        event.target.value = `${matches[1]}: `;
+      } else {
+        event.target.value = '';
+      }
+
       this.$refs['command-form__history'].textContent = value;
 
       const actionPackage = inputParser.parse(value);
