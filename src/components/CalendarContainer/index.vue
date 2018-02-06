@@ -44,6 +44,9 @@ export default {
   mounted() {
     calendar = $(this.$refs['full-calendar']);
 
+    const fifteenMinsAgo = new Date((new Date() - (60 * 15 * 1000)));
+    fifteenMinsAgo.getHours();
+
     calendar.fullCalendar({
       defaultView: this.defaultView,
       header: {
@@ -53,6 +56,9 @@ export default {
       },
       contentHeight: 600,
       allDaySlot: false,
+      slotDuration: '00:15:00',
+      scrollTime: `${fifteenMinsAgo.getHours()}:${fifteenMinsAgo.getMinutes()}:00`,
+      slotEventOverlap: false,
     });
   }
 };
