@@ -18,7 +18,16 @@ export default {
   data() {
     return {};
   },
-  props: ['events'],
+  props: {
+    events: {
+      type: Array,
+      required: true,
+    },
+    defaultView: {
+      type: String,
+      default: 'agendaDay',
+    }
+  },
   watch: {
     events() {
       if (!calendar) return;
@@ -36,7 +45,7 @@ export default {
     calendar = $(this.$refs['full-calendar']);
 
     calendar.fullCalendar({
-      defaultView: 'agendaDay',
+      defaultView: this.defaultView,
       header: {
         left: '',
         center: '',
