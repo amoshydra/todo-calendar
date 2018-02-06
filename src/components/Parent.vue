@@ -27,6 +27,7 @@
       <div class="parent-container flex">
         <div class="calendar-container flex">
           <calendar-container :events="events[0]"></calendar-container>
+          <summary-trigger />
         </div>
         <div class="tasks-container flex">
           <todo-container :tasks="tasks"></todo-container>
@@ -38,11 +39,13 @@
 
 <script>
 import gaHelper from '@/libs/gaHelper/index';
-import todoContainer from '@/components/TodoContainer';
-import progressContainer from '@/components/ProgressContainer';
-import calendarContainer from '@/components/CalendarContainer';
 import InputParser from '@/libs/InputParser';
 import Commander from '@/libs/Commander';
+
+import TodoContainer from '@/components/TodoContainer';
+import ProgressContainer from '@/components/ProgressContainer';
+import CalendarContainer from '@/components/CalendarContainer';
+import SummaryTrigger from '@/components/Actions/SummaryTrigger';
 
 const APP_DETECTION_REGEX = /^(.*):/;
 
@@ -96,9 +99,10 @@ export default {
     },
   },
   components: {
-    'todo-container': todoContainer,
-    'progress-container': progressContainer,
-    'calendar-container': calendarContainer,
+    TodoContainer,
+    ProgressContainer,
+    CalendarContainer,
+    SummaryTrigger,
   },
   mounted() {
     gaHelper.init((signInStatus) => {
