@@ -25,11 +25,11 @@
       </div>
 
       <div class="parent-container flex">
+        <div class="calendar-container flex">
+          <calendar-container :events="events[0]"></calendar-container>
+        </div>
         <div class="tasks-container flex">
           <todo-container :tasks="tasks"></todo-container>
-        </div>
-        <div class="calendar-container flex">
-          <calendar-container :events="events"></calendar-container>
         </div>
       </div>
     </div>
@@ -57,7 +57,7 @@ export default {
   },
   computed: {
     events() {
-      return this.$store.state.events[0];
+      return this.$store.state.events;
     },
   },
   methods: {
