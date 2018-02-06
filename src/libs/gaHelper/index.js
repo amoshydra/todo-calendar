@@ -91,7 +91,11 @@ const gaHelper = {
         showDeleted: false,
         singleEvents: true,
         orderBy: 'startTime'
-      }).then(response => response.result.items);
+      })
+      .then(response => response.result.items)
+      .then(events => events.filter(event =>
+        !!event.start.dateTime && event.creator.self
+      ));
     },
     insert(calendarId, event) {
       return gaHelper.gapi.client.calendar.events.insert({
