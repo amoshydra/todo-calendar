@@ -157,29 +157,6 @@ h2 {
   width: calc(100% + 40px);
 }
 
-// Common class
-.sketch__container {
-  border: 2px solid #2c3e50;
-  border-radius: 1px;
-  box-shadow: 0 0 1px 0 rgba(0,0,0,0.5);
-  background: gray;
-
-  .sketch__item {
-    background: white;
-    border: 2px solid #2c3e50;
-    padding: 12px;
-    padding-bottom: 24px;
-    font-weight: 600;
-    color: #828284;
-    transition: transform  0.125s,
-                box-shadow 0.125s;
-  }
-  .sketch__item:active {
-    transform: scale(1.05);
-    box-shadow: 0px 0px 200px 1px rgba(0, 0, 0, 0.1);
-  }
-}
-
 @media screen and (min-width: 768px) {
   .parent-container {
     flex-direction: row;
