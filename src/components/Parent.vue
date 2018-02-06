@@ -25,12 +25,25 @@
       </div>
 
       <div class="parent-container flex">
-        <div class="calendar-container flex">
-          <calendar-container :events="events[0]"></calendar-container>
+        <div
+          class="calendar-container flex"
+          :style="{ width: `${ratio}px` }"
+        >
+          <calendar-container
+            :events="events[0]"
+          ></calendar-container>
           <summary-trigger />
         </div>
-        <div class="tasks-container flex">
-          <todo-container :tasks="tasks"></todo-container>
+        
+        <column-resizer v-model="ratio"/>
+
+        <div
+          class="tasks-container flex"
+          :style="{ width: `calc(100% - ${ratio}px)` }"
+        >
+          <todo-container
+            :tasks="tasks"
+          ></todo-container>
         </div>
       </div>
     </div>
@@ -46,6 +59,7 @@ import TodoContainer from '@/components/TodoContainer';
 import ProgressContainer from '@/components/ProgressContainer';
 import CalendarContainer from '@/components/CalendarContainer';
 import SummaryTrigger from '@/components/Actions/SummaryTrigger';
+import ColumnResizer from '@/components/Actions/ColumnResizer';
 
 const APP_DETECTION_REGEX = /^(.*):/;
 
@@ -58,6 +72,7 @@ export default {
     return {
       tasks: [],
       isSignedIn: false,
+      ratio: 200,
     };
   },
   computed: {
@@ -102,7 +117,9 @@ export default {
     TodoContainer,
     ProgressContainer,
     CalendarContainer,
+
     SummaryTrigger,
+    ColumnResizer,
   },
   mounted() {
     gaHelper.init((signInStatus) => {
@@ -158,21 +175,23 @@ h2 {
 }
 .parent-container {
   margin-left: -20px;
-  width: calc(100% + 40px);
+  width: 100%;
 }
 
 @media screen and (min-width: 768px) {
   .parent-container {
     flex-direction: row;
   }
-
-  .tasks-container {    width: 40%; }
-  .calendar-container { width: 60%; }
+}
+@media screen and (max-width: 768px) {
+  .tasks-container {    width: 100% !important; }
+  .calendar-container { width: 100% !important; }
+  .column-resizer { display: none; }
 }
 
 .calendar-container,
 .progress-container,
-.todo-container {
+.tasks-container {
   margin: 20px;
   margin-bottom: 40px;
 }

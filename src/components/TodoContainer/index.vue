@@ -1,5 +1,5 @@
 <template>
-  <div class="todo-container">
+  <div>
     <h2>Tasks</h2>
     <task-list :tasks="tasks"></task-list>
   </div>
@@ -28,6 +28,7 @@ export default {
   background: gray;
   overflow-y: scroll;
   height: 600px;
+  width: 100%;
 
   .sketch__item {
     background: white;
