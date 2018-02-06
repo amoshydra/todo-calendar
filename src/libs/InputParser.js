@@ -45,7 +45,7 @@ const mapAction = (input) => {
 InputParser.prototype.parse = (rawInput) => {
   const input = rawInput.trim();
 
-  const action = mapAction(input);
+  const action = mapAction(input.toLowerCase());
   const task = input;
 
   return { action, task };
