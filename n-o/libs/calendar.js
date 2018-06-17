@@ -4,14 +4,14 @@ import googleApi from '@/plugins/google-api/main';
 const DAY_IN_HOUR = 24;
 
 const getZeroedDay = (offset) => {
-  const start = moment();
-  start.set({
+  const date = moment();
+  date.set({
     hour: offset * DAY_IN_HOUR,
     minute: 0,
     second: 0,
     millisecond: 0,
   });
-  return start
+  return date
 };
 
 /**
@@ -21,13 +21,9 @@ const getZeroedDay = (offset) => {
  * @return {Object} containing startDate and endDate
  */
 const getDayRange = (startOffset = 0, endOffset = 1) => {
-  // Setup today's midnight Date object
-  const start = getZeroedDay(startOffset * DAY_IN_HOUR)
-  const end = start.clone();
-  end.set('hour', endOffset * DAY_IN_HOUR);
   return {
-    start,
-    end,
+    start: getZeroedDay(startOffset),
+    end: getZeroedDay(endOffset),
   };
 };
 
@@ -47,8 +43,8 @@ export default {
   async list (options = {}) {
     // Initialize options
     const calendarId = options.calendarId || 'primary';
-    const startOffset = options.startOffset || 0;
-    const endOffset = options.endOffset || 1;
+    const startOffset =(options.startOffset != null) ? options.startOffset : 0;
+    const endOffset =(options.endOffset != null) ? options.endOffset : 1;
 
     // Start fetching
     const { start, end } = getDayRange(startOffset, endOffset);
