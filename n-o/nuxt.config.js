@@ -55,7 +55,7 @@ module.exports = {
           'openid',
           'profile',
           'email',
-          ...GOOGLE_API_CONFIG.SCOPE,
+          ...GOOGLE_API_CONFIG.SCOPES,
         ],
       },
     }
