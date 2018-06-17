@@ -1,4 +1,7 @@
+require('dotenv').config()
+
 module.exports = {
+  mode: "spa",
   /*
   ** Headers of the page
   */
@@ -34,5 +37,17 @@ module.exports = {
         })
       }
     }
-  }
+  },
+  modules: [
+    '@nuxtjs/dotenv',
+    '@nuxtjs/axios',
+    '@nuxtjs/auth',
+  ],
+  auth: {
+    strategies: {
+      google: {
+        client_id: process.env.GOOGLE_CLIENT_ID,
+      },
+    }
+  },
 }

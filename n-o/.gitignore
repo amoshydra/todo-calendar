@@ -1,3 +1,6 @@
+# Environment file that keeps environment context and client secret
+.env
+
 # dependencies
 node_modules
 
