@@ -6,6 +6,7 @@ const gapiPromise = getGAPI()
     gapi.load(
       'client:auth2',
       () => gapi.client.init({
+        apiKey: process.env.GOOGLE_API_KEY,
         clientId: process.env.GOOGLE_CLIENT_ID,
         discoveryDocs: config.DISCOVERY_DOCS,
         scope: config.SCOPES.join(' '),
