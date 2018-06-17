@@ -1,8 +1,15 @@
 <template>
-  <full-calendar
-    :events="fcEvents"
-    :config="fcConfig"
-  ></full-calendar>
+  <div
+    class="calendar-view-wrapper"
+  >
+    <full-calendar
+      @mousewheel.native="$_handleZoom"
+
+      ref="calendar"
+      :events="fcEvents"
+      :config="fcConfig"
+    ></full-calendar>
+  </div>
 </template>
 
 <script>
@@ -24,6 +31,7 @@ export default {
     fifteenMinsAgo.getHours();
 
     return {
+      zoomLevel: 15,
       fcConfig: {
         defaultView: 'agendaDay',
         weekends: false,
@@ -46,7 +54,27 @@ export default {
         }));
     },
   },
-}
+  methods: {
+    fireMethod(methodName, options) {
+      return this.$refs.calendar.fireMethod(methodName, options);
+    },
+    $_setZoom(zoomLevel) {
+      const zoomLevelString = `${zoomLevel}`.padStart(2, '0')
+      this.fireMethod('option', {
+        slotDuration: `00:${zoomLevelString}:${zoomLevel ? '0' : '6'}0`,
+      });
+    },
+    $_handleZoom(event) {
+      if (!event.ctrlKey) return;
+
+      event.preventDefault();
+      const zoomFactor = (event.wheelDeltaY > 0) ? -5 : 5;
+      const proposedZoomLevel = this.zoomLevel + zoomFactor;
+      this.zoomLevel = Math.min(Math.max(proposedZoomLevel, 0), 60);
+      this.$_setZoom(this.zoomLevel);
+    },
+  },
+};
 </script>
 
 <style>
