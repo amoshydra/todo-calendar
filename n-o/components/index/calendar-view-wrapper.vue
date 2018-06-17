@@ -4,10 +4,13 @@
   >
     <full-calendar
       @mousewheel.native="$_handleZoom"
+      @event-drop="$_handleEventUpdated"
+      @event-resize="$_handleEventUpdated"
 
       ref="calendar"
       :events="fcEvents"
       :config="fcConfig"
+
     ></full-calendar>
   </div>
 </template>
@@ -15,6 +18,8 @@
 <script>
 import { FullCalendar } from 'vue-full-calendar'
 import 'fullcalendar/dist/fullcalendar.css';
+
+import calendar from '@/libs/calendar';
 
 const getSlotDurationWithMinute = (minute) => {
   const zoomLevelString = `${minute}`.padStart(2, '0')
@@ -55,10 +60,11 @@ export default {
   computed: {
     fcEvents() {
       return this.events
-        .map(({ summary, start, end }) => ({
-          title: summary,
-          start: start.dateTime,
-          end: end.dateTime,
+        .map((event) => ({
+          title: event.summary,
+          start: event.start.dateTime,
+          end: event.end.dateTime,
+          data: event,
         }));
     },
   },
@@ -69,6 +75,24 @@ export default {
     fireMethod(methodName, options) {
       return this.$refs.calendar.fireMethod(methodName, options);
     },
+
+    $_handleEventUpdated(receivedUpdate) {
+      const event = {
+        ...receivedUpdate.data,
+        start: {
+          dateTime: new Date(receivedUpdate.start.format()).toISOString(),
+        },
+        end: {
+          dateTime: new Date(receivedUpdate.end.format()).toISOString(),
+        },
+      };
+
+      calendar.update('primary', event.id, event)
+        .then(() => {
+          this.$store.dispatch('calendar/list');
+        });
+    },
+
     $_handleZoom(event) {
       if (!event.ctrlKey) return;
 
