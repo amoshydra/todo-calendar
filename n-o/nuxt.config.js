@@ -47,6 +47,15 @@ module.exports = {
     strategies: {
       google: {
         client_id: process.env.GOOGLE_CLIENT_ID,
+        scope: [
+          'openid',
+          'profile',
+          'email',
+          'https://www.googleapis.com/auth/calendar.readonly',
+          'https://www.googleapis.com/auth/calendar',
+          'https://www.googleapis.com/auth/tasks.readonly',
+          'https://www.googleapis.com/auth/tasks'
+        ],
       },
     }
   },
