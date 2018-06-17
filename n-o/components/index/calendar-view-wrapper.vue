@@ -20,10 +20,19 @@ export default {
     },
   },
   data() {
+    const fifteenMinsAgo = new Date((new Date() - (60 * 15 * 1000)));
+    fifteenMinsAgo.getHours();
+
     return {
       fcConfig: {
         defaultView: 'agendaDay',
         weekends: false,
+        nowIndicator: true,
+        contentHeight: 600,
+        allDaySlot: false,
+        slotDuration: '00:05:00',
+        scrollTime: `${fifteenMinsAgo.getHours()}:${fifteenMinsAgo.getMinutes()}:00`,
+        slotEventOverlap: false,
       },
     };
   },
@@ -41,5 +50,12 @@ export default {
 </script>
 
 <style>
-
+.calendar-view-wrapper .fc-time-grid .fc-event,
+.calendar-view-wrapper .fc-time-grid .fc-bgevent {
+  min-height: 1.5em;
+}
+.calendar-view-wrapper .fc-time-grid .fc-event:hover,
+.calendar-view-wrapper .fc-time-grid .fc-bgevent:hover {
+  z-index: 999 !important;
+}
 </style>
