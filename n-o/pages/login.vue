@@ -3,7 +3,21 @@
 
     <div class="page__login__intro">
       <h1 class="brand__title">To-do Calendar</h1>
-      <h4 class="brand__tagline">Where To-do meet calendar</h4>
+      <h4 class="brand__tagline">
+        <vue-typer
+          :pre-type-delay='1000'
+          :type-delay='80'
+          text='Where To-do meet '
+          :repeat='0'
+        ></vue-typer>
+        <span style="display: inline-block">
+          <vue-typer
+            :pre-type-delay='1000 + (17 * 80)'
+            text='calendar'
+            :repeat='0'
+          ></vue-typer>
+        </span>
+      </h4>
     </div>
 
     <button
@@ -16,7 +30,12 @@
 </template>
 
 <script>
+import { VueTyper } from 'vue-typer'
+
 export default {
+  components: {
+    VueTyper,
+  },
   methods: {
     login() {
       this.$auth.loginWith('google');
@@ -29,7 +48,7 @@ export default {
 
 .page__login__intro {
   font-size: 2em;
-  margin-bottom: 120px;
+  margin-bottom: 80px;
   padding-top: 32px;
 }
 
@@ -39,9 +58,12 @@ export default {
   margin-bottom: 0.5em;
 }
 .brand__tagline {
-  font-family: 'Kalam', cursive;
-  font-weight: 900;
   opacity: 0.4;
+  font-weight: 900;
+  min-height: 3em;
+}
+.brand__tagline >>> span {
+  font-family: 'Kalam', cursive;
   line-height: 1.2em;
 }
 
