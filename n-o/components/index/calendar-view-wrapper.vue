@@ -86,12 +86,78 @@ export default {
 </script>
 
 <style>
+/* Style toolbar button */
+.calendar-view-wrapper .fc-state-default {
+  box-shadow: none;
+  border: none;
+  text-shadow: none;
+  background: none;
+  /* New style */
+  border-bottom: 2px solid transparent;
+  transition:
+    border-color 0.2s,
+    ;
+}
+.calendar-view-wrapper .fc-state-hover,
+.calendar-view-wrapper .fc-state-down,
+.calendar-view-wrapper .fc-state-active {
+  border-bottom: 2px solid rgba(0,0,0,0.1);
+}
+.calendar-view-wrapper .fc-state-disabled {
+  border-bottom: 2px solid rgba(0,0,0,0.0);
+}
+.calendar-view-wrapper .fc-state-default.fc-corner-left,
+.calendar-view-wrapper .fc-state-default.fc-corner-right {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.calendar-view-wrapper .fc-state-default.fc-state-down,
+.calendar-view-wrapper .fc-state-default.fc-state-active {
+  box-shadow: none;
+  /* New style */
+  border-bottom: 2px solid black;
+}
+
+/* Remove calendar today yellow */
+.calendar-view-wrapper .fc-unthemed td {
+  background: #F0F0F0;
+}
+.calendar-view-wrapper .fc-unthemed td.fc-today {
+  background: none;
+}
+
+
 .calendar-view-wrapper .fc-time-grid .fc-event,
 .calendar-view-wrapper .fc-time-grid .fc-bgevent {
-  min-height: 1.5em;
+  border-radius: 0;
+  border: 1px solid rgba(0,0,0,0.15);
+  color: black;
+  background: rgba(254, 254, 254, 0.9);
+
+  /* For readability */
+  min-height: 1em;
+  right: initial !important;
+  padding: 0.5em;
 }
+
 .calendar-view-wrapper .fc-time-grid .fc-event:hover,
 .calendar-view-wrapper .fc-time-grid .fc-bgevent:hover {
+  /* For readability */
   z-index: 999 !important;
 }
+
+.calendar-view-wrapper .fc-time-grid-event .fc-time {
+  display: inline;
+  margin-right: 6px;
+  background-color: rgba(0,0,0,0.8);
+  color: white;
+}
+.calendar-view-wrapper .fc-time-grid-event .fc-time,
+.calendar-view-wrapper .fc-time-grid-event .fc-title {
+  display: inline;
+}
+
 </style>
