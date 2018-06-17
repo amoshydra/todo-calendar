@@ -16,6 +16,12 @@
 import { FullCalendar } from 'vue-full-calendar'
 import 'fullcalendar/dist/fullcalendar.css';
 
+const getSlotDurationWithMinute = (minute) => {
+  const zoomLevelString = `${minute}`.padStart(2, '0')
+  const slotDuration = `00:${zoomLevelString}:${minute ? '0' : '6'}0`;
+  return slotDuration;
+}
+
 export default {
   components: {
     FullCalendar,
@@ -30,15 +36,17 @@ export default {
     const fifteenMinsAgo = new Date((new Date() - (60 * 15 * 1000)));
     fifteenMinsAgo.getHours();
 
+    const initialZoomLevel = parseInt(localStorage.getItem('zoomLevel')) || 15;
+
     return {
-      zoomLevel: 15,
+      zoomLevel: initialZoomLevel,
       fcConfig: {
         defaultView: 'agendaDay',
         weekends: false,
         nowIndicator: true,
         contentHeight: 600,
         allDaySlot: false,
-        slotDuration: '00:05:00',
+        slotDuration: getSlotDurationWithMinute(initialZoomLevel),
         scrollTime: `${fifteenMinsAgo.getHours()}:${fifteenMinsAgo.getMinutes()}:00`,
         slotEventOverlap: false,
       },
@@ -54,15 +62,12 @@ export default {
         }));
     },
   },
+  mounted() {
+
+  },
   methods: {
     fireMethod(methodName, options) {
       return this.$refs.calendar.fireMethod(methodName, options);
-    },
-    $_setZoom(zoomLevel) {
-      const zoomLevelString = `${zoomLevel}`.padStart(2, '0')
-      this.fireMethod('option', {
-        slotDuration: `00:${zoomLevelString}:${zoomLevel ? '0' : '6'}0`,
-      });
     },
     $_handleZoom(event) {
       if (!event.ctrlKey) return;
@@ -71,7 +76,10 @@ export default {
       const zoomFactor = (event.wheelDeltaY > 0) ? -5 : 5;
       const proposedZoomLevel = this.zoomLevel + zoomFactor;
       this.zoomLevel = Math.min(Math.max(proposedZoomLevel, 0), 60);
-      this.$_setZoom(this.zoomLevel);
+      localStorage.setItem('zoomLevel', this.zoomLevel);
+      this.fireMethod('option', {
+        slotDuration: getSlotDurationWithMinute(this.zoomLevel),
+      });
     },
   },
 };
