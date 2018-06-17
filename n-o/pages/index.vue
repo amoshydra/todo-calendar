@@ -1,9 +1,9 @@
 <template>
   <section class="container">
-    <div>
-      <input>
+    <div class="index__input">
+      <command-input-wrapper/>
     </div>
-    <div>
+    <div class="index__calendar">
       <calendar-view-wrapper
         :events="$store.state.calendar.events"
       />
@@ -12,11 +12,13 @@
 </template>
 
 <script>
+import CommandInputWrapper from "@/components/index/command-input-wrapper";
 import CalendarViewWrapper from "@/components/index/calendar-view-wrapper";
 
 export default {
   components: {
-    CalendarViewWrapper
+    CommandInputWrapper,
+    CalendarViewWrapper,
   },
   middleware: 'auth',
   mounted() {
@@ -34,4 +36,11 @@ export default {
 </script>
 
 <style>
+.index__input {
+  margin-top: 24px;
+}
+.index__calendar {
+  margin-top: 60px;
+}
+
 </style>

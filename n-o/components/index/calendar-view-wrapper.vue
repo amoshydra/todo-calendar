@@ -121,9 +121,12 @@ export default {
   border-bottom: 2px solid black;
 }
 
+.calendar-view-wrapper .fc-view-container {
+  box-shadow: 1px 1px 1px 0 rgba(0,0,0,0.1);
+}
 /* Remove calendar today yellow */
 .calendar-view-wrapper .fc-unthemed td {
-  background: #F0F0F0;
+  background: white;
 }
 .calendar-view-wrapper .fc-unthemed td.fc-today {
   background: none;
@@ -136,6 +139,7 @@ export default {
   border: 1px solid rgba(0,0,0,0.15);
   color: black;
   background: rgba(254, 254, 254, 0.9);
+  background: #91d1ffe6;
 
   /* For readability */
   min-height: 1em;
@@ -158,6 +162,19 @@ export default {
 .calendar-view-wrapper .fc-time-grid-event .fc-time,
 .calendar-view-wrapper .fc-time-grid-event .fc-title {
   display: inline;
+}
+
+.fc-unthemed th,
+.fc-unthemed td,
+.fc-unthemed thead,
+.fc-unthemed tbody,
+.fc-unthemed .fc-divider,
+.fc-unthemed .fc-row,
+.fc-unthemed .fc-content,
+.fc-unthemed .fc-popover,
+.fc-unthemed .fc-list-view,
+.fc-unthemed .fc-list-heading td {
+  border-color: #00000005;
 }
 
 </style>
