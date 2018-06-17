@@ -1,4 +1,5 @@
 require('dotenv').config()
+const GOOGLE_API_CONFIG = require('./plugins/google-api/config');
 
 module.exports = {
   mode: "spa",
@@ -38,6 +39,9 @@ module.exports = {
       }
     }
   },
+  plugins: [
+    '@/plugins/google-api',
+  ],
   modules: [
     '@nuxtjs/dotenv',
     '@nuxtjs/axios',
@@ -51,10 +55,7 @@ module.exports = {
           'openid',
           'profile',
           'email',
-          'https://www.googleapis.com/auth/calendar.readonly',
-          'https://www.googleapis.com/auth/calendar',
-          'https://www.googleapis.com/auth/tasks.readonly',
-          'https://www.googleapis.com/auth/tasks'
+          ...GOOGLE_API_CONFIG.SCOPE,
         ],
       },
     }
