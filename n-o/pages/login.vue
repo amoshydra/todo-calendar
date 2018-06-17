@@ -12,7 +12,7 @@
 export default {
   methods: {
     login() {
-      $auth.loginWith('google');
+      this.$auth.loginWith('google');
     },
   },
 };
