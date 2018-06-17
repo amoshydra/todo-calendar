@@ -72,4 +72,30 @@ export default {
     // Return
     return events;
   },
+
+  insert(calendarId, resource) {
+    return googleApi(gapi =>
+      gapi.client.calendar.events.insert({
+        calendarId,
+        resource,
+      })
+    );
+  },
+  update(calendarId, eventId, resource) {
+    return googleApi(gapi =>
+      gapi.client.calendar.events.update({
+        calendarId,
+        eventId,
+        resource,
+      })
+    );
+  },
+  remove(calendarId, eventId) {
+    return googleApi(gapi =>
+      gapi.client.calendar.events.delete({
+        calendarId,
+        eventId,
+      })
+    );
+  },
 };
