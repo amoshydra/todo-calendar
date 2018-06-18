@@ -31,14 +31,14 @@ export default {
   methods: {
     submit(event) {
       event.preventDefault();
-      const value = event.target.value;
+      const value = this.input;
 
       const matches = value.match(APP_DETECTION_REGEX);
 
       if (matches && matches[1]) {
-        event.target.value = `${matches[1]}: `;
+        this.input = `${matches[1]}: `;
       } else {
-        event.target.value = '';
+        this.input = '';
       }
 
       this.existingCommand = value;
