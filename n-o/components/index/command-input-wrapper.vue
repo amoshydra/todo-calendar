@@ -9,6 +9,7 @@
       placeholder="Type commands here..."
       v-model="input"
     >
+    <code class="command__history">{{ existingCommand }}&nbsp;</code>
   </div>
 </template>
 
@@ -24,6 +25,7 @@ export default {
     this.commander = new Commander({ store: this.$store });
     return {
       input: '',
+      existingCommand: '',
     };
   },
   methods: {
@@ -39,7 +41,7 @@ export default {
         event.target.value = '';
       }
 
-      // this.$refs['command-form__history'].textContent = value;
+      this.existingCommand = value;
 
       const actionPackage = this.inputParser.parse(value);
       this.commander.execute(actionPackage)
@@ -60,5 +62,13 @@ export default {
   font-size: 1em;
   border: none;
   box-shadow: 1px 1px 1px 0 rgba(0,0,0,0.1);
+}
+
+.command__history {
+  padding: 16px;
+  font-size: 0.8em;
+  opacity: 0.8;
+  font-family: monospace;
+  display: inline-block;
 }
 </style>
