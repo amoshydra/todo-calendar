@@ -42,9 +42,8 @@ export const mutations = {
     state.events.push(newEvent);
   },
   update(state, updatedEvent) {
-    state.events = state.events.filter(event => event.id !== updatedEvent.id);
     state.events = [
-      ...state.events,
+      ...state.events.filter(event => event.id !== updatedEvent.id),
       updatedEvent,
     ];
   },
@@ -70,9 +69,8 @@ export const actions = {
     return result;
   },
   async remove({ states, commit }, { calendarId, eventId }) {
-    const event = await calendar.remove(calendarId, eventId);
-    console.log(event);
-    commit('remove', { eventId });
+    await calendar.remove(calendarId, eventId);
+    commit('remove', { id: eventId });
   },
 };
 
