@@ -204,11 +204,10 @@ export default {
 
 .calendar-view-wrapper .fc-time-grid .fc-event,
 .calendar-view-wrapper .fc-time-grid .fc-bgevent {
-  border-radius: 0;
+  border-radius: 4px;
   border: 1px solid rgba(0,0,0,0.15);
   color: black;
-  background: rgba(254, 254, 254, 0.9);
-  background: #91d1ffe6;
+  background: hsla(518, 100%, 90%, 0.9);
 
   /* For readability */
   min-height: 1em;
