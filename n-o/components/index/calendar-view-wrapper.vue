@@ -54,6 +54,7 @@ export default {
     const initialZoomLevel = parseInt(localStorage.getItem('zoomLevel')) || 15;
 
     this.bindedCalendarFetcher = this.$_handleCalendarFetching.bind(this);
+    this.bindedFcScrollingHandler = this.$_handleFcScrolling.bind(this);
 
     return {
       zoomLevel: initialZoomLevel,
@@ -66,13 +67,34 @@ export default {
         slotDuration: getSlotDurationWithMinute(initialZoomLevel),
         scrollTime: `${fifteenMinsAgo.getHours()}:${fifteenMinsAgo.getMinutes()}:00`,
         slotEventOverlap: false,
+        viewDestroy: (view) => {
+          if (view.name === 'agendaDay' || view.name === 'agendaWeek') this.$_removeFcScrollListener(view);
+        },
+        viewRender: (view) => {
+          if (view.name === 'agendaDay' || view.name === 'agendaWeek') this.$_addFcScrollListener(view);
+        }
       },
       selectedEvent: null,
+      agendaScrollTop: 0,
     };
   },
   methods: {
     fireMethod(methodName, options) {
       return this.$refs.calendar.fireMethod(methodName, options);
+    },
+
+    $_handleFcScrolling(event) {
+      this.agendaScrollTop = event.target.scrollTop;
+    },
+
+    $_removeFcScrollListener({ scroller }) {
+      const scrollEl = scroller.scrollEl;
+      scrollEl.removeEventListener('scroll', this.bindedFcScrollingHandler)
+    },
+    $_addFcScrollListener({ scroller }) {
+      const scrollEl = scroller.scrollEl;
+      scroller.scrollEl.scrollTop = this.agendaScrollTop || scroller.scrollEl.scrollTop;
+      scrollEl.addEventListener('scroll', this.bindedFcScrollingHandler);
     },
 
     $_handleEventSelected(event, jsEvent, view) {
