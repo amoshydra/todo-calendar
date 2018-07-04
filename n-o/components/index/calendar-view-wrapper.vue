@@ -197,11 +197,6 @@ export default {
   background: none;
 }
 
-@keyframes fadeInEvent {
-    0% { opacity: 0; transform: translateY(2%)}
-  100% { opacity: 1; transform: translateY(0%)}
-}
-
 .calendar-view-wrapper .fc-time-grid .fc-event,
 .calendar-view-wrapper .fc-time-grid .fc-bgevent {
   border-radius: 4px;
@@ -213,10 +208,6 @@ export default {
   min-height: 1em;
   right: initial !important;
   padding: 0.5em;
-
-  /* Animation */
-  transform-origin: left top;
-  animation: fadeInEvent 0.5s;
 }
 
 .calendar-view-wrapper .fc-time-grid .fc-event:hover,
