@@ -4,9 +4,7 @@
       <command-input-wrapper/>
     </div>
     <div class="index__calendar">
-      <calendar-view-wrapper
-        :events="$store.state.calendar.events"
-      />
+      <calendar-view-wrapper />
     </div>
   </section>
 </template>
@@ -21,17 +19,6 @@ export default {
     CalendarViewWrapper,
   },
   middleware: 'auth',
-  mounted() {
-    this.refreshCalendarEventList();
-  },
-  methods: {
-    refreshCalendarEventList() {
-      this.$store.dispatch('calendar/list', {
-        startOffset: -7,
-        endOffset: 1,
-      })
-    },
-  }
 }
 </script>
 

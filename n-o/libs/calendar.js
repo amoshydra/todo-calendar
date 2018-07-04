@@ -47,7 +47,8 @@ export default {
     const endOffset =(options.endOffset != null) ? options.endOffset : 1;
 
     // Start fetching
-    const { start, end } = getDayRange(startOffset, endOffset);
+    const start = options.start || getZeroedDay(startOffset);
+    const end = options.end || getZeroedDay(endOffset);
     const { result } = await googleApi(gapi =>
       gapi.client.calendar.events.list({
         calendarId: calendarId,

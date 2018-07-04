@@ -8,7 +8,7 @@
       @event-resize="$_handleEventUpdated"
 
       ref="calendar"
-      :events="fcEvents"
+      :events="bindedCalendarFetcher"
       :config="fcConfig"
 
     ></full-calendar>
@@ -31,17 +31,13 @@ export default {
   components: {
     FullCalendar,
   },
-  props: {
-    events: {
-      type: Array,
-      default: () => [],
-    },
-  },
   data() {
     const fifteenMinsAgo = new Date((new Date() - (60 * 15 * 1000)));
     fifteenMinsAgo.getHours();
 
     const initialZoomLevel = parseInt(localStorage.getItem('zoomLevel')) || 15;
+
+    this.bindedCalendarFetcher = this.$_handleCalendarFetching.bind(this);
 
     return {
       zoomLevel: initialZoomLevel,
@@ -56,20 +52,6 @@ export default {
         slotEventOverlap: false,
       },
     };
-  },
-  computed: {
-    fcEvents() {
-      return this.events
-        .map((event) => ({
-          title: event.summary,
-          start: event.start.dateTime,
-          end: event.end.dateTime,
-          data: event,
-        }));
-    },
-  },
-  mounted() {
-
   },
   methods: {
     fireMethod(methodName, options) {
@@ -105,6 +87,21 @@ export default {
         slotDuration: getSlotDurationWithMinute(this.zoomLevel),
       });
     },
+
+    $_handleCalendarFetching(startWithoutTZ, endWithoutTZ, timezone, callback) {
+      this.$store.dispatch('calendar/list', {
+        start: new Date(startWithoutTZ.valueOf()),
+        end: new Date(endWithoutTZ.valueOf()),
+      })
+        .then(events => events.map(event => ({
+          title: event.summary,
+          start: event.start.dateTime,
+          end: event.end.dateTime,
+          data: event,
+        })))
+        .then(callback)
+        ;
+    }
   },
 };
 </script>
