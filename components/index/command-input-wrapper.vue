@@ -83,12 +83,7 @@ export default {
       this.$store.commit('command/add', value);
 
       const actionPackage = this.inputParser.parse(value);
-      this.commander.execute(actionPackage)
-        .then((response) => {
-          this.$nextTick(() => {
-            this.$store.dispatch('calendar/list');
-          });
-        });
+      this.commander.execute(actionPackage);
     },
   }
 };

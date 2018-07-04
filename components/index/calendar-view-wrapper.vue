@@ -9,7 +9,7 @@
       @event-selected="$_handleEventSelected"
 
       ref="calendar"
-      :events="bindedCalendarFetcher"
+      :events="fcEvents"
       :config="fcConfig"
 
     ></full-calendar>
@@ -71,13 +71,31 @@ export default {
           if (view.name === 'agendaDay' || view.name === 'agendaWeek') this.$_removeFcScrollListener(view);
         },
         viewRender: (view) => {
+          if (!(
+            this.renderedView.start.valueOf() === view.start.valueOf()
+            && this.renderedView.end.valueOf() === view.end.valueOf())
+          ) {
+            this.renderedView.start = view.start;
+            this.renderedView.end = view.end;
+            this.$_handleCalendarFetching(view.start, view.end);
+          }
+
           if (view.name === 'agendaDay' || view.name === 'agendaWeek') this.$_addFcScrollListener(view);
         }
       },
       selectedEvent: null,
       agendaScrollTop: 0,
       agendaScrollerEl: null,
+      renderedView: {
+        start: 0,
+        end: 0,
+      },
     };
+  },
+  computed: {
+    fcEvents() {
+      return this.$_makeFcEvents(this.$store.state.calendar.events);
+    },
   },
   methods: {
     fireMethod(methodName, options) {
@@ -139,16 +157,17 @@ export default {
       this.$store.dispatch('calendar/list', {
         start: new Date(startWithoutTZ.toISOString()),
         end: new Date(endWithoutTZ.toISOString()),
-      })
-        .then(events => events.map(event => ({
-          title: event.summary,
-          start: event.start.dateTime,
-          end: event.end.dateTime,
-          data: event,
-        })))
-        .then(callback)
-      ;
-    }
+      });
+    },
+
+    $_makeFcEvents(events) {
+      return events.map(event => ({
+        title: event.summary,
+        start: event.start.dateTime,
+        end: event.end.dateTime,
+        data: event,
+      }));
+    },
   },
 };
 </script>

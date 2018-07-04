@@ -38,6 +38,19 @@ export const mutations = {
   list(state, events) {
     state.events = events;
   },
+  insert(state, newEvent) {
+    state.events.push(newEvent);
+  },
+  update(state, updatedEvent) {
+    state.events = state.events.filter(event => event.id !== updatedEvent.id);
+    state.events = [
+      ...state.events,
+      updatedEvent,
+    ];
+  },
+  remove(state, removeEvent) {
+    state.events = state.events.filter(event => event.id !== removeEvent.id);
+  },
 };
 
 export const actions = {
@@ -45,6 +58,21 @@ export const actions = {
     const events = await calendar.list(options);
     commit('list', events);
     return events;
+  },
+  async insert({ states, commit }, { calendarId, resource }) {
+    const { result } = await calendar.insert(calendarId, resource);
+    commit('insert', result);
+    return result;
+  },
+  async update({ states, commit }, { calendarId, eventId, resource }) {
+    const { result } = await calendar.update(calendarId, eventId, resource);
+    commit('update', result);
+    return result;
+  },
+  async remove({ states, commit }, { calendarId, eventId }) {
+    const event = await calendar.remove(calendarId, eventId);
+    console.log(event);
+    commit('remove', { eventId });
   },
 };
 
