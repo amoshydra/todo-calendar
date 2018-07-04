@@ -1,3 +1,5 @@
+const path = require('path');
+
 module.exports = {
   root: true,
   env: {
@@ -8,6 +10,7 @@ module.exports = {
     parser: 'babel-eslint'
   },
   extends: [
+    'airbnb-base',
     // https://github.com/vuejs/eslint-plugin-vue#priority-a-essential-error-prevention
     // consider switching to `plugin:vue/strongly-recommended` or `plugin:vue/recommended` for stricter rules.
     'plugin:vue/essential'
@@ -16,6 +19,27 @@ module.exports = {
   plugins: [
     'vue'
   ],
+  settings: {
+    'import/resolver': {
+      webpack: {
+        config: {
+          resolve: {
+            extensions: ['.js', '.vue'],
+            alias: {
+              '~': __dirname,
+              '~~': __dirname,
+              '@': __dirname,
+              '@@': __dirname,
+              'static': path.resolve(__dirname, 'static'), // use in template with <img src="~static/nuxt.png" />
+              '~static': path.resolve(__dirname, 'static'),
+              'assets': path.resolve(__dirname, 'assets'), // use in template with <img src="~static/nuxt.png" />
+              '~assets': path.resolve(__dirname, 'assets'),
+            }
+          }
+        }
+      },
+    },
+  },
   // add your custom rules here
   rules: {
     // don't require .vue extension when importing
