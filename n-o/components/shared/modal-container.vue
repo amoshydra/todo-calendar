@@ -42,6 +42,15 @@ export default {
 </script>
 
 <style>
+@keyframes floatUp {
+  from { transform: translateY(2%); }
+  to   { transform: translateY( 0%); }
+}
+@keyframes fadeIn {
+  from { background: rgba(0,0,0,0.0); }
+  to   { background: rgba(0,0,0,0.2); }
+}
+
 .modal__overlay {
   background: rgba(0,0,0,0.2);
   position: fixed;
@@ -56,14 +65,22 @@ export default {
 
   text-align: initial;
   font-size: 1rem;
+
+  animation-name: fadeIn;
+  animation-duration: 0.2s;
 }
 
+
+
 .modal__container {
+  pointer-events: auto;
   max-width: 500px;
   width: 100%;
   max-height: 500px;
   height: 100%;
   background: white;
   box-shadow: 1px 1px 1px 0 rgba(0,0,0,0.1);
+  animation-name: floatUp;
+  animation-duration: 0.25s;
 }
 </style>
