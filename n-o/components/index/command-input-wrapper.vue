@@ -12,16 +12,38 @@
       v-model="input"
       ref="input"
     >
+    <div class="emoji-picker">
+      <span
+        class="emoji-picker__button"
+        @click="showEmojiPicker = !showEmojiPicker"
+        tabindex="0"
+      ></span>
+      <keep-alive>
+        <picker
+          v-if="showEmojiPicker"
+          class="emoji-picker__panel"
+          @select="(({ native }) => input += native)"
+          native
+          :showPreview="true"
+          :showSkinTones="true"
+        />
+      </keep-alive>
+    </div>
+
   </div>
 </template>
 
 <script>
+import { Picker } from 'emoji-mart-vue'
 import InputParser from '@/libs/InputParser';
 import Commander from '@/libs/Commander';
 
 const APP_DETECTION_REGEX = /^(.*):/;
 
 export default {
+  components: {
+    Picker,
+  },
   data() {
     this.inputParser = new InputParser();
     this.commander = new Commander({ store: this.$store });
@@ -29,6 +51,7 @@ export default {
       input: '',
       existingCommand: '',
       commandHistoryCursor: 0,
+      showEmojiPicker: false,
     };
   },
   methods: {
@@ -86,5 +109,38 @@ export default {
   opacity: 0.8;
   font-family: monospace;
   display: inline-block;
+}
+
+.command-input-wrappper {
+  position: relative;
+}
+.emoji-picker {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.emoji-picker__button {
+  padding: 16px;
+  display: block;
+  cursor: pointer;
+}
+
+.emoji-picker__button::before {
+  content: '🙂';
+  display: inline-block;
+  transition: transform 0.2s;
+}
+.emoji-picker__button:hover::before {
+  content: '😃';
+}
+.emoji-picker__button:active::before {
+  content: '😣';
+}
+
+.emoji-picker__panel {
+  z-index: 1010;
+  position: absolute;
+  right: 0;
 }
 </style>
