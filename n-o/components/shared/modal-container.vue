@@ -72,12 +72,11 @@ export default {
   animation-duration: 0.2s;
 }
 
-
-
 .modal__container {
   pointer-events: auto;
   max-width: 500px;
   width: 100%;
+  margin: 8px;
   max-height: 500px;
   height: 100%;
   background: white;
