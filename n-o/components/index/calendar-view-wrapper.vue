@@ -132,9 +132,7 @@ export default {
       this.fireMethod('option', {
         slotDuration: getSlotDurationWithMinute(this.zoomLevel),
       });
-      this.$nextTick(() => {
-        this.agendaScrollerEl.scrollTop = scrollRatio * this.agendaScrollerEl.scrollHeight;
-      })
+      this.agendaScrollerEl.scrollTop = scrollRatio * this.agendaScrollerEl.scrollHeight;
     },
 
     $_handleCalendarFetching(startWithoutTZ, endWithoutTZ, timezone, callback) {
