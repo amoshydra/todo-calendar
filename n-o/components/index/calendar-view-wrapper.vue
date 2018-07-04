@@ -6,12 +6,23 @@
       @mousewheel.native="$_handleZoom"
       @event-drop="$_handleEventUpdated"
       @event-resize="$_handleEventUpdated"
+      @event-selected="$_handleEventSelected"
 
       ref="calendar"
       :events="bindedCalendarFetcher"
       :config="fcConfig"
 
     ></full-calendar>
+
+    <ModalContainer
+      ref="modal"
+      targetClass="event-detail"
+    >
+      <CalendarViewItemDetail
+        :selectedEvent="selectedEvent"
+      />
+    </ModalContainer>
+
   </div>
 </template>
 
@@ -20,6 +31,9 @@ import { FullCalendar } from 'vue-full-calendar'
 import 'fullcalendar/dist/fullcalendar.css';
 
 import calendar from '@/libs/calendar';
+import ModalContainer from '@/components/shared/modal-container';
+
+import CalendarViewItemDetail from './calendar-view-item-detail';
 
 const getSlotDurationWithMinute = (minute) => {
   const zoomLevelString = `${minute}`.padStart(2, '0')
@@ -30,6 +44,8 @@ const getSlotDurationWithMinute = (minute) => {
 export default {
   components: {
     FullCalendar,
+    ModalContainer,
+    CalendarViewItemDetail,
   },
   data() {
     const fifteenMinsAgo = new Date((new Date() - (60 * 15 * 1000)));
@@ -51,11 +67,17 @@ export default {
         scrollTime: `${fifteenMinsAgo.getHours()}:${fifteenMinsAgo.getMinutes()}:00`,
         slotEventOverlap: false,
       },
+      selectedEvent: null,
     };
   },
   methods: {
     fireMethod(methodName, options) {
       return this.$refs.calendar.fireMethod(methodName, options);
+    },
+
+    $_handleEventSelected(event, jsEvent, view) {
+      this.selectedEvent = event;
+      this.$refs.modal.show();
     },
 
     $_handleEventUpdated(receivedUpdate) {
