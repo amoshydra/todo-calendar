@@ -7,9 +7,9 @@
       <calendar-view-wrapper />
     </div>
 
-    <calendar-summarizer
-      :events="$store.state.calendar.events"
-    />
+    <div class="index__calendar-sumarizer">
+      <calendar-summarizer :events="$store.state.calendar.events"/>
+    </div>
   </section>
 </template>
 
@@ -35,5 +35,8 @@ export default {
 .index__calendar {
   margin-top: 60px;
 }
-
+.index__calendar-sumarizer {
+  margin-top: 24px;
+  text-align: right;
+}
 </style>

@@ -2,7 +2,10 @@
   <div
     class="command-summarizer"
   >
-    <a @click="$refs.modal.show()">Show modal</a>
+    <a
+      href="javascript:void(0)"
+      @click="$refs.modal.show()"
+    >Show summary</a>
 
     <ModalContainer
       ref="modal"
@@ -43,6 +46,15 @@ export default {
 </script>
 
 <style>
+.command-summarizer > a {
+  color: black;
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+  transition: border-bottom 0.2s;
+}
+.command-summarizer > a:hover {
+  border-bottom: 1px solid rgba(0,0,0,0.5);
+}
+
 .summary-wrapper {
   padding: 15px;
   display: flex;

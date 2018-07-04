@@ -53,6 +53,9 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+
+  text-align: initial;
+  font-size: 1rem;
 }
 
 .modal__container {
