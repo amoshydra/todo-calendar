@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import { FullCalendar } from 'vue-full-calendar'
+import { FullCalendar } from 'vue-full-calendar';
 import 'fullcalendar/dist/fullcalendar.css';
 
 import calendar from '@/libs/calendar';
@@ -36,10 +36,10 @@ import ModalContainer from '@/components/shared/modal-container';
 import CalendarViewItemDetail from './calendar-view-item-detail';
 
 const getSlotDurationWithMinute = (minute) => {
-  const zoomLevelString = `${minute}`.padStart(2, '0')
+  const zoomLevelString = `${minute}`.padStart(2, '0');
   const slotDuration = `00:${zoomLevelString}:${minute ? '0' : '6'}0`;
   return slotDuration;
-}
+};
 
 export default {
   components: {
@@ -89,7 +89,7 @@ export default {
     },
 
     $_removeFcScrollListener({ scroller }) {
-      scroller.scrollEl.removeEventListener('scroll', this.bindedFcScrollingHandler)
+      scroller.scrollEl.removeEventListener('scroll', this.bindedFcScrollingHandler);
     },
     $_addFcScrollListener({ scroller }) {
       this.agendaScrollerEl = scroller.scrollEl;
@@ -147,7 +147,7 @@ export default {
           data: event,
         })))
         .then(callback)
-        ;
+      ;
     }
   },
 };

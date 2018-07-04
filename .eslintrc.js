@@ -65,6 +65,7 @@ module.exports = {
       "error",
       "always"
     ],
+    "semi-style": "off",
     "no-console": "warn",
     "linebreak-style": "off",
     "max-len": [

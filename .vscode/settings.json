@@ -16,16 +16,21 @@
 
   // Aggressive eslint auto fix
   "eslint.autoFixOnSave": true,
-
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    {
+      "language": "vue",
+      "autoFix": true
+    }, {
+      "language": "html",
+      "autoFix": true
+    }
+  ],
   "eslint.options": {
     "extensions": [
       ".js", ".vue"
     ]
   },
-  "eslint.validate": [
-    "javascript", "html",
-    "javascriptreact",
-    "vue"
-  ],
   "vsicons.presets.angular": false
 }

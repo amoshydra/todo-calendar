@@ -1,9 +1,5 @@
 import calendar from '@/libs/calendar';
 
-export const state = () => ({
-  events: [],
-});
-
 export const getters = {
   /**
    * Find the first currently occuring event
@@ -35,7 +31,7 @@ export const getters = {
     return state.events[closestPastIndex] || null;
   }
 
-}
+};
 
 
 export const mutations = {
@@ -45,9 +41,13 @@ export const mutations = {
 };
 
 export const actions = {
-  async list ({ states, commit }, options) {
+  async list({ states, commit }, options) {
     const events = await calendar.list(options);
     commit('list', events);
     return events;
   },
-}
+};
+
+export const state = () => ({
+  events: [],
+});

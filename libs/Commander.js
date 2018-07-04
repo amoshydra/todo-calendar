@@ -9,49 +9,49 @@ Commander.prototype.execute = ({ action, task }) => {
   switch (action) {
     case 'insert': {
       return this.store.dispatch('calendar/list')
-      .then(() => {
-        const currentEvent = this.store.getters['calendar/getCurrent'];
+        .then(() => {
+          const currentEvent = this.store.getters['calendar/getCurrent'];
 
-        const updatePromises = [
-          calendar.insert('primary', new Task(task)),
-        ];
+          const updatePromises = [
+            calendar.insert('primary', new Task(task)),
+          ];
 
-        if (currentEvent) {
-          updatePromises.push(
-            calendar.update(
-              'primary',
-              currentEvent.id,
-              {
-                ...currentEvent,
-                end: {
-                  dateTime: new Date().toISOString(),
+          if (currentEvent) {
+            updatePromises.push(
+              calendar.update(
+                'primary',
+                currentEvent.id,
+                {
+                  ...currentEvent,
+                  end: {
+                    dateTime: new Date().toISOString(),
+                  }
                 }
-              }
-            )
-          );
-        }
+              )
+            );
+          }
 
-        return Promise.all(updatePromises);
-      });
+          return Promise.all(updatePromises);
+        });
     }
     case 'break': {
       return this.store.dispatch('calendar/list')
-      .then(() => {
-        const concerningEvent = this.store.getters['calendar/getCurrent'] || this.store.getters['calendar/getClosestPast'];
+        .then(() => {
+          const concerningEvent = this.store.getters['calendar/getCurrent'] || this.store.getters['calendar/getClosestPast'];
 
-        if (!concerningEvent) return Promise.resolve();
+          if (!concerningEvent) return Promise.resolve();
 
-        return calendar.update(
-          'primary',
-          concerningEvent.id,
-          {
-            ...concerningEvent,
-            end: {
-              dateTime: new Date().toISOString(),
+          return calendar.update(
+            'primary',
+            concerningEvent.id,
+            {
+              ...concerningEvent,
+              end: {
+                dateTime: new Date().toISOString(),
+              }
             }
-          }
-        );
-      });
+          );
+        });
     }
     case 'resume': {
       return this.store.dispatch('calendar/list')

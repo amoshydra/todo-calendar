@@ -1,8 +1,8 @@
-import { getGAPI } from './core';
+import getGAPI from './core';
 import config from './config';
 
 const gapiPromise = getGAPI()
-  .then((gapi) => new Promise((resolve) => {
+  .then(gapi => new Promise((resolve) => {
     gapi.load(
       'client:auth2',
       () => gapi.client.init({
@@ -12,7 +12,7 @@ const gapiPromise = getGAPI()
         scope: config.SCOPES.join(' '),
       })
         .then(() => resolve(window.gapi))
-    )
+    );
   }));
 
 /**
@@ -20,7 +20,7 @@ const gapiPromise = getGAPI()
  * Usage example:
  * ```
  * import $gapi from './';
- * 
+ *
  * $gapi((gapi) => {
  *   gapi.client.people.people.get({
  *     ...

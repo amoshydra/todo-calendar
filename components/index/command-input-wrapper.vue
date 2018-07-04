@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import { Picker } from 'emoji-mart-vue'
+import { Picker } from 'emoji-mart-vue';
 import InputParser from '@/libs/InputParser';
 import Commander from '@/libs/Commander';
 
@@ -56,7 +56,7 @@ export default {
   },
   methods: {
     fillCommandWithHistoryCursor() {
-      const history = this.$store.state.command.history;
+      const { history } = this.$store.state.command;
       this.input = history[history.length - this.commandHistoryCursor] || '';
     },
     fillNextCommand() {

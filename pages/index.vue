@@ -14,9 +14,9 @@
 </template>
 
 <script>
-import CommandInputWrapper from "@/components/index/command-input-wrapper";
-import CalendarViewWrapper from "@/components/index/calendar-view-wrapper";
-import CalendarSummarizer from "@/components/index/calendar-summarizer";
+import CommandInputWrapper from '@/components/index/command-input-wrapper';
+import CalendarViewWrapper from '@/components/index/calendar-view-wrapper';
+import CalendarSummarizer from '@/components/index/calendar-summarizer';
 
 export default {
   components: {
@@ -25,7 +25,7 @@ export default {
     CalendarSummarizer,
   },
   middleware: 'auth',
-}
+};
 </script>
 
 <style>

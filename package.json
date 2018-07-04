@@ -18,9 +18,12 @@
     "@nuxtjs/auth": "^4.5.1",
     "@nuxtjs/axios": "^5.3.1",
     "@nuxtjs/dotenv": "^1.1.1",
+    "dotenv": "^6.0.0",
     "emoji-mart-vue": "^2.6.3",
+    "fullcalendar": "^3.9.0",
     "moment": "^2.22.2",
     "nuxt": "^1.0.0",
+    "vue": "^2.5.16",
     "vue-full-calendar": "^4.0.0-0",
     "vue-typer": "^1.2.0",
     "vuesax": "^3.1.7"

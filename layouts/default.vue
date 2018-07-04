@@ -7,7 +7,17 @@
 <style>
 @import url('https://fonts.googleapis.com/css?family=Kalam|Montserrat');
 * {
-  font-family: Montserrat, "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-family:
+    Montserrat,
+    "Source Sans Pro",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    "Helvetica Neue",
+    Arial,
+    sans-serif
+    ;
 }
 
 html {
