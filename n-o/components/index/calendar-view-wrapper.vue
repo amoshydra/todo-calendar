@@ -137,8 +137,8 @@ export default {
 
     $_handleCalendarFetching(startWithoutTZ, endWithoutTZ, timezone, callback) {
       this.$store.dispatch('calendar/list', {
-        start: new Date(startWithoutTZ.valueOf()),
-        end: new Date(endWithoutTZ.valueOf()),
+        start: new Date(startWithoutTZ.toISOString()),
+        end: new Date(endWithoutTZ.toISOString()),
       })
         .then(events => events.map(event => ({
           title: event.summary,
