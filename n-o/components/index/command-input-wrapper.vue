@@ -3,13 +3,15 @@
     class="command-input-wrappper"
   >
     <input
+      v-on:keyup.up="fillPreviousCommand"
+      v-on:keyup.down="fillNextCommand"
       v-on:keyup.enter="submit"
       class="command__input"
       type="text"
       placeholder="Type commands here..."
       v-model="input"
+      ref="input"
     >
-    <code class="command__history">{{ existingCommand }}&nbsp;</code>
   </div>
 </template>
 
@@ -26,9 +28,23 @@ export default {
     return {
       input: '',
       existingCommand: '',
+      commandHistoryCursor: 0,
     };
   },
   methods: {
+    fillCommandWithHistoryCursor() {
+      const history = this.$store.state.command.history;
+      this.input = history[history.length - this.commandHistoryCursor] || '';
+    },
+    fillNextCommand() {
+      this.commandHistoryCursor = Math.max(0, this.commandHistoryCursor - 1);
+      this.fillCommandWithHistoryCursor();
+    },
+    fillPreviousCommand() {
+      this.commandHistoryCursor = Math.min(this.$store.state.command.history.length, this.commandHistoryCursor + 1);
+      this.fillCommandWithHistoryCursor();
+    },
+
     submit(event) {
       event.preventDefault();
       const value = this.input;
@@ -41,7 +57,7 @@ export default {
         this.input = '';
       }
 
-      this.existingCommand = value;
+      this.$store.commit('history/add', value);
 
       const actionPackage = this.inputParser.parse(value);
       this.commander.execute(actionPackage)
