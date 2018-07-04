@@ -76,6 +76,7 @@ export default {
       },
       selectedEvent: null,
       agendaScrollTop: 0,
+      agendaScrollerEl: null,
     };
   },
   methods: {
@@ -84,17 +85,16 @@ export default {
     },
 
     $_handleFcScrolling(event) {
-      this.agendaScrollTop = event.target.scrollTop;
+      this.agendaScrollTop = this.agendaScrollerEl.scrollTop;
     },
 
     $_removeFcScrollListener({ scroller }) {
-      const scrollEl = scroller.scrollEl;
-      scrollEl.removeEventListener('scroll', this.bindedFcScrollingHandler)
+      scroller.scrollEl.removeEventListener('scroll', this.bindedFcScrollingHandler)
     },
     $_addFcScrollListener({ scroller }) {
-      const scrollEl = scroller.scrollEl;
-      scroller.scrollEl.scrollTop = this.agendaScrollTop || scroller.scrollEl.scrollTop;
-      scrollEl.addEventListener('scroll', this.bindedFcScrollingHandler);
+      this.agendaScrollerEl = scroller.scrollEl;
+      this.agendaScrollerEl.scrollTop = this.agendaScrollTop || this.agendaScrollerEl.scrollTop;
+      this.agendaScrollerEl.addEventListener('scroll', this.bindedFcScrollingHandler);
     },
 
     $_handleEventSelected(event, jsEvent, view) {
@@ -127,9 +127,14 @@ export default {
       const proposedZoomLevel = this.zoomLevel + zoomFactor;
       this.zoomLevel = Math.min(Math.max(proposedZoomLevel, 0), 60);
       localStorage.setItem('zoomLevel', this.zoomLevel);
+
+      const scrollRatio = this.agendaScrollerEl.scrollTop / this.agendaScrollerEl.scrollHeight;
       this.fireMethod('option', {
         slotDuration: getSlotDurationWithMinute(this.zoomLevel),
       });
+      this.$nextTick(() => {
+        this.agendaScrollerEl.scrollTop = scrollRatio * this.agendaScrollerEl.scrollHeight;
+      })
     },
 
     $_handleCalendarFetching(startWithoutTZ, endWithoutTZ, timezone, callback) {
