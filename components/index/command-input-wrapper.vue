@@ -80,7 +80,7 @@ export default {
         this.input = '';
       }
 
-      this.$store.commit('history/add', value);
+      this.$store.commit('command/add', value);
 
       const actionPackage = this.inputParser.parse(value);
       this.commander.execute(actionPackage)
