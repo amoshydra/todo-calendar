@@ -19,9 +19,9 @@
           class="summary-item"
           :title="event.summary"
         >
-          <code>{{ event.summary.split(':')[0] }}</code>
+          <code>{{ (event.summary || '').split(':')[0] }}</code>
           <small>:</small>
-          <span>{{ event.summary.split(':')[1] }}</span>
+          <span>{{ (event.summary || '').split(':')[1] }}</span>
         </div>
       </div>
 
