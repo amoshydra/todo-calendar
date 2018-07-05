@@ -23,8 +23,10 @@
     "fullcalendar": "^3.9.0",
     "moment": "^2.22.2",
     "nuxt": "^1.0.0",
+    "quill": "^1.3.6",
     "vue": "^2.5.16",
     "vue-full-calendar": "^4.0.0-0",
+    "vue-quill-editor": "^3.0.6",
     "vue-typer": "^1.2.0",
     "vuesax": "^3.1.7"
   },

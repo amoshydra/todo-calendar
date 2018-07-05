@@ -16,12 +16,14 @@
         <strong>Duration:</strong>&nbsp;<span>{{ duration }}</span>
       </div>
 
-
-      <div
+      <quill-editor
         class="item-detail__item item-detail__description"
-        v-if="event.description"
-        v-html="event.description"
-      ></div>
+        :content="event.description"
+        :options="editorOption"
+        @change="({ html }) => cachedHtml = html"
+        @blur="updateEvent(cachedHtml == null ? {} : { description: cachedHtml })"
+      >
+      </quill-editor>
     </div>
 
     <div class="item-detail__actions">
@@ -37,12 +39,37 @@
 
 <script>
 import moment from 'moment';
+import 'quill/dist/quill.core.css';
+import 'quill/dist/quill.snow.css';
+import 'quill/dist/quill.bubble.css';
+
+import { quillEditor } from 'vue-quill-editor';
 
 export default {
+  components: {
+    quillEditor,
+  },
   props: {
     selectedEvent: {
       type: Object,
     },
+  },
+  created() {
+    this.editorOption = {
+      modules: {
+        toolbar: [
+          ['bold', 'italic', 'underline', 'strike'], // toggled buttons
+          [{ header: [1, 2, 3, 4, 5, 6, false] }],
+          [{ list: 'ordered' }, { list: 'bullet' }],
+          ['clean'] // remove formatting button
+        ],
+      }
+    };
+  },
+  data() {
+    return {
+      cachedHtml: null,
+    };
   },
   computed: {
     event() {
@@ -69,7 +96,7 @@ export default {
         calendarId: 'primary',
         eventId: this.event.id,
       });
-    }
+    },
   },
 };
 </script>
@@ -93,12 +120,19 @@ export default {
   margin-top: 1em;
 }
 .item-detail__description {
-  padding: 16px 8px;
-  background: rgba(0,0,0,0.025);
+  background: rgba(0, 0, 0, .025);
   max-height: 100%;
   overflow-y: auto;
-  white-space: pre-wrap;
+  position: relative;
+  height: 100%;
 }
+.item-detail__description .ql-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: white;
+}
+
 .item-detail__description ul {
   padding-left: 1em;
 }
@@ -118,4 +152,6 @@ export default {
   font-size: 1rem;
   line-height: 1.25;
 }
+
+
 </style>
