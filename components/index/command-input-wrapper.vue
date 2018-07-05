@@ -11,6 +11,7 @@
       placeholder="Type commands here..."
       v-model="input"
       ref="input"
+      autofocus
     >
     <div class="emoji-picker">
       <span
