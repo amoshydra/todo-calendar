@@ -30,7 +30,6 @@
 import { FullCalendar } from 'vue-full-calendar';
 import 'fullcalendar/dist/fullcalendar.css';
 
-import calendar from '@/libs/calendar';
 import ModalContainer from '@/components/shared/modal-container';
 
 import CalendarViewItemDetail from './calendar-view-item-detail';
@@ -131,10 +130,11 @@ export default {
         },
       };
 
-      calendar.update('primary', event.id, event)
-        .then(() => {
-          this.$store.dispatch('calendar/list');
-        });
+      this.$store.dispatch('calendar/update', {
+        calendarId: 'primary',
+        eventId: event.id,
+        resource: event,
+      });
     },
 
     $_handleZoom(event) {
