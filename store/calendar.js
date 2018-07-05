@@ -30,9 +30,7 @@ export const getters = {
     const closestPastIndex = justPastedEventIndex - 1;
     return state.events[closestPastIndex] || null;
   }
-
 };
-
 
 export const mutations = {
   list(state, events) {
