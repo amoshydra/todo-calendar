@@ -7,6 +7,7 @@
       @event-drop="$_handleEventUpdated"
       @event-resize="$_handleEventUpdated"
       @event-selected="$_handleEventSelected"
+      @event-created="$_handleEventCreated"
 
       ref="calendar"
       :events="fcEvents"
@@ -117,6 +118,22 @@ export default {
     $_handleEventSelected(event, jsEvent, view) {
       this.selectedEvent = event;
       this.$refs.modal.show();
+    },
+
+    $_handleEventCreated({ start, end }) {
+      if ((end - start) <= 1800000) return; // prevent single click creation
+
+      this.$store.dispatch('calendar/insert', {
+        calendarId: 'primary',
+        resource: {
+          start: {
+            dateTime: new Date(start.format()).toISOString(),
+          },
+          end: {
+            dateTime: new Date(end.format()).toISOString(),
+          },
+        },
+      });
     },
 
     $_handleEventUpdated(receivedUpdate) {
