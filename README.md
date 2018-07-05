@@ -16,48 +16,32 @@ yarn
 <img height="30px">
 
 ### 2. Configure the project
-After running `yarn`, a `keys.js` will be generated for you at `config/secrets/keys.js`.  
-You are required update the `client_id` inside the file with your own Google Client ID.  
+This project uses some of the Google APIs. You are required update the
+`GOOGLE_CLIENT_ID` and `GOOGLE_API_KEY` inside the `.env` file at the root of this repository.
 
 For instruction on how to obtain a Google Client ID,  
 see https://developers.google.com/identity/sign-in/web/devconsole-project.
-
-#### Credentials Options
-Here are the options you should choose when creating the Google Credential
-- Google Calendar API
-- Web browser (Javascript)
-- User data
-
-Check out `config/secrets/keys.js` in your local repository for more information.
 
 <img height="30px">
 
 ### 3. Run the project
 Once you have done configuring the project,  
-run `yarn run dev` to start developing!
+run `yarn dev` to start developing!
 
-This project is based on https://github.com/vuejs-templates/webpack.  
+This project is based on https://github.com/nuxt/nuxt.js.  
 For detailed explanation on how things work, checkout the  
-- [guide](http://vuejs-templates.github.io/webpack/) and
-- [docs for vue-loader](http://vuejs.github.io/vue-loader).
+- [guide](https://github.com/nuxt/nuxt.js)
 
 <img height="30px">
 
 ### 4. Build and deploy the project
-`yarn run build` to build the project into the `dist` folder.  
+`yarn build` to build the project into the `dist` folder.  
 
 This project usese [surge.sh](http://surge.sh/) for deployment.  
-`yarn run deploy` will deploy the `dist` folder to todo-calendar.surge.sh (you can change this in [`config/index.js`](https://github.com/amoshydra/todo-calendar/blob/master/config/index.js))
+`yarn publish` will deploy the `dist` folder to todo-calendar.surge.sh (you can change this in [`package.json`](https://github.com/amoshydra/todo-calendar/blob/master/package.json))
 
 <img height="30px">
-
-### 5. Tweak the project
-See [`config/index.js`](https://github.com/amoshydra/todo-calendar/blob/master/config/index.js) to tweak some of the project settings
-
-
-<img height="60px">
 
 ## More information:
 1. [Background](https://github.com/amoshydra/todo-calendar/wiki) of this project
 2. On-going [tasks](https://github.com/amoshydra/todo-calendar/wiki/Tasks)
-

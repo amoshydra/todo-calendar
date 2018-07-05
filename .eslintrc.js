@@ -1,29 +1,47 @@
-// http://eslint.org/docs/user-guide/configuring
+const path = require('path');
 
 module.exports = {
   root: true,
-  parser: 'babel-eslint',
-  parserOptions: {
-    sourceType: 'module'
-  },
   env: {
     browser: true,
+    node: true
   },
-  extends: 'airbnb-base',
+  parserOptions: {
+    parser: 'babel-eslint'
+  },
+  extends: [
+    'airbnb-base',
+    // https://github.com/vuejs/eslint-plugin-vue#priority-a-essential-error-prevention
+    // consider switching to `plugin:vue/strongly-recommended` or `plugin:vue/recommended` for stricter rules.
+    'plugin:vue/essential'
+  ],
   // required to lint *.vue files
   plugins: [
-    'html'
+    'vue'
   ],
-  // check if imports actually resolve
-  'settings': {
+  settings: {
     'import/resolver': {
-      'webpack': {
-        'config': 'build/webpack.base.conf.js'
-      }
-    }
+      webpack: {
+        config: {
+          resolve: {
+            extensions: ['.js', '.vue'],
+            alias: {
+              '~': __dirname,
+              '~~': __dirname,
+              '@': __dirname,
+              '@@': __dirname,
+              'static': path.resolve(__dirname, 'static'), // use in template with <img src="~static/nuxt.png" />
+              '~static': path.resolve(__dirname, 'static'),
+              'assets': path.resolve(__dirname, 'assets'), // use in template with <img src="~static/nuxt.png" />
+              '~assets': path.resolve(__dirname, 'assets'),
+            }
+          }
+        }
+      },
+    },
   },
   // add your custom rules here
-  'rules': {
+  rules: {
     // don't require .vue extension when importing
     'import/extensions': ['error', 'always', {
       'js': 'never',
@@ -47,6 +65,7 @@ module.exports = {
       "error",
       "always"
     ],
+    "semi-style": "off",
     "no-console": "warn",
     "linebreak-style": "off",
     "max-len": [
