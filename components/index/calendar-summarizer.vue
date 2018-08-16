@@ -21,7 +21,7 @@
         >
           <code>{{ (event.summary || '').split(':')[0] }}</code>
           <small>:</small>
-          <span>{{ (event.summary || '').split(':')[1] }}</span>
+          <span>{{ (event.summary || '').split(':').slice(1).join(':') }}</span>
         </div>
       </div>
 
