@@ -36,7 +36,7 @@ jobs:
   deploy-job:
     docker:
       - image: circleci/node:8.12
-    working_directory: ~/repo
+    working_directory: ~/project
     steps:
       - run: yarn publish
 
