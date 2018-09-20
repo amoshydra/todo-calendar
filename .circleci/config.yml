@@ -45,6 +45,8 @@ jobs:
       - image: circleci/node:8.12
     working_directory: ~/repo
     steps:
+      - attach_workspace:
+          at: ~/repo
       - run: ls -la
       - run: yarn publish
 
