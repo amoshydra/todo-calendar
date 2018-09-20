@@ -48,7 +48,7 @@ jobs:
       - attach_workspace:
           at: ~/repo
       - run: ls -la
-      - run: yarn publish
+      - run: yarn publish-dist
 
 workflows:
   version: 2
