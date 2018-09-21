@@ -31,8 +31,11 @@ jobs:
           key: v1-dependencies-{{ checksum "package.json" }}
 
       # set up env
-      - run: echo 'export GOOGLE_API_KEY="$GOOGLE_API_KEY"' >> $BASH_ENV
-      - run: echo 'export GOOGLE_CLIENT_ID="$GOOGLE_CLIENT_ID"' >> $BASH_ENV
+      - run:
+          name: Setup Environment Variables
+          command: |
+            echo 'export GOOGLE_API_KEY="$GOOGLE_API_KEY"' >> $BASH_ENV
+            echo 'export GOOGLE_CLIENT_ID="$GOOGLE_CLIENT_ID"' >> $BASH_ENV
 
       # run tests!
       - run: yarn test
