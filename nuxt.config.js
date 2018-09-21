@@ -21,6 +21,12 @@ module.exports = {
   ** Customize the progress bar color
   */
   loading: { color: '#3B8070' },
+
+  env: {
+    GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
+    GOOGLE_API_KEY: process.env.GOOGLE_API_KEY,
+  },
+
   /*
   ** Build configuration
   */
