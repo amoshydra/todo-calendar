@@ -2,7 +2,11 @@
 
 > A Todo app + a calender view, that allow users to quickly record down their todos and organise them easily.
 
-<img height="60px">
+[![CircleCI](https://circleci.com/gh/amoshydra/todo-calendar.svg?style=svg)](https://circleci.com/gh/amoshydra/todo-calendar)
+[![Known Vulnerabilities](https://snyk.io/test/github/amoshydra/todo-calendar/badge.svg)](https://snyk.io/test/github/amoshydra/todo-calendar)
+[![Maintainability](https://api.codeclimate.com/v1/badges/a99a88d28ad37a79dbf6/maintainability)](https://codeclimate.com/github/amoshydra/todo-calendar/maintainability)
+
+<img height="10px">
 
 ## Getting started in development
 
