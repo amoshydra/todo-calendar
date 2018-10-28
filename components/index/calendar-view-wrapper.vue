@@ -62,7 +62,7 @@ export default {
         defaultView: 'agendaDay',
         weekends: false,
         nowIndicator: true,
-        contentHeight: 600,
+        contentHeight: 'auto',
         allDaySlot: false,
         slotDuration: getSlotDurationWithMinute(initialZoomLevel),
         scrollTime: `${fifteenMinsAgo.getHours()}:${fifteenMinsAgo.getMinutes()}:00`,
@@ -279,4 +279,9 @@ export default {
   border-color: #00000005;
 }
 
+
+/* Make dynamic calendar height */
+.fc-scroller {
+  max-height: calc(100vh - 320px);
+}
 </style>
