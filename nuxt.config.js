@@ -45,9 +45,11 @@ module.exports = {
       }
     }
   },
+  css: [
+    'reset-css',
+  ],
   plugins: [
     '@/plugins/google-api',
-    '@/plugins/vuesax',
   ],
   modules: [
     '@nuxtjs/dotenv',
