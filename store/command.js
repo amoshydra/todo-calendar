@@ -12,7 +12,7 @@ export const mutations = {
 };
 
 export const state = () => {
-  const commandHistoryJson = localStorage.getItem(LOCAL_STORAGE_NAME) || '';
+  const commandHistoryJson = localStorage.getItem(LOCAL_STORAGE_NAME) || '{}';
   let commandHistory = [];
   try {
     commandHistory = JSON.parse(commandHistoryJson) || [];
