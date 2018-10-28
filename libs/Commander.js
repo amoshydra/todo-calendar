@@ -61,7 +61,7 @@ const CASE_REMOVE_FN = async (instance, task) => {
   });
 };
 
-const Commander = ({ store }) => {
+const Commander = function Commander({ store }) {
   this.store = store;
 };
 Commander.prototype.execute = ({ action, task }) => {
