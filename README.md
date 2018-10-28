@@ -26,6 +26,8 @@ This project uses some of the Google APIs. You are required update the
 For instruction on how to obtain a Google Client ID,  
 see https://developers.google.com/identity/sign-in/web/devconsole-project.
 
+Then, create a new API Key for `GOOGLE_API_KEY` at https://console.cloud.google.com/apis/credentials
+
 <img height="30px">
 
 ### 3. Run the project
