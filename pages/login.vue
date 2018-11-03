@@ -33,7 +33,7 @@ export default {
   margin-bottom: 80px;
   padding-top: 32px;
 }
-.page__login__intro .app-login-brand-tagline {
+.page__login__intro >>> .app-login-brand-tagline {
   font-size: 1em;
 }
 

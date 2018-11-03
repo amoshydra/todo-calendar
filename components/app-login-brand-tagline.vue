@@ -27,12 +27,13 @@ const makeTaglineWrapper = (element, index, arr, renderer, context) => {
 const makeTagLine = (renderer, context, lines) => makeTaglineWrapper(lines[0], 0, lines, renderer, context);
 
 export default {
-  render(h) {
+  functional: true,
+  render(h, context) {
     return h(
-      this.tagName, {
+      context.props.tagName, {
         staticClass: 'app-login-brand-tagline'
       },
-      makeTagLine(h, this, this.lines),
+      makeTagLine(h, context.props, context.props.lines),
     );
   },
   props: {
