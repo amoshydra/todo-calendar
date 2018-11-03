@@ -1,21 +1,11 @@
-<template>
+<template functional>
   <button
-    @click="login"
+    @click="parent.$auth.loginWith('google')"
     class="login__button"
   >
     <span><slot>Login</slot></span>
   </button>
 </template>
-
-<script>
-export default {
-  methods: {
-    login() {
-      this.$auth.loginWith('google');
-    },
-  },
-};
-</script>
 
 <style>
 .login__button {
