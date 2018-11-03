@@ -45,9 +45,6 @@ module.exports = {
       }
     }
   },
-  css: [
-    'reset-css',
-  ],
   plugins: [
     '@/plugins/google-api',
   ],
