@@ -69,7 +69,9 @@ export default {
         scrollTime: [fifteenMinsAgo.getHours(), fifteenMinsAgo.getMinutes(), '00'].map(toPaddedString).join(':'),
         slotEventOverlap: false,
         viewDestroy: (view) => {
-          if (view.name === 'agendaDay' || view.name === 'agendaWeek') this.$_removeFcScrollListener(view);
+          if (view.name === 'agendaDay' || view.name === 'agendaWeek') {
+            this.$_removeFcScrollListener(view);
+          }
         },
         viewRender: (view) => {
           if (!(
@@ -81,7 +83,9 @@ export default {
             this.$_handleCalendarFetching(view.start, view.end);
           }
 
-          if (view.name === 'agendaDay' || view.name === 'agendaWeek') this.$_addFcScrollListener(view);
+          if (view.name === 'agendaDay' || view.name === 'agendaWeek') {
+            this.$_addFcScrollListener(view);
+          }
         }
       },
       selectedEvent: null,
@@ -111,7 +115,7 @@ export default {
       scroller.scrollEl.removeEventListener('scroll', this.bindedFcScrollingHandler);
     },
     $_addFcScrollListener({ scroller }) {
-      this.agendaScrollerEl = scroller.scrollEl;
+      [this.agendaScrollerEl] = scroller.scrollEl;
       this.agendaScrollerEl.scrollTop = this.agendaScrollTop || this.agendaScrollerEl.scrollTop;
       this.agendaScrollerEl.addEventListener('scroll', this.bindedFcScrollingHandler);
     },
