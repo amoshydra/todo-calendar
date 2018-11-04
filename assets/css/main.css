@@ -1,6 +1,8 @@
 @import url('https://fonts.googleapis.com/css?family=Kalam|Montserrat');
 
-html {
+html,
+body,
+* {
   font-size: 16px;
   word-spacing: 1px;
   -ms-text-size-adjust: 100%;
@@ -37,3 +39,11 @@ h3 { font-size: 1.17em; }
 h4 { font-size: 1.0em; }
 h5 { font-size: 0.83em; }
 h6 { font-size: 0.67em; }
+
+*,
+:after,
+:before,
+html {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
