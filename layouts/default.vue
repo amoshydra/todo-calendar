@@ -9,6 +9,10 @@
 @import url('reset-css');
 @import url('@/assets/css/main.css');
 
+body {
+  background-color: #fbfbfb;
+}
+
 main.main {
   padding: 16px;
   max-width: 1440px;
