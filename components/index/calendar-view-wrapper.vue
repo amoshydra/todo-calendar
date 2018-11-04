@@ -112,7 +112,7 @@ export default {
     },
 
     $_removeFcScrollListener({ scroller }) {
-      scroller.scrollEl.forEach((element) => {
+      [...scroller.scrollEl].forEach((element) => {
         element.removeEventListener('scroll', this.bindedFcScrollingHandler);
       });
     },
