@@ -35,8 +35,9 @@ import ModalContainer from '@/components/shared/modal-container';
 
 import CalendarViewItemDetail from './calendar-view-item-detail';
 
+const toPaddedString = input => `${input}`.padStart(2, '0');
 const getSlotDurationWithMinute = (minute) => {
-  const zoomLevelString = `${minute}`.padStart(2, '0');
+  const zoomLevelString = toPaddedString(minute);
   const slotDuration = `00:${zoomLevelString}:${minute ? '0' : '6'}0`;
   return slotDuration;
 };
@@ -65,10 +66,12 @@ export default {
         contentHeight: 'auto',
         allDaySlot: false,
         slotDuration: getSlotDurationWithMinute(initialZoomLevel),
-        scrollTime: `${fifteenMinsAgo.getHours()}:${fifteenMinsAgo.getMinutes()}:00`,
+        scrollTime: [fifteenMinsAgo.getHours(), fifteenMinsAgo.getMinutes(), '00'].map(toPaddedString).join(':'),
         slotEventOverlap: false,
         viewDestroy: (view) => {
-          if (view.name === 'agendaDay' || view.name === 'agendaWeek') this.$_removeFcScrollListener(view);
+          if (view.name === 'agendaDay' || view.name === 'agendaWeek') {
+            this.$_removeFcScrollListener(view);
+          }
         },
         viewRender: (view) => {
           if (!(
@@ -80,7 +83,9 @@ export default {
             this.$_handleCalendarFetching(view.start, view.end);
           }
 
-          if (view.name === 'agendaDay' || view.name === 'agendaWeek') this.$_addFcScrollListener(view);
+          if (view.name === 'agendaDay' || view.name === 'agendaWeek') {
+            this.$_addFcScrollListener(view);
+          }
         }
       },
       selectedEvent: null,
@@ -110,7 +115,7 @@ export default {
       scroller.scrollEl.removeEventListener('scroll', this.bindedFcScrollingHandler);
     },
     $_addFcScrollListener({ scroller }) {
-      this.agendaScrollerEl = scroller.scrollEl;
+      [this.agendaScrollerEl] = scroller.scrollEl;
       this.agendaScrollerEl.scrollTop = this.agendaScrollTop || this.agendaScrollerEl.scrollTop;
       this.agendaScrollerEl.addEventListener('scroll', this.bindedFcScrollingHandler);
     },
