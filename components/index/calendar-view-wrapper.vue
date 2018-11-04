@@ -112,7 +112,9 @@ export default {
     },
 
     $_removeFcScrollListener({ scroller }) {
-      scroller.scrollEl.removeEventListener('scroll', this.bindedFcScrollingHandler);
+      scroller.scrollEl.forEach((element) => {
+        element.removeEventListener('scroll', this.bindedFcScrollingHandler);
+      });
     },
     $_addFcScrollListener({ scroller }) {
       [this.agendaScrollerEl] = scroller.scrollEl;
