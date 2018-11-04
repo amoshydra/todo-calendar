@@ -47,7 +47,7 @@ import { quillEditor } from 'vue-quill-editor';
 
 export default {
   components: {
-    quillEditor,
+    QuillEditor: quillEditor,
   },
   props: {
     selectedEvent: {

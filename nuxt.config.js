@@ -47,7 +47,6 @@ module.exports = {
   },
   plugins: [
     '@/plugins/google-api',
-    '@/plugins/vuesax',
   ],
   modules: [
     '@nuxtjs/dotenv',
