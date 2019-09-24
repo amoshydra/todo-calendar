@@ -1,5 +1,5 @@
 require('dotenv').config();
-const GOOGLE_API_CONFIG = require('./plugins/google-api/config');
+const GOOGLE_API_CONFIG = require('./src/plugins/google-api/config');
 
 module.exports = {
   mode: 'spa',
@@ -31,6 +31,8 @@ module.exports = {
     GOOGLE_API_KEY: process.env.GOOGLE_API_KEY,
   },
 
+  srcDir: 'src/',
+
   /*
   ** Build configuration
   */
@@ -41,7 +43,9 @@ module.exports = {
     '@/plugins/vue-composition-api',
   ],
   modules: [
-    '@nuxtjs/dotenv',
+    ['@nuxtjs/dotenv', {
+      path: '.'
+    }],
     '@nuxtjs/axios',
     '@nuxtjs/auth',
   ],
