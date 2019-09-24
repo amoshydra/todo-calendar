@@ -9,7 +9,7 @@ const getGAPI = () => new Promise((resolve, reject) => {
     if (window.gapi) {
       resolve(window.gapi);
     } else {
-      reject();
+      reject(new Error('Google API is not loaded correctly'));
     }
   });
   googleScript.addEventListener('error', (error) => {

@@ -11,19 +11,20 @@ const getZeroedDay = (offset) => {
     second: 0,
     millisecond: 0,
   });
+  console.log('date', date);
   return date;
 };
 
-/**
- *
- * @param {Number} startOffset 0 today, -1 yesterday, 1 tomorrow
- * @param {Number} endOffset exclusive
- * @return {Object} containing startDate and endDate
- */
-const getDayRange = (startOffset = 0, endOffset = 1) => ({
-  start: getZeroedDay(startOffset),
-  end: getZeroedDay(endOffset),
-});
+// /**
+//  *
+//  * @param {Number} startOffset 0 today, -1 yesterday, 1 tomorrow
+//  * @param {Number} endOffset exclusive
+//  * @return {Object} containing startDate and endDate
+//  */
+// const getDayRange = (startOffset = 0, endOffset = 1) => ({
+//   start: getZeroedDay(startOffset),
+//   end: getZeroedDay(endOffset),
+// });
 
 export default {
 

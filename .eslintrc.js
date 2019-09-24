@@ -9,7 +9,7 @@ module.exports = {
   extends: [
     // https://github.com/vuejs/eslint-plugin-vue#priority-a-essential-error-prevention
     // consider switching to `plugin:vue/strongly-recommended` or `plugin:vue/recommended` for stricter rules.
-    'plugin:vue/strongly-recommended',
+    'plugin:vue/recommended',
     '@nuxtjs/eslint-config-typescript',
   ],
   settings: {
@@ -61,10 +61,6 @@ module.exports = {
     "semi-style": "off",
     "no-console": "warn",
     "linebreak-style": "off",
-    "max-len": [
-      "warn", 120, 2,
-      { ignoreComments: true }
-    ],
     "quote-props": [
       "warn",
       "consistent-as-needed"

@@ -104,7 +104,7 @@ export default {
       return this.$refs.calendar.fireMethod(methodName, options);
     },
 
-    $_handleFcScrolling(event) {
+    $_handleFcScrolling(_event) {
       this.agendaScrollTop = this.agendaScrollerEl.scrollTop;
     },
 
@@ -119,7 +119,7 @@ export default {
       this.agendaScrollerEl.addEventListener('scroll', this.bindedFcScrollingHandler);
     },
 
-    $_handleEventSelected(event, jsEvent, view) {
+    $_handleEventSelected(event, _jsEvent, _view) {
       this.selectedEvent = event;
       this.$refs.modal.show();
     },
@@ -174,7 +174,7 @@ export default {
       this.agendaScrollerEl.scrollTop = scrollRatio * this.agendaScrollerEl.scrollHeight;
     },
 
-    $_handleCalendarFetching(startWithoutTZ, endWithoutTZ, timezone, callback) {
+    $_handleCalendarFetching(startWithoutTZ, endWithoutTZ, _timezone, _callback) {
       this.$store.dispatch('calendar/list', {
         start: new Date(startWithoutTZ.toISOString()),
         end: new Date(endWithoutTZ.toISOString()),

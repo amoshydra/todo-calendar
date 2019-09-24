@@ -51,6 +51,7 @@ export default {
   props: {
     selectedEvent: {
       type: Object,
+      default: undefined,
     },
   },
   data() {

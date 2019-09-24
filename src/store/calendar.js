@@ -51,22 +51,22 @@ export const mutations = {
 };
 
 export const actions = {
-  async list({ states, commit }, options) {
+  async list({ commit }, options) {
     const events = await calendar.list(options);
     commit('list', events);
     return events;
   },
-  async insert({ states, commit }, { calendarId, resource }) {
+  async insert({ commit }, { calendarId, resource }) {
     const { result } = await calendar.insert(calendarId, resource);
     commit('insert', result);
     return result;
   },
-  async update({ states, commit }, { calendarId, eventId, resource }) {
+  async update({ commit }, { calendarId, eventId, resource }) {
     const { result } = await calendar.update(calendarId, eventId, resource);
     commit('update', result);
     return result;
   },
-  async remove({ states, commit }, { calendarId, eventId }) {
+  async remove({ commit }, { calendarId, eventId }) {
     await calendar.remove(calendarId, eventId);
     commit('remove', { id: eventId });
   },

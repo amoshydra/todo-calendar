@@ -17,7 +17,10 @@
 <script>
 export default {
   props: {
-    targetClass: {},
+    targetClass: {
+      type: [String, Array, Object],
+      default: undefined,
+    },
   },
   data() {
     return {

@@ -21,7 +21,7 @@ const CASE_INSERT_FN = async (instance, task) => {
     });
   }
 };
-const CASE_BREAK_FN = async (instance, task) => {
+const CASE_BREAK_FN = async (instance, _task) => {
   await instance.store.dispatch('calendar/list');
   const concerningEvent = (
     instance.store.getters['calendar/getCurrent'] ||
@@ -40,7 +40,7 @@ const CASE_BREAK_FN = async (instance, task) => {
     },
   });
 };
-const CASE_RESUME_FN = async (instance, task) => {
+const CASE_RESUME_FN = async (instance, _task) => {
   await instance.store.dispatch('calendar/list');
   if (instance.store.getters['calendar/getCurrent']) { return; }
 
@@ -56,7 +56,7 @@ const CASE_RESUME_FN = async (instance, task) => {
     resource: new Task(concerningEvent.summary || concerningEvent.title),
   });
 };
-const CASE_REMOVE_FN = async (instance, task) => {
+const CASE_REMOVE_FN = async (instance, _task) => {
   await instance.store.dispatch('calendar/list');
 
   const currentEvent = instance.store.getters['calendar/getCurrent'];

@@ -1,5 +1,5 @@
 import gapi from './main';
 
-export default ({ app, env, store }, inject) => {
+export default (_context, inject) => {
   inject('gapi', gapi);
 };

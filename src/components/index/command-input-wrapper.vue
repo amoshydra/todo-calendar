@@ -3,9 +3,9 @@
     class="command-input-wrappper"
   >
     <input
+      ref="input"
       v-model="input"
       class="command__input"
-      ref="input"
       type="text"
       placeholder="Type commands here..."
       autofocus
