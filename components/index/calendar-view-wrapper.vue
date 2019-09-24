@@ -179,8 +179,8 @@ export default {
 
     $_handleCalendarFetching(startWithoutTZ, endWithoutTZ, timezone, callback) {
       this.$store.dispatch('calendar/list', {
-        start: new Date(startWithoutTZ.toISOString()),
-        end: new Date(endWithoutTZ.toISOString()),
+        start: startWithoutTZ.local().toDate(),
+        end: endWithoutTZ.local().toDate(),
       });
     },
 
