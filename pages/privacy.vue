@@ -24,37 +24,18 @@
   </div>
 </template>
 
-<style scoped>
-.privacy-page * {
-  line-height: 1.5em !important;
-}
-
-.privacy-page strong {
-  font-weight: bold;
-}
-.privacy-page h1,
-.privacy-page h2,
-.privacy-page h3,
-.privacy-page h4,
-.privacy-page h5,
-.privacy-page h6,
-.privacy-page p {
-  margin-bottom: 0.5em;
-}
-.privacy-page hr {
-  opacity: 0.2;
-}
-.privacy-page ul {
-  margin-top: 0.25em;
-  padding-left: 1em;
-}
-.privacy-page li {
-  list-style-type: circle;
-  list-style-position: inside;
-}
-.privacy-page li span {
-  display: inline-block;
-  width: calc(100% - 1em);
-  vertical-align: top;
+<style lang="scss" scoped>
+.privacy-page {
+  hr {
+    opacity: 0.2;
+  }
+  ul {
+    margin-top: 0.25em;
+  }
+  li span {
+    display: inline-block;
+    width: calc(100% - 1em);
+    vertical-align: top;
+  }
 }
 </style>

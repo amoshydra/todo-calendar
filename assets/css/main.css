@@ -1,8 +1,8 @@
+@import url('reset-css');
 @import url('https://fonts.googleapis.com/css?family=Kalam|Montserrat');
 
 html,
-body,
-* {
+body {
   font-size: 16px;
   word-spacing: 1px;
   -ms-text-size-adjust: 100%;
@@ -21,7 +21,8 @@ body,
     "Helvetica Neue",
     Arial,
     sans-serif
-    ;
+  ;
+  line-height: 1.5em;
 }
 
 h1,
@@ -38,6 +39,24 @@ h3 { font-size: 1.17em; }
 h4 { font-size: 1.0em; }
 h5 { font-size: 0.83em; }
 h6 { font-size: 0.67em; }
+h1, h2, h3, h4, h5, h6 {
+  margin-bottom: 0.5em;
+  line-height: 1.5em;
+}
+p {
+  margin-bottom: 0.5em;
+}
+
+ul {
+  padding-left: 1em;
+}
+li {
+  list-style-type: circle;
+  list-style-position: inside;
+}
+strong {
+  font-weight: bold;
+}
 
 *,
 :after,

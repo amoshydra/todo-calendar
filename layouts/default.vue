@@ -1,14 +1,10 @@
 <template>
   <main class="main">
-    <nuxt/>
+    <nuxt />
   </main>
 </template>
 
 <style>
-/* TODO: Use this, as nuxt css has a bug ordering app styling */
-@import url('reset-css');
-@import url('@/assets/css/main.css');
-
 body {
   background-color: #fbfbfb;
 }
