@@ -3,27 +3,25 @@
     class="calendar-view-wrapper"
   >
     <full-calendar
-      @mousewheel.native="$_handleZoom"
-      @event-drop="$_handleEventUpdated"
-      @event-resize="$_handleEventUpdated"
-      @event-selected="$_handleEventSelected"
-      @event-created="$_handleEventCreated"
-
       ref="calendar"
       :events="fcEvents"
       :config="fcConfig"
+      @mousewheel.native="$_handleZoom"
+      @event-drop="$_handleEventUpdated"
 
-    ></full-calendar>
+      @event-resize="$_handleEventUpdated"
+      @event-selected="$_handleEventSelected"
+      @event-created="$_handleEventCreated"
+    />
 
     <ModalContainer
       ref="modal"
-      targetClass="event-detail"
+      target-class="event-detail"
     >
       <CalendarViewItemDetail
-        :selectedEvent="selectedEvent"
+        :selected-event="selectedEvent"
       />
     </ModalContainer>
-
   </div>
 </template>
 
@@ -31,9 +29,8 @@
 import { FullCalendar } from 'vue-full-calendar';
 import 'fullcalendar/dist/fullcalendar.css';
 
-import ModalContainer from '@/components/shared/modal-container';
-
 import CalendarViewItemDetail from './calendar-view-item-detail';
+import ModalContainer from '@/components/shared/modal-container';
 
 const toPaddedString = input => `${input}`.padStart(2, '0');
 const getSlotDurationWithMinute = (minute) => {
@@ -75,8 +72,8 @@ export default {
         },
         viewRender: (view) => {
           if (!(
-            this.renderedView.start.valueOf() === view.start.valueOf()
-            && this.renderedView.end.valueOf() === view.end.valueOf())
+            this.renderedView.start.valueOf() === view.start.valueOf() &&
+            this.renderedView.end.valueOf() === view.end.valueOf())
           ) {
             this.renderedView.start = view.start;
             this.renderedView.end = view.end;
@@ -128,7 +125,7 @@ export default {
     },
 
     $_handleEventCreated({ start, end }) {
-      if ((end - start) <= 1800000) return; // prevent single click creation
+      if ((end - start) <= 1800000) { return; } // prevent single click creation
 
       this.$store.dispatch('calendar/insert', {
         calendarId: 'primary',
@@ -162,7 +159,7 @@ export default {
     },
 
     $_handleZoom(event) {
-      if (!event.ctrlKey) return;
+      if (!event.ctrlKey) { return; }
 
       event.preventDefault();
       const zoomFactor = (event.wheelDeltaY > 0) ? -5 : 5;
@@ -285,7 +282,6 @@ export default {
 .fc-unthemed .fc-list-heading td {
   border-color: #00000005;
 }
-
 
 /* Make dynamic calendar height */
 .fc-scroller {

@@ -9,7 +9,7 @@
 
     <ModalContainer
       ref="modal"
-      targetClass="summary-wrapper"
+      target-class="summary-wrapper"
     >
       <h4>Summary</h4>
       <div class="summary-item-container">
@@ -24,7 +24,6 @@
           <span>{{ (event.summary || '').split(':').slice(1).join(':') }}</span>
         </div>
       </div>
-
     </ModalContainer>
   </div>
 </template>

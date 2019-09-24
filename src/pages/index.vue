@@ -1,14 +1,14 @@
 <template>
   <section class="container">
     <div class="index__input">
-      <command-input-wrapper/>
+      <command-input-wrapper />
     </div>
     <div class="index__calendar">
       <calendar-view-wrapper />
     </div>
 
     <div class="index__calendar-sumarizer">
-      <calendar-summarizer :events="$store.state.calendar.events"/>
+      <calendar-summarizer :events="$store.state.calendar.events" />
     </div>
   </section>
 </template>

@@ -16,7 +16,7 @@ export const state = () => {
   let commandHistory = [];
   try {
     commandHistory = JSON.parse(commandHistoryJson) || [];
-    if (!Array.isArray(commandHistory)) commandHistory = [];
+    if (!Array.isArray(commandHistory)) { commandHistory = []; }
   } catch (error) {
     /* eslint no-console: off */
     console.warn(error);

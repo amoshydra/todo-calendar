@@ -1,7 +1,7 @@
 <template>
   <div
-    class="calendar-view-item-detail"
     v-if="selectedEvent"
+    class="calendar-view-item-detail"
     tabindex="0"
     autofocus
   >
@@ -10,7 +10,7 @@
         class="item-detail__input"
         :value="event.summary"
         @blur="event => updateEvent({ summary: event.target.value })"
-      ></textarea>
+      />
 
       <div class="item-detail__item">
         <strong>Duration:</strong>&nbsp;<span>{{ duration }}</span>
@@ -22,8 +22,7 @@
         :options="editorOption"
         @change="({ html }) => cachedHtml = html"
         @blur="updateEvent(cachedHtml == null ? {} : { description: cachedHtml })"
-      >
-      </quill-editor>
+      />
     </div>
 
     <div class="item-detail__actions">
@@ -54,18 +53,6 @@ export default {
       type: Object,
     },
   },
-  created() {
-    this.editorOption = {
-      modules: {
-        toolbar: [
-          ['bold', 'italic', 'underline', 'strike'], // toggled buttons
-          [{ header: [1, 2, 3, 4, 5, 6, false] }],
-          [{ list: 'ordered' }, { list: 'bullet' }],
-          ['clean'] // remove formatting button
-        ],
-      }
-    };
-  },
   data() {
     return {
       cachedHtml: null,
@@ -79,6 +66,18 @@ export default {
       const durationMiliseconds = this.selectedEvent.end.valueOf() - this.selectedEvent.start.valueOf();
       return moment.duration(durationMiliseconds).humanize();
     },
+  },
+  created() {
+    this.editorOption = {
+      modules: {
+        toolbar: [
+          ['bold', 'italic', 'underline', 'strike'], // toggled buttons
+          [{ header: [1, 2, 3, 4, 5, 6, false] }],
+          [{ list: 'ordered' }, { list: 'bullet' }],
+          ['clean'] // remove formatting button
+        ],
+      }
+    };
   },
   methods: {
     updateEvent(updateData = {}) {
@@ -152,6 +151,5 @@ export default {
   font-size: 1rem;
   line-height: 1.25;
 }
-
 
 </style>

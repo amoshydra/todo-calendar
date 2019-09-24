@@ -1,10 +1,11 @@
 <template>
   <div class="page__login">
-
     <div class="page__login__intro">
-      <h1 class="brand__title">To-do Calendar</h1>
+      <h1 class="brand__title">
+        To-do Calendar
+      </h1>
       <AppLoginBrandTagline
-        tagName="h2"
+        tag-name="h2"
         :lines="['Where To-do meets', 'calendar']"
       />
     </div>

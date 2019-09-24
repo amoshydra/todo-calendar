@@ -1,7 +1,7 @@
 <template functional>
   <button
-    @click="parent.$auth.loginWith('google')"
     class="login__button"
+    @click="parent.$auth.loginWith('google')"
   >
     <span><slot>Login</slot></span>
   </button>

@@ -25,7 +25,6 @@ const getDayRange = (startOffset = 0, endOffset = 1) => ({
   end: getZeroedDay(endOffset),
 });
 
-
 export default {
 
   /**

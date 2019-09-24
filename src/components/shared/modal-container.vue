@@ -1,7 +1,7 @@
 <template>
   <div
-    class="modal__overlay"
     v-if="visibility"
+    class="modal__overlay"
     @click="handleOverlayClicked"
   >
     <div
@@ -9,7 +9,7 @@
       class="modal__container"
       :class="targetClass"
     >
-      <slot/>
+      <slot />
     </div>
   </div>
 </template>
@@ -26,7 +26,7 @@ export default {
   },
   methods: {
     handleOverlayClicked(event) {
-      if (event.target === this.$el) this.visibility = false;
+      if (event.target === this.$el) { this.visibility = false; }
     },
     show() {
       this.visibility = true;

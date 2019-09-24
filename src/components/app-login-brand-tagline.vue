@@ -2,7 +2,7 @@
 import { VueTyper } from 'vue-typer';
 
 const makeTaglineWrapper = (element, index, arr, renderer, context) => {
-  if (!element) return [];
+  if (!element) { return []; }
 
   const previousLength = arr.slice(0, index).join(' ').length + 1;
   const preTypeDelay = context.preTypeDelay + (previousLength * context.typeDelay);
@@ -28,14 +28,6 @@ const makeTagLine = (renderer, context, lines) => makeTaglineWrapper(lines[0], 0
 
 export default {
   functional: true,
-  render(h, context) {
-    return h(
-      context.props.tagName, {
-        staticClass: 'app-login-brand-tagline'
-      },
-      makeTagLine(h, context.props, context.props.lines),
-    );
-  },
   props: {
     tagName: {
       type: String,
@@ -53,6 +45,14 @@ export default {
       type: Array,
       default: () => [],
     },
+  },
+  render(h, context) {
+    return h(
+      context.props.tagName, {
+        staticClass: 'app-login-brand-tagline'
+      },
+      makeTagLine(h, context.props, context.props.lines),
+    );
   },
 };
 </script>

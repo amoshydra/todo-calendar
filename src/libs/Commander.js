@@ -24,10 +24,10 @@ const CASE_INSERT_FN = async (instance, task) => {
 const CASE_BREAK_FN = async (instance, task) => {
   await instance.store.dispatch('calendar/list');
   const concerningEvent = (
-    instance.store.getters['calendar/getCurrent']
-    || instance.store.getters['calendar/getClosestPast']
+    instance.store.getters['calendar/getCurrent'] ||
+    instance.store.getters['calendar/getClosestPast']
   );
-  if (!concerningEvent) return;
+  if (!concerningEvent) { return; }
 
   await instance.store.dispatch('calendar/update', {
     calendarId: 'primary',
@@ -42,14 +42,14 @@ const CASE_BREAK_FN = async (instance, task) => {
 };
 const CASE_RESUME_FN = async (instance, task) => {
   await instance.store.dispatch('calendar/list');
-  if (instance.store.getters['calendar/getCurrent']) return;
+  if (instance.store.getters['calendar/getCurrent']) { return; }
 
   // Get closest or last night task
   const concerningEvent = (
-    instance.store.getters['calendar/getClosestPast']
-    || instance.store.state.events[-1].slice(-1)[0]
+    instance.store.getters['calendar/getClosestPast'] ||
+    instance.store.state.events[-1].slice(-1)[0]
   );
-  if (!concerningEvent) return;
+  if (!concerningEvent) { return; }
 
   await instance.store.dispatch('calendar/insert', {
     calendarId: 'primary',
@@ -60,7 +60,7 @@ const CASE_REMOVE_FN = async (instance, task) => {
   await instance.store.dispatch('calendar/list');
 
   const currentEvent = instance.store.getters['calendar/getCurrent'];
-  if (!currentEvent) return;
+  if (!currentEvent) { return; }
   await instance.$store.dispatch('calendar/remove', {
     calendarId: 'primary',
     eventId: currentEvent.id,

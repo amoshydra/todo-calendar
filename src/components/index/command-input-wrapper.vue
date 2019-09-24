@@ -3,34 +3,33 @@
     class="command-input-wrappper"
   >
     <input
-      v-on:keyup.up="fillPreviousCommand"
-      v-on:keyup.down="fillNextCommand"
-      v-on:keyup.enter="submit"
+      v-model="input"
       class="command__input"
+      ref="input"
       type="text"
       placeholder="Type commands here..."
-      v-model="input"
-      ref="input"
       autofocus
+      @keyup.up="fillPreviousCommand"
+      @keyup.down="fillNextCommand"
+      @keyup.enter="submit"
     >
     <div class="emoji-picker">
       <span
         class="emoji-picker__button"
-        @click="showEmojiPicker = !showEmojiPicker"
         tabindex="0"
-      ></span>
+        @click="showEmojiPicker = !showEmojiPicker"
+      />
       <keep-alive>
         <picker
           v-if="showEmojiPicker"
           class="emoji-picker__panel"
-          @select="(({ native }) => input += native)"
           native
-          :showPreview="true"
-          :showSkinTones="true"
+          :show-preview="true"
+          :show-skin-tones="true"
+          @select="(({ native }) => input += native)"
         />
       </keep-alive>
     </div>
-
   </div>
 </template>
 
