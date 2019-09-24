@@ -2,29 +2,18 @@ const path = require('path');
 
 module.exports = {
   root: true,
-  env: {
-    browser: true,
-    node: true
-  },
-  parserOptions: {
-    parser: 'babel-eslint'
-  },
   extends: [
-    'airbnb-base',
     // https://github.com/vuejs/eslint-plugin-vue#priority-a-essential-error-prevention
     // consider switching to `plugin:vue/strongly-recommended` or `plugin:vue/recommended` for stricter rules.
-    'plugin:vue/essential'
-  ],
-  // required to lint *.vue files
-  plugins: [
-    'vue'
+    'plugin:vue/strongly-recommended',
+    '@nuxtjs/eslint-config-typescript',
   ],
   settings: {
     'import/resolver': {
       webpack: {
         config: {
           resolve: {
-            extensions: ['.js', '.vue'],
+            extensions: ['.js', '.vue', '.ts'],
             alias: {
               '~': __dirname,
               '~~': __dirname,
