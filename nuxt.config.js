@@ -38,6 +38,7 @@ module.exports = {
 
   plugins: [
     '@/plugins/google-api',
+    '@/plugins/vue-composition-api',
   ],
   modules: [
     '@nuxtjs/dotenv',
