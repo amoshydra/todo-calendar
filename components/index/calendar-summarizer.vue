@@ -9,12 +9,12 @@
 
     <ModalContainer
       ref="modal"
-      targetClass="summary-wrapper"
+      target-class="summary-wrapper"
     >
       <h4>Summary</h4>
       <div class="summary-item-container">
         <CalendarSummarizerItem
-          v-for="event in events"
+          v-for="event in filteredSortedEvents"
           :key="event.id"
           class="summary-item"
           :event="event"
@@ -39,6 +39,25 @@ export default {
       default: () => [],
     }
   },
+  computed: {
+    filteredSortedEvents() {
+      const uniqSummary = {};
+      return [...this.events]
+        .reduce((acc, event) => {
+          if (uniqSummary[event.summary]) {
+            return acc;
+          }
+          uniqSummary[event.summary] = true;
+          acc.push(event);
+          return acc;
+        }, [])
+        .sort((a, b) => (
+          new Date(a.end.dateTime || a.start.dateTime)
+          - new Date(b.end.dateTime || b.start.dateTime)
+        ))
+      ;
+    },
+  }
 };
 </script>
 
