@@ -13,28 +13,25 @@
     >
       <h4>Summary</h4>
       <div class="summary-item-container">
-        <div
+        <CalendarSummarizerItem
           v-for="event in events"
           :key="event.id"
           class="summary-item"
-          :title="event.summary"
-        >
-          <code>{{ (event.summary || '').split(':')[0] }}</code>
-          <small>:</small>
-          <span>{{ (event.summary || '').split(':').slice(1).join(':') }}</span>
-        </div>
+          :event="event"
+        />
       </div>
-
     </ModalContainer>
   </div>
 </template>
 
 <script>
+import CalendarSummarizerItem from './calendar-summarizer-item';
 import ModalContainer from '@/components/shared/modal-container';
 
 export default {
   components: {
     ModalContainer,
+    CalendarSummarizerItem,
   },
   props: {
     events: {
