@@ -51,7 +51,7 @@ module.exports = {
       redirect: {
         login: '/login',
         logout: '/login',
-        callback: '/login/',
+        callback: '/login/callback/',
         home: '/',
       },
     }],
