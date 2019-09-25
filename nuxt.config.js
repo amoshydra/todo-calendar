@@ -47,7 +47,14 @@ module.exports = {
       path: '.'
     }],
     '@nuxtjs/axios',
-    '@nuxtjs/auth',
+    ['@nuxtjs/auth', {
+      redirect: {
+        login: '/login',
+        logout: '/login',
+        callback: '/login/',
+        home: '/',
+      },
+    }],
   ],
   auth: {
     strategies: {
