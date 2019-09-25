@@ -25,6 +25,13 @@ export default {
     AppLoginButton,
     AppLoginBrandTagline,
   },
+  created() {
+    if (!this.$auth.loggedIn) {
+      return;
+    }
+
+    this.$router.push(this.$auth.options.redirect.home);
+  },
 };
 </script>
 
