@@ -52,8 +52,8 @@ export default {
           return acc;
         }, [])
         .sort((a, b) => (
-          new Date(a.end.dateTime || a.start.dateTime)
-          - new Date(b.end.dateTime || b.start.dateTime)
+          new Date(a.end.dateTime || a.start.dateTime) -
+          new Date(b.end.dateTime || b.start.dateTime)
         ))
       ;
     },

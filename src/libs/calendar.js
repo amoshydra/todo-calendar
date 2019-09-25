@@ -11,7 +11,6 @@ const getZeroedDay = (offset) => {
     second: 0,
     millisecond: 0,
   });
-  console.log('date', date);
   return date;
 };
 
