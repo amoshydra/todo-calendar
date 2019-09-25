@@ -33,7 +33,7 @@ jobs:
           command: |
             echo 'export GOOGLE_API_KEY="$GOOGLE_API_KEY"' >> $BASH_ENV
             echo 'export GOOGLE_CLIENT_ID="$GOOGLE_CLIENT_ID"' >> $BASH_ENV
-      - run: yarn build
+      - run: yarn generate
       - run: ls -la
       - persist_to_workspace:
           root: .
