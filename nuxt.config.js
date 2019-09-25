@@ -71,7 +71,7 @@ module.exports = {
   },
   typescript: {
     typeCheck: {
-      eslint: true,
+      eslint: process.env.NODE_ENV === 'development',
     },
   },
   generate: {
