@@ -38,8 +38,6 @@ jobs:
             echo 'export GOOGLE_API_KEY="$GOOGLE_API_KEY"' >> $BASH_ENV
             echo 'export GOOGLE_CLIENT_ID="$GOOGLE_CLIENT_ID"' >> $BASH_ENV
 
-      # run tests!
-      - run: yarn test
       - run: yarn build
       - run: ls -la
       - persist_to_workspace:
@@ -55,6 +53,22 @@ jobs:
           at: ~/repo
       - run: ls -la
       - run: yarn publish-dist
+  lint-job:
+    <<: *common-job-mixin
+    steps:
+      - checkout
+      - restore_cache: *cache-restore-mixin
+      - run: yarn install
+      - save_cache: *cache-save-mixin
+      - run: yarn lint
+  test-job:
+    <<: *common-job-mixin
+    steps:
+      - checkout
+      - restore_cache: *cache-restore-mixin
+      - run: yarn install
+      - save_cache: *cache-save-mixin
+      - run: yarn test
 
 workflows:
   version: 2
@@ -73,3 +87,9 @@ workflows:
           requires:
             - build-job
           filters: *build-deploy-filters
+  lint:
+    jobs:
+      - lint-job
+  test:
+    jobs:
+      - test-job
