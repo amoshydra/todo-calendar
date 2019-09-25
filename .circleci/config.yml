@@ -69,19 +69,25 @@ workflows:
   version: 2
   build-deploy:
     jobs:
-      - build-job:
-          filters: &build-deploy-filters
+      - lint-job:
+          filters: &filters-for-release-tag-only
             # ignore any commit on any branch by default
             branches:
               ignore: /.*/
             # only act on version tags
             tags:
               only: /^v[0-9]+(\.[0-9]+)*/
-
+      - test-job:
+          filters: *filters-for-release-tag-only
+      - build-job:
+          filters: *filters-for-release-tag-only
+          requires:
+            - lint-job
+            - test-job
       - deploy-job:
+          filters: *filters-for-release-tag-only
           requires:
             - build-job
-          filters: *build-deploy-filters
   lint:
     jobs:
       - lint-job
