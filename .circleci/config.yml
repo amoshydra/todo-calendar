@@ -3,42 +3,36 @@
 # Check https://circleci.com/docs/2.0/language-javascript/ for more details
 #
 version: 2
+fragments:
+  mixin-base-image-setup-node: &mixin-base-image-setup-node
+    docker:
+      - image: circleci/node:10.16.3-buster
+    working_directory: ~/repo
+  # Download and cache dependencies
+  restore_cache: &mixin-cache-yarn-restore
+    keys:
+    - v1-dependencies-{{ checksum "yarn.lock" }}
+    # fallback to using the latest cache if no exact match is found
+    - v1-dependencies-
+  save_cache: &mixin-cache-yarn-save
+    paths:
+      - node_modules
+    key: v1-dependencies-{{ checksum "yarn.lock" }}
+
 jobs:
   build-job:
-    docker:
-      # specify the version you desire here
-      - image: circleci/node:8.12
-      # Specify service dependencies here if necessary
-      # CircleCI maintains a library of pre-built images
-      # documented at https://circleci.com/docs/2.0/circleci-images/
-
-    working_directory: ~/repo
-
+    <<: *mixin-base-image-setup-node
     steps:
       - checkout
-      # Download and cache dependencies
-      - restore_cache:
-          keys:
-          - v1-dependencies-{{ checksum "package.json" }}
-          # fallback to using the latest cache if no exact match is found
-          - v1-dependencies-
-
+      - restore_cache: *mixin-cache-yarn-restore
       - run: yarn install
-
-      - save_cache:
-          paths:
-            - node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
-
+      - save_cache: *mixin-cache-yarn-save
       # set up env
       - run:
           name: Setup Environment Variables
           command: |
             echo 'export GOOGLE_API_KEY="$GOOGLE_API_KEY"' >> $BASH_ENV
             echo 'export GOOGLE_CLIENT_ID="$GOOGLE_CLIENT_ID"' >> $BASH_ENV
-
-      # run tests!
-      - run: yarn test
       - run: yarn build
       - run: ls -la
       - persist_to_workspace:
@@ -48,29 +42,55 @@ jobs:
             - package.json
             - dist
   deploy-job:
-    docker:
-      - image: circleci/node:8.12
-    working_directory: ~/repo
+    <<: *mixin-base-image-setup-node
     steps:
       - attach_workspace:
           at: ~/repo
       - run: ls -la
       - run: yarn publish-dist
+  lint-job:
+    <<: *mixin-base-image-setup-node
+    steps:
+      - checkout
+      - restore_cache: *mixin-cache-yarn-restore
+      - run: yarn install
+      - save_cache: *mixin-cache-yarn-save
+      - run: yarn lint
+  test-job:
+    <<: *mixin-base-image-setup-node
+    steps:
+      - checkout
+      - restore_cache: *mixin-cache-yarn-restore
+      - run: yarn install
+      - save_cache: *mixin-cache-yarn-save
+      - run: yarn test
 
 workflows:
   version: 2
   build-deploy:
     jobs:
-      - build-job:
-          filters: &build-deploy-filters
+      - lint-job:
+          filters: &filters-for-release-tag-only
             # ignore any commit on any branch by default
             branches:
               ignore: /.*/
             # only act on version tags
             tags:
               only: /^v[0-9]+(\.[0-9]+)*/
-
+      - test-job:
+          filters: *filters-for-release-tag-only
+      - build-job:
+          filters: *filters-for-release-tag-only
+          requires:
+            - lint-job
+            - test-job
       - deploy-job:
+          filters: *filters-for-release-tag-only
           requires:
             - build-job
-          filters: *build-deploy-filters
+  lint:
+    jobs:
+      - lint-job
+  test:
+    jobs:
+      - test-job
