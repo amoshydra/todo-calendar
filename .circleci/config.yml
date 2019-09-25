@@ -3,32 +3,33 @@
 # Check https://circleci.com/docs/2.0/language-javascript/ for more details
 #
 version: 2
+fragments:
+  common-job-mixin: &common-job-mixin
+    docker:
+      - image: circleci/node:8.12
+    working_directory: ~/repo
+  common-job-steps-mixin:
+    - checkout
+    # Download and cache dependencies
+    - restore_cache: &cache-restore-mixin
+        keys:
+        - v1-dependencies-{{ checksum "package.json" }}
+        # fallback to using the latest cache if no exact match is found
+        - v1-dependencies-
+    - run: yarn install
+    - save_cache: &cache-save-mixin
+        paths:
+          - node_modules
+        key: v1-dependencies-{{ checksum "package.json" }}
+
 jobs:
   build-job:
-    docker:
-      # specify the version you desire here
-      - image: circleci/node:8.12
-      # Specify service dependencies here if necessary
-      # CircleCI maintains a library of pre-built images
-      # documented at https://circleci.com/docs/2.0/circleci-images/
-
-    working_directory: ~/repo
-
+    <<: *common-job-mixin
     steps:
       - checkout
-      # Download and cache dependencies
-      - restore_cache:
-          keys:
-          - v1-dependencies-{{ checksum "package.json" }}
-          # fallback to using the latest cache if no exact match is found
-          - v1-dependencies-
-
+      - restore_cache: *cache-restore-mixin
       - run: yarn install
-
-      - save_cache:
-          paths:
-            - node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
+      - save_cache: *cache-save-mixin
 
       # set up env
       - run:
@@ -48,9 +49,7 @@ jobs:
             - package.json
             - dist
   deploy-job:
-    docker:
-      - image: circleci/node:8.12
-    working_directory: ~/repo
+    <<: *common-job-mixin
     steps:
       - attach_workspace:
           at: ~/repo
