@@ -1,39 +1,32 @@
 const path = require('path');
 
+const sourceDir = path.resolve(process.cwd(), 'src');
+const staticDir = path.resolve(sourceDir, 'static');
+const assetsDir = path.resolve(sourceDir, 'assets');
+
 module.exports = {
   root: true,
-  env: {
-    browser: true,
-    node: true
-  },
-  parserOptions: {
-    parser: 'babel-eslint'
-  },
   extends: [
-    'airbnb-base',
     // https://github.com/vuejs/eslint-plugin-vue#priority-a-essential-error-prevention
     // consider switching to `plugin:vue/strongly-recommended` or `plugin:vue/recommended` for stricter rules.
-    'plugin:vue/essential'
-  ],
-  // required to lint *.vue files
-  plugins: [
-    'vue'
+    'plugin:vue/recommended',
+    '@nuxtjs/eslint-config-typescript',
   ],
   settings: {
     'import/resolver': {
       webpack: {
         config: {
           resolve: {
-            extensions: ['.js', '.vue'],
+            extensions: ['.js', '.vue', '.ts'],
             alias: {
-              '~': __dirname,
-              '~~': __dirname,
-              '@': __dirname,
-              '@@': __dirname,
-              'static': path.resolve(__dirname, 'static'), // use in template with <img src="~static/nuxt.png" />
-              '~static': path.resolve(__dirname, 'static'),
-              'assets': path.resolve(__dirname, 'assets'), // use in template with <img src="~static/nuxt.png" />
-              '~assets': path.resolve(__dirname, 'assets'),
+              '~': sourceDir,
+              '~~': sourceDir,
+              '@': sourceDir,
+              '@@': sourceDir,
+              'static': staticDir, // use in template with <img src="~static/nuxt.png" />
+              '~static': staticDir,
+              'assets': assetsDir, // use in template with <img src="~static/nuxt.png" />
+              '~assets': assetsDir,
             }
           }
         }
@@ -68,10 +61,6 @@ module.exports = {
     "semi-style": "off",
     "no-console": "warn",
     "linebreak-style": "off",
-    "max-len": [
-      "warn", 120, 2,
-      { ignoreComments: true }
-    ],
     "quote-props": [
       "warn",
       "consistent-as-needed"

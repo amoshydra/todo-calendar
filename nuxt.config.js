@@ -1,5 +1,5 @@
 require('dotenv').config();
-const GOOGLE_API_CONFIG = require('./plugins/google-api/config');
+const GOOGLE_API_CONFIG = require('./src/plugins/google-api/config');
 
 module.exports = {
   mode: 'spa',
@@ -22,34 +22,30 @@ module.exports = {
   */
   loading: { color: '#3B8070' },
 
+  css: [
+    '@/assets/css/main'
+  ],
+
   env: {
     GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
     GOOGLE_API_KEY: process.env.GOOGLE_API_KEY,
   },
 
+  srcDir: 'src/',
+
   /*
   ** Build configuration
   */
-  build: {
-    /*
-    ** Run ESLint on save
-    */
-    extend(config, { isDev, isClient }) {
-      if (isDev && isClient) {
-        config.module.rules.push({
-          enforce: 'pre',
-          test: /\.(js|vue)$/,
-          loader: 'eslint-loader',
-          exclude: /(node_modules)/
-        });
-      }
-    }
-  },
+  buildModules: ['@nuxt/typescript-build'],
+
   plugins: [
     '@/plugins/google-api',
+    '@/plugins/vue-composition-api',
   ],
   modules: [
-    '@nuxtjs/dotenv',
+    ['@nuxtjs/dotenv', {
+      path: '.'
+    }],
     '@nuxtjs/axios',
     '@nuxtjs/auth',
   ],
@@ -65,5 +61,10 @@ module.exports = {
         ],
       },
     }
+  },
+  typescript: {
+    typeCheck: {
+      eslint: true,
+    },
   },
 };
