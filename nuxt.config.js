@@ -74,4 +74,9 @@ module.exports = {
       eslint: true,
     },
   },
+  generate: {
+    exclude: [
+      /^\/$/,
+    ]
+  }
 };

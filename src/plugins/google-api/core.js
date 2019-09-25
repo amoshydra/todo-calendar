@@ -3,6 +3,8 @@
  * @returns {Promise} containing a reference to window.gapi
  */
 const getGAPI = () => new Promise((resolve, reject) => {
+  if (process.server) {return;}
+
   const googleScript = document.createElement('script');
   googleScript.src = 'https://apis.google.com/js/api.js';
   googleScript.addEventListener('load', () => {

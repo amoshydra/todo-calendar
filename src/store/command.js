@@ -1,6 +1,11 @@
 const MAX_HISTORY_LIMIT = 20;
 const LOCAL_STORAGE_NAME = 'command-history';
 
+const localStorage = (typeof window === 'undefined')
+  ? { setItem() {}, getItem() {} }
+  : window.localStorage
+;
+
 export const mutations = {
   add(state, item) {
     state.history.push(item);
