@@ -4,37 +4,35 @@
 #
 version: 2
 fragments:
-  common-job-mixin: &common-job-mixin
+  mixin-base-image-setup-node: &mixin-base-image-setup-node
     docker:
       - image: circleci/node:8.12
     working_directory: ~/repo
   # Download and cache dependencies
-  restore_cache: &cache-restore-mixin
+  restore_cache: &mixin-cache-yarn-restore
     keys:
     - v1-dependencies-{{ checksum "yarn.lock" }}
     # fallback to using the latest cache if no exact match is found
     - v1-dependencies-
-  save_cache: &cache-save-mixin
+  save_cache: &mixin-cache-yarn-save
     paths:
       - node_modules
     key: v1-dependencies-{{ checksum "yarn.lock" }}
 
 jobs:
   build-job:
-    <<: *common-job-mixin
+    <<: *mixin-base-image-setup-node
     steps:
       - checkout
-      - restore_cache: *cache-restore-mixin
+      - restore_cache: *mixin-cache-yarn-restore
       - run: yarn install
-      - save_cache: *cache-save-mixin
-
+      - save_cache: *mixin-cache-yarn-save
       # set up env
       - run:
           name: Setup Environment Variables
           command: |
             echo 'export GOOGLE_API_KEY="$GOOGLE_API_KEY"' >> $BASH_ENV
             echo 'export GOOGLE_CLIENT_ID="$GOOGLE_CLIENT_ID"' >> $BASH_ENV
-
       - run: yarn build
       - run: ls -la
       - persist_to_workspace:
@@ -44,27 +42,27 @@ jobs:
             - package.json
             - dist
   deploy-job:
-    <<: *common-job-mixin
+    <<: *mixin-base-image-setup-node
     steps:
       - attach_workspace:
           at: ~/repo
       - run: ls -la
       - run: yarn publish-dist
   lint-job:
-    <<: *common-job-mixin
+    <<: *mixin-base-image-setup-node
     steps:
       - checkout
-      - restore_cache: *cache-restore-mixin
+      - restore_cache: *mixin-cache-yarn-restore
       - run: yarn install
-      - save_cache: *cache-save-mixin
+      - save_cache: *mixin-cache-yarn-save
       - run: yarn lint
   test-job:
-    <<: *common-job-mixin
+    <<: *mixin-base-image-setup-node
     steps:
       - checkout
-      - restore_cache: *cache-restore-mixin
+      - restore_cache: *mixin-cache-yarn-restore
       - run: yarn install
-      - save_cache: *cache-save-mixin
+      - save_cache: *mixin-cache-yarn-save
       - run: yarn test
 
 workflows:
