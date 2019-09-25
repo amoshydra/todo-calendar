@@ -13,27 +13,25 @@
     >
       <h4>Summary</h4>
       <div class="summary-item-container">
-        <div
-          v-for="event in events"
+        <CalendarSummarizerItem
+          v-for="event in filteredSortedEvents"
           :key="event.id"
           class="summary-item"
-          :title="event.summary"
-        >
-          <code>{{ (event.summary || '').split(':')[0] }}</code>
-          <small>:</small>
-          <span>{{ (event.summary || '').split(':').slice(1).join(':') }}</span>
-        </div>
+          :event="event"
+        />
       </div>
     </ModalContainer>
   </div>
 </template>
 
 <script>
+import CalendarSummarizerItem from './calendar-summarizer-item';
 import ModalContainer from '@/components/shared/modal-container';
 
 export default {
   components: {
     ModalContainer,
+    CalendarSummarizerItem,
   },
   props: {
     events: {
@@ -41,6 +39,25 @@ export default {
       default: () => [],
     }
   },
+  computed: {
+    filteredSortedEvents() {
+      const uniqSummary = {};
+      return [...this.events]
+        .reduce((acc, event) => {
+          if (uniqSummary[event.summary]) {
+            return acc;
+          }
+          uniqSummary[event.summary] = true;
+          acc.push(event);
+          return acc;
+        }, [])
+        .sort((a, b) => (
+          new Date(a.end.dateTime || a.start.dateTime)
+          - new Date(b.end.dateTime || b.start.dateTime)
+        ))
+      ;
+    },
+  }
 };
 </script>
 
