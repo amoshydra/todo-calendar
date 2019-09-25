@@ -1,11 +1,25 @@
-<template functional>
+<template>
   <button
     class="login__button"
-    @click="parent.$auth.loginWith('google')"
+    @click="handleClick"
   >
     <span><slot>Login</slot></span>
   </button>
 </template>
+
+<script>
+export default {
+  methods: {
+    handleClick() {
+      if (this.$auth.loggedIn) {
+        return this.$router.push(this.$auth.options.redirect.home);
+      }
+
+      return this.$auth.loginWith('google');
+    }
+  }
+};
+</script>
 
 <style>
 .login__button {
