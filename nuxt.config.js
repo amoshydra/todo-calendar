@@ -52,7 +52,7 @@ module.exports = {
         login: '/login',
         logout: '/login',
         callback: '/login/callback/',
-        home: '/',
+        home: '/app',
       },
     }],
   ],

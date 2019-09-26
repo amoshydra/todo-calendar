@@ -1,42 +1,46 @@
 <template>
-  <section class="container">
-    <div class="index__input">
-      <command-input-wrapper />
-    </div>
-    <div class="index__calendar">
-      <calendar-view-wrapper />
+  <div class="page__login">
+    <div class="page__login__intro">
+      <h1 class="brand__title">
+        To-do Calendar
+      </h1>
+      <AppLoginBrandTagline
+        tag-name="h2"
+        :lines="['Where To-do meets', 'calendar']"
+      />
     </div>
 
-    <div class="index__calendar-sumarizer">
-      <calendar-summarizer :events="$store.state.calendar.events" />
-    </div>
-  </section>
+    <AppLoginButton>
+      Get started with your Google Calendar
+    </AppLoginButton>
+  </div>
 </template>
 
 <script>
-import CommandInputWrapper from '@/components/index/command-input-wrapper';
-import CalendarViewWrapper from '@/components/index/calendar-view-wrapper';
-import CalendarSummarizer from '@/components/index/calendar-summarizer';
+import AppLoginButton from '@/components/app-login-button';
+import AppLoginBrandTagline from '@/components/app-login-brand-tagline';
 
 export default {
   components: {
-    CommandInputWrapper,
-    CalendarViewWrapper,
-    CalendarSummarizer,
+    AppLoginButton,
+    AppLoginBrandTagline,
   },
-  middleware: 'auth',
 };
 </script>
 
-<style>
-.index__input {
-  margin-top: 24px;
+<style scoped>
+.page__login__intro {
+  font-size: 2em;
+  margin-bottom: 80px;
+  padding-top: 32px;
 }
-.index__calendar {
-  margin-top: 60px;
+.page__login__intro >>> .app-login-brand-tagline {
+  font-size: 1em;
 }
-.index__calendar-sumarizer {
-  margin-top: 24px;
-  text-align: right;
+
+.brand__title {
+  font-family: 'Montserrat', sans-serif;
+  line-height: 1em;
+  margin-bottom: 0.5em;
 }
 </style>
