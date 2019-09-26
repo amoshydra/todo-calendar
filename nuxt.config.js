@@ -2,7 +2,7 @@ require('dotenv').config();
 const GOOGLE_API_CONFIG = require('./src/plugins/google-api/config');
 
 module.exports = {
-  mode: 'spa',
+  mode: 'universal',
   /*
   ** Headers of the page
   */
@@ -70,14 +70,4 @@ module.exports = {
       },
     }
   },
-  typescript: {
-    typeCheck: {
-      eslint: process.env.NODE_ENV === 'development',
-    },
-  },
-  generate: {
-    exclude: [
-      /^\/$/,
-    ]
-  }
 };

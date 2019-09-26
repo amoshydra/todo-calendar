@@ -2,7 +2,9 @@
   <div
     class="calendar-view-wrapper"
   >
-    <full-calendar
+    <component
+      :is="fullCalendarComponent"
+      v-if="fullCalendarComponent"
       ref="calendar"
       :events="fcEvents"
       :config="fcConfig"
@@ -26,7 +28,6 @@
 </template>
 
 <script>
-import { FullCalendar } from 'vue-full-calendar';
 import 'fullcalendar/dist/fullcalendar.css';
 
 import CalendarViewItemDetail from './calendar-view-item-detail';
@@ -41,7 +42,6 @@ const getSlotDurationWithMinute = (minute) => {
 
 export default {
   components: {
-    FullCalendar,
     ModalContainer,
     CalendarViewItemDetail,
   },
@@ -49,12 +49,13 @@ export default {
     const fifteenMinsAgo = new Date((new Date() - (60 * 15 * 1000)));
     fifteenMinsAgo.getHours();
 
-    const initialZoomLevel = parseInt(localStorage.getItem('zoomLevel')) || 15;
+    const initialZoomLevel = parseInt(global.localStorage && global.localStorage.getItem('zoomLevel')) || 15;
 
     this.bindedCalendarFetcher = this.$_handleCalendarFetching.bind(this);
     this.bindedFcScrollingHandler = this.$_handleFcScrolling.bind(this);
 
     return {
+      fullCalendarComponent: null,
       zoomLevel: initialZoomLevel,
       fcConfig: {
         defaultView: 'agendaDay',
@@ -98,6 +99,10 @@ export default {
     fcEvents() {
       return this.$_makeFcEvents(this.$store.state.calendar.events);
     },
+  },
+  async mounted() {
+    const { FullCalendar } = await import('vue-full-calendar');
+    this.fullCalendarComponent = FullCalendar;
   },
   methods: {
     fireMethod(methodName, options) {

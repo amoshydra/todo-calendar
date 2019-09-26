@@ -16,7 +16,9 @@
         <strong>Duration:</strong>&nbsp;<span>{{ duration }}</span>
       </div>
 
-      <quill-editor
+      <component
+        :is="quillEditor"
+        v-if="quillEditor"
         class="item-detail__item item-detail__description"
         :content="event.description"
         :options="editorOption"
@@ -42,12 +44,7 @@ import 'quill/dist/quill.core.css';
 import 'quill/dist/quill.snow.css';
 import 'quill/dist/quill.bubble.css';
 
-import { quillEditor } from 'vue-quill-editor';
-
 export default {
-  components: {
-    QuillEditor: quillEditor,
-  },
   props: {
     selectedEvent: {
       type: Object,
@@ -56,8 +53,13 @@ export default {
   },
   data() {
     return {
+      quillEditor: null,
       cachedHtml: null,
     };
+  },
+  async mount() {
+    const { quillEditor } = await import('vue-quill-editor');
+    this.quillEditor = quillEditor;
   },
   computed: {
     event() {

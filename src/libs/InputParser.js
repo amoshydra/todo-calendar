@@ -1,5 +1,3 @@
-const InputParser = () => {};
-
 const makeWordRegex = (array) => {
   const delimeteredWords = array.join('|');
   return new RegExp(`^(${delimeteredWords})$`);
@@ -42,13 +40,13 @@ const mapAction = (input) => {
   }
 };
 
-InputParser.prototype.parse = (rawInput) => {
-  const input = rawInput.trim();
+export default class InputParser {
+  parse(rawInput) {
+    const input = rawInput.trim();
 
-  const action = mapAction(input.toLowerCase());
-  const task = input;
+    const action = mapAction(input.toLowerCase());
+    const task = input;
 
-  return { action, task };
-};
-
-export default InputParser;
+    return { action, task };
+  }
+}
