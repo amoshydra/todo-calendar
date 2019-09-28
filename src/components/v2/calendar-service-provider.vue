@@ -7,21 +7,18 @@
 <script lang="ts">
 import { createComponent, provide } from '@vue/composition-api';
 import { TodoCalendarService, TodoCalendarServiceKey } from '~/domain/todo-calendar';
+import googleConfig from '~/../config/google';
 
 const serviceCache = (() => {
   let cache: TodoCalendarService | null = null;
 
   return () => {
-    if (cache) {
-      console.log('returning cached copy');
-      return cache;
-    }
+    if (cache) { return cache; }
 
-    console.log('creating todo calendar service');
     cache = new TodoCalendarService({
       google: {
-        apiKey: process.env.GOOGLE_API_KEY as string,
-        clientId: process.env.GOOGLE_CLIENT_ID as string,
+        apiKey: googleConfig.apiKey,
+        clientId: googleConfig.clientId,
       }
     });
     return cache;

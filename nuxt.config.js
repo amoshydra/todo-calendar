@@ -1,5 +1,5 @@
 require('dotenv').config();
-const GOOGLE_API_CONFIG = require('./src/plugins/google-api/config');
+const GOOGLE_API_CONFIG = require('./config/google').default;
 
 module.exports = {
   mode: 'universal',
@@ -39,7 +39,6 @@ module.exports = {
   buildModules: ['@nuxt/typescript-build'],
 
   plugins: [
-    '@/plugins/google-api',
     '@/plugins/vue-composition-api',
   ],
   modules: [
@@ -65,7 +64,7 @@ module.exports = {
           'openid',
           'profile',
           'email',
-          ...GOOGLE_API_CONFIG.SCOPES,
+          ...GOOGLE_API_CONFIG.scope,
         ],
       },
     }

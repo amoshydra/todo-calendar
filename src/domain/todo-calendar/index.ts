@@ -8,6 +8,8 @@ export interface TodoCalendarServiceConstructorOption {
   google: {
     apiKey: string
     clientId: string
+    discoveryDocs?: string[],
+    scope?: string,
   }
 }
 
@@ -17,8 +19,6 @@ export class TodoCalendarService {
 
   constructor(option: TodoCalendarServiceConstructorOption) {
     this.service = new Google.APIService({
-      apiKey: option.google.apiKey,
-      clientId: option.google.clientId,
       // Array of API discovery doc URLs for APIs used by the quickstart
       discoveryDocs: [
         'https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest',
@@ -32,6 +32,7 @@ export class TodoCalendarService {
         'https://www.googleapis.com/auth/tasks.readonly',
         'https://www.googleapis.com/auth/tasks'
       ].join(' '),
+      ...option.google,
     });
 
     this.events = new CalendarEventsAPI(this.service);

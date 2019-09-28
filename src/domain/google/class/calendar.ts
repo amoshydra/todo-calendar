@@ -3,12 +3,18 @@ type URLString = string;
 
 export namespace Google.Calendar {
   export interface User {
-    email: string
-    self: boolean
+    displayName?: string
+    email?: string
+    id?: string
+    self?: boolean
   }
 
-  export interface DateTime {
+  type DateTime = {
     dateTime: string
+    timeZone?: string
+  } | {
+    date: string
+    timeZone?: string
   }
 
   export interface Event {
@@ -27,6 +33,22 @@ export namespace Google.Calendar {
     status: string
     summary: string
     updated: DateString
+  }
+
+  export interface EventWritableBody {
+    summary?: string
+    location?: string
+    description?: string
+    start: DateTime,
+    end: DateTime,
+    recurrence?: string[],
+    attendees?: User[]
+    status?: 'confirmed' | 'tentative' | 'cancelled'
+    transparency?: 'opaque' | 'transparent'
+    reminders?: {
+      useDefault?: boolean,
+      overrides?: { method: 'string', minutes: number }[],
+    },
   }
 
   export class Event {
