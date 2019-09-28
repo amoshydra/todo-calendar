@@ -57,7 +57,7 @@ export default {
       cachedHtml: null,
     };
   },
-  async mount() {
+  async mounted() {
     const { quillEditor } = await import('vue-quill-editor');
     this.quillEditor = quillEditor;
   },
