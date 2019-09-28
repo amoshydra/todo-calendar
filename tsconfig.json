@@ -25,6 +25,8 @@
     },
     "types": [
       "@types/node",
+      "@types/gapi",
+      "@types/gapi.client.calendar",
       "@nuxt/types"
     ]
   },
