@@ -18,6 +18,7 @@ export default createComponent({
   props: {
     scale: {
       type: Number,
+      required: true,
     }
   },
   setup(props) {
