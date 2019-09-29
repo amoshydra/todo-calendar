@@ -46,7 +46,6 @@ const proxyReturn: any = new Proxy((() => {}), {
       for (const key of keys) {
         await (gapiLoaderPromises as any)[key];
       }
-      console.log(paths)
       const promise = get(gapi, paths).apply(thisArg, argumentList);
       if (promise && ('then' in promise)) {
         promise.then(callback);
