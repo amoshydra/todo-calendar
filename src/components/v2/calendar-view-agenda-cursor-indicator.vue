@@ -3,22 +3,8 @@
 </template>
 
 <script lang="ts">
-import { createComponent, computed, ref, onUnmounted } from '@vue/composition-api';
+import { createComponent, computed } from '@vue/composition-api';
 import { useMousePosition } from './compositions/use-mouse-position';
-
-export function getTime() {
-  const time = ref(new Date());
-
-  const interval = setInterval(() => {
-    time.value = (new Date());
-  }, 1000);
-
-  onUnmounted(() => {
-    clearInterval(interval);
-  });
-
-  return { time };
-}
 
 export default createComponent<{ el: Element }>({
   props: {
