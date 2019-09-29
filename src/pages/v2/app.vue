@@ -16,5 +16,6 @@ export default createComponent({
     CalendarServiceProvider,
     CalendarViewContainer,
   },
+  middleware: 'auth',
 });
 </script>
