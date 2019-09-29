@@ -1,10 +1,23 @@
 <template>
-  <div class="calendar-view-agenda">
+  <div
+    ref="calendarViewAgenda"
+    class="calendar-view-agenda"
+  >
+    <CalendarViewAgendaGridLine
+      :scale="scale"
+    />
+    <CalendarViewAgendaNowIndicator
+      :scale="scale"
+    />
+    <CalendarViewAgendaCursorIndicator
+      v-if="calendarViewAgenda"
+      :el="calendarViewAgenda"
+    />
     <CalendarViewAgendaEntryPresenter
       v-for="(event, index) in events"
       :key="event.id"
       tabindex="-1"
-      :style="transformStyle[index]"
+      :style="transformationStyles[index]"
       class="agenda-entry"
       :event="event"
     />
@@ -14,6 +27,12 @@
 <script lang="ts">
 import { createComponent, computed, ref } from '@vue/composition-api';
 import CalendarViewAgendaEntryPresenter from './calendar-view-agenda-entry-presenter.vue';
+import CalendarViewAgendaNowIndicator from './calendar-view-agenda-now-indicator.vue';
+import CalendarViewAgendaCursorIndicator from './calendar-view-agenda-cursor-indicator.vue';
+import CalendarViewAgendaGridLine from './calendar-view-agenda-grid-line.vue';
+import { useScaleWithMouseWheel } from './compositions/use-scale-with-mouse-wheel';
+import { computeEventsTransformation } from './compositions/compute-events-transformation';
+import { maintainScrollPosition } from './compositions/maintain-scroll-position';
 
 interface Props {
   events: gapi.client.calendar.Event[]
@@ -22,6 +41,9 @@ interface Props {
 export default createComponent<Props>({
   components: {
     CalendarViewAgendaEntryPresenter,
+    CalendarViewAgendaNowIndicator,
+    CalendarViewAgendaCursorIndicator,
+    CalendarViewAgendaGridLine,
   },
   props: {
     events: {
@@ -29,66 +51,49 @@ export default createComponent<Props>({
     }
   },
   setup(props) {
-    const multiplier = ref(1);
+    const calendarViewAgenda = ref(null);
+    const { scale } = useScaleWithMouseWheel({
+      initial: 0.5,
+      min: 0.1,
+      max: 3,
+      invert: true,
+      scale: 0.0005,
+      el: calendarViewAgenda
+    });
 
-    const transformStyle = computed(() => (props.events)
-      .map((event) => {
-        const start = new Date((event.start && event.start.dateTime) as string);
-        const end = new Date((event.end && event.end.dateTime) as string);
+    maintainScrollPosition({ scale, el: calendarViewAgenda });
 
-        const time = {
-          start: start.getHours() * 100 + (start.getMinutes() / 3 * 5),
-          end: end.getHours() * 100 + (end.getMinutes() / 3 * 5),
-        };
-        const duration = time.end - time.start;
-        return {
-          duration,
-          top: time.start,
-          minHeight: 90,
-          height: duration,
-          start: time.start,
-          end: time.end,
-        };
-      })
-      .reduce((acc: any[], meta, index) => {
-        const top = meta.top * multiplier.value;
-
-        const prevNode = acc[index - 1];
-        const prevNodeBottom = (prevNode && (prevNode.top + prevNode.height)) || top;
-        // const gapDuration = Math.max(0, meta.start - ((prevNode && prevNode.end) || meta.start));
-
-        const isOverlappingPrevious = top < prevNodeBottom;
-
-        return [...acc, {
-          top,
-          height: Math.max(meta.minHeight, meta.height),
-          end: meta.end,
-          overlapCounter: !isOverlappingPrevious ? 0 : ((prevNode && prevNode.overlapCounter) || 0) + 1
-        }];
-      }, [])
-      .map((styleMeta: any) => ({
-        height: `${styleMeta.height}px`,
-        transform: `translateY(${styleMeta.top}px) translateX(${(styleMeta.overlapCounter) * 10}px)`,
-      }))
+    const eventSource = computed(() => props.events);
+    const { transformationStyles } = computeEventsTransformation(
+      { events: eventSource },
+      { scale },
+      {
+        minHeight: 60,
+        paddingLeft: 50,
+      }
     );
 
     return {
-      transformStyle,
-      multiplier,
+      calendarViewAgenda,
+      transformationStyles,
+      scale,
     };
   }
 });
 </script>
 
 <style lang="scss" scoped>
+$animation-speed: 0.5s linear;
+
 .agenda-entry {
   position: absolute;
-  background: #edfbfdd9;
+  background: #91fdcbe0;
   backdrop-filter: blur(1px);
-  transition: box-shadow 0.5s, transform 0.5s;
+  transition:
+    box-shadow $animation-speed,
+  ;
 
   &:hover {
-    z-index: 1;
     box-shadow: 8px 8px 32px 0 rgba(0,0,0,0.2);
   }
   &:focus {
@@ -99,6 +104,5 @@ export default createComponent<Props>({
 
 .calendar-view-agenda {
   position: relative;
-  height: 10000px;
 }
 </style>

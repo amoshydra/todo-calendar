@@ -78,9 +78,9 @@ export default createComponent({
   }
 }
 .summary {
-  padding: 16px;
-  padding-bottom: 48px;
-  padding-right: 48px;
+  font-size: 0.8rem;
+  padding: 8px;
+  padding-right: 16px;
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;

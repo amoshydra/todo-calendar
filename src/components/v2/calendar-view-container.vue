@@ -1,6 +1,9 @@
 <template>
-  <div>
-    <CalendarViewAgendaPresenter :events="events" />
+  <div class="calendar-view-container">
+    <CalendarViewAgendaPresenter
+      class="calendar-view-agenda-presenter"
+      :events="events"
+    />
   </div>
 </template>
 
@@ -52,3 +55,15 @@ export default createComponent({
   },
 });
 </script>
+
+<style lang="scss" scoped>
+.calendar-view-container {
+  border: 1px solid black;
+  padding-left: 16px;
+}
+.calendar-view-agenda-presenter {
+  height: calc(100vh - 200px);
+  overflow-y: scroll;
+  padding-bottom: 32px;
+}
+</style>
