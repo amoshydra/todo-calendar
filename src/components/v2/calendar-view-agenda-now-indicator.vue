@@ -3,38 +3,27 @@
 </template>
 
 <script lang="ts">
-import { createComponent, computed, ref, onUnmounted } from '@vue/composition-api';
-
-export function getTime() {
-  const time = ref(new Date());
-
-  const interval = setInterval(() => {
-    time.value = (new Date());
-  }, 1000);
-
-  onUnmounted(() => {
-    clearInterval(interval);
-  });
-
-  return { time };
-}
+import Time from 'time-chainer';
+import { createComponent, computed } from '@vue/composition-api';
+import { useCurrentTime } from './compositions/use-current-time';
 
 export default createComponent({
   props: {
     scale: {
       type: Number,
+      required: true,
     }
   },
   setup(props) {
-    const timeRef = getTime();
+    const midnight = new Date().setHours(0, 0, 0, 0);
+    const { time } = useCurrentTime({
+      interval: Time.seconds(60),
+    });
+
+    const factor = Time.hours(1) / 100;
 
     const style = computed(() => {
-      const time = timeRef.time.value;
-      const offset = (
-        (time.getHours() * 100) +
-        (time.getMinutes() / 3 * 5) +
-        (time.getSeconds() / 3000 * 5)
-      );
+      const offset = (time.value - midnight) / factor;
 
       return {
         transform: `translateY(${props.scale * offset}px)`,

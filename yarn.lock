@@ -10175,6 +10175,11 @@ through@2, through@^2.3.6:
   resolved "https://registry.yarnpkg.com/through/-/through-2.3.8.tgz#0dd4c9ffaabc357960b1b724115d7e0e86a2e1f5"
   integrity sha1-DdTJ/6q8NXlgsbckEV1+Doai4fU=
 
+time-chainer@^0.0.3:
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/time-chainer/-/time-chainer-0.0.3.tgz#970cb9315196613bd93e9e515d529f68e1cec4d8"
+  integrity sha512-B5A+yNW1tZ3wxymGs1QZINPdHpYrYuguD0LZO6lZfvdgv2YI/id1OG1+zuoEGEMeslnDEK3ql/6DIsyQ/U+szA==
+
 time-fix-plugin@^2.0.6:
   version "2.0.6"
   resolved "https://registry.yarnpkg.com/time-fix-plugin/-/time-fix-plugin-2.0.6.tgz#3210121d269b475a7e7661766e682bd768ba1ced"
