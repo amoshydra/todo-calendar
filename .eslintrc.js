@@ -62,5 +62,13 @@ module.exports = {
     "object-shorthand": "warn",
     "prefer-const": "warn",
     "arrow-body-style": "warn",
-  }
+  },
+  overrides: [
+    {
+      files: ['**/*.ts'],
+      rules: {
+        'no-undef': 'off'
+      }
+    }
+  ],
 }
