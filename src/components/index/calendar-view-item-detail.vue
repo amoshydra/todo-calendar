@@ -57,10 +57,6 @@ export default {
       cachedHtml: null,
     };
   },
-  async mounted() {
-    const { quillEditor } = await import('vue-quill-editor');
-    this.quillEditor = quillEditor;
-  },
   computed: {
     event() {
       return (this.selectedEvent && this.selectedEvent.data) || {};
@@ -69,6 +65,10 @@ export default {
       const durationMiliseconds = this.selectedEvent.end.valueOf() - this.selectedEvent.start.valueOf();
       return moment.duration(durationMiliseconds).humanize();
     },
+  },
+  async mounted() {
+    const { quillEditor } = await import('vue-quill-editor');
+    this.quillEditor = quillEditor;
   },
   created() {
     this.editorOption = {
