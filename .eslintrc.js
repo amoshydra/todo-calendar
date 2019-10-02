@@ -1,9 +1,3 @@
-const path = require('path');
-
-const sourceDir = path.resolve(process.cwd(), 'src');
-const staticDir = path.resolve(sourceDir, 'static');
-const assetsDir = path.resolve(sourceDir, 'assets');
-
 module.exports = {
   root: true,
   extends: [
@@ -12,38 +6,8 @@ module.exports = {
     'plugin:vue/recommended',
     '@nuxtjs/eslint-config-typescript',
   ],
-  settings: {
-    'import/resolver': {
-      webpack: {
-        config: {
-          resolve: {
-            extensions: ['.js', '.vue', '.ts'],
-            alias: {
-              '~': sourceDir,
-              '~~': sourceDir,
-              '@': sourceDir,
-              '@@': sourceDir,
-              'static': staticDir, // use in template with <img src="~static/nuxt.png" />
-              '~static': staticDir,
-              'assets': assetsDir, // use in template with <img src="~static/nuxt.png" />
-              '~assets': assetsDir,
-            }
-          }
-        }
-      },
-    },
-  },
   // add your custom rules here
   rules: {
-    // don't require .vue extension when importing
-    'import/extensions': ['error', 'always', {
-      'js': 'never',
-      'ts': 'never',
-    }],
-    // allow optionalDependencies
-    'import/no-extraneous-dependencies': ['error', {
-      'optionalDependencies': ['test/unit/index.js']
-    }],
     // allow debugger during development
     'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0,
     "indent": [
@@ -98,5 +62,13 @@ module.exports = {
     "object-shorthand": "warn",
     "prefer-const": "warn",
     "arrow-body-style": "warn",
-  }
+  },
+  overrides: [
+    {
+      files: ['**/*.ts'],
+      rules: {
+        'no-undef': 'off'
+      }
+    }
+  ],
 }
