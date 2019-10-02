@@ -1,4 +1,4 @@
-import { ref, onMounted, onUnmounted, Ref } from "@vue/composition-api";
+import { ref, onMounted, onUnmounted, Ref } from '@vue/composition-api';
 
 interface MouseWheelOption {
   initial?: number
@@ -34,12 +34,12 @@ export function useScaleWithMouseWheel(mouseWheelOption: MouseWheelOption) {
   }
   onMounted(() => {
     const target = option.el.value;
-    if (!target) return;
+    if (!target) { return; }
     target.addEventListener('wheel', update);
   });
   onUnmounted(() => {
     const target = option.el.value;
-    if (!target) return;
+    if (!target) { return; }
     target.removeEventListener('wheel', update);
   });
 

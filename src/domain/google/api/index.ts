@@ -17,17 +17,17 @@ export namespace Google {
       this.google = GoogleModule;
 
       GoogleModule.gapi.load('client:auth2', () => {
-        GoogleModule.gapi.client.init(this.initOption)
+        GoogleModule.gapi.client.init(this.initOption);
       });
     }
 
-    get auth () {
+    get auth() {
       return this.google.gapi.auth;
     }
-    get client () {
+    get client() {
       return this.google.gapi.client;
     }
-    get load () {
+    get load() {
       return this.google.gapi.load;
     }
   }

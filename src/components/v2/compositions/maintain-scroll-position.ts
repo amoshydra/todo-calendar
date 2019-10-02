@@ -1,5 +1,5 @@
-import { Ref, watch, onMounted, onUnmounted, ref, computed } from "@vue/composition-api";
-import { useMousePosition } from "./use-mouse-position";
+import { Ref, watch, onMounted, onUnmounted, ref, computed } from '@vue/composition-api';
+import { useMousePosition } from './use-mouse-position';
 
 export const maintainScrollPosition = ({ scale, el }: {
   scale: Ref<number>,
@@ -9,13 +9,11 @@ export const maintainScrollPosition = ({ scale, el }: {
 
   const scrollTop = ref(0);
   const scrollHeight = ref(0);
-  const scrollRatio = computed(() => {
-    return (scrollTop.value + mousemove.y.value) / scrollHeight.value;
-  })
+  const scrollRatio = computed(() => (scrollTop.value + mousemove.y.value) / scrollHeight.value);
 
   watch(() => scale.value, () => {
     const target = el.value;
-    if (!target) return;
+    if (!target) { return; }
 
     const desiredScrollTop = (scrollRatio.value * target.scrollHeight) - mousemove.y.value;
     target.scrollTo({
@@ -29,12 +27,11 @@ export const maintainScrollPosition = ({ scale, el }: {
     const target = event.target as Element;
     scrollTop.value = target.scrollTop;
     scrollHeight.value = target.scrollHeight;
-  }
-
+  };
 
   onMounted(() => {
     const element = el.value;
-    if (!element) return;
+    if (!element) { return; }
 
     scrollTop.value = element.scrollTop;
     scrollHeight.value = element.scrollHeight;
@@ -43,7 +40,7 @@ export const maintainScrollPosition = ({ scale, el }: {
   });
   onUnmounted(() => {
     const element = el.value;
-    if (!element) return;
+    if (!element) { return; }
     element.removeEventListener('scroll', update);
   });
 
@@ -51,5 +48,5 @@ export const maintainScrollPosition = ({ scale, el }: {
     scrollTop,
     scrollHeight,
     scrollRatio,
-  }
-}
+  };
+};

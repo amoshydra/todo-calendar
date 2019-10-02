@@ -8,7 +8,7 @@ const gapiLoaderPromises: {
   init: Promise<void>
 } = {
   module: new Promise((resolve, reject) => {
-    if (process.server) return;
+    if (process.server) { return; }
     const retrievalKey = 'gapi';
 
     const googleScript = document.createElement('script');
@@ -31,18 +31,18 @@ const gapiLoaderPromises: {
   init: new Promise((resolve) => {
     eventEmitter.listen('initCompleted', resolve);
   }),
-}
+};
 
-const proxyReturn: any = new Proxy((() => {}), {
+const proxyReturn: any = new Proxy(() => {}, {
   get(_obj, propertyKey: string) {
     execPaths.push(propertyKey);
     return proxyReturn;
   },
   async apply(_obj, thisArg, argumentList) {
-    const paths = execPaths.splice(0, execPaths.length)
+    const paths = execPaths.splice(0, execPaths.length);
     const gapi = await gapiLoaderPromises.module;
 
-    const waitBeforeExecute = async (keys: string[], callback = (() => {})) => {
+    const waitBeforeExecute = async (keys: string[], callback = () => {}) => {
       for (const key of keys) {
         await (gapiLoaderPromises as any)[key];
       }

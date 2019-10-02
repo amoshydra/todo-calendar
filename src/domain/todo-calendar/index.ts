@@ -1,6 +1,6 @@
-import { Google } from '~/domain/google/api'
 import { InjectionKey } from '@vue/composition-api';
 import { CalendarEventsAPI } from './api/calendar-events';
+import { Google } from '~/domain/google/api';
 
 export const TodoCalendarServiceKey: InjectionKey<TodoCalendarService> = Symbol('TodoCalendarServiceKey');
 

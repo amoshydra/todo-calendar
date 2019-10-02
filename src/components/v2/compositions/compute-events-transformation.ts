@@ -1,4 +1,4 @@
-import { computed, Ref } from "@vue/composition-api";
+import { computed, Ref } from '@vue/composition-api';
 
 interface EventsTransformationOption {
   minHeight: number,
@@ -22,9 +22,7 @@ const convertGapiEventToDate = (event: gapi.client.calendar.Event) => ({
   start: new Date((event.start && event.start.dateTime) as string),
   end: new Date((event.end && event.end.dateTime) as string),
 });
-const convertDateToInt = (date: Date) => {
-  return date.getHours() * 100 + (date.getMinutes() / 3 * 5)
-}
+const convertDateToInt = (date: Date) => date.getHours() * 100 + (date.getMinutes() / 3 * 5);
 const computeEventDimension = (event: gapi.client.calendar.Event): EventDimension => {
   const { start, end } = convertGapiEventToDate(event);
   const time = {
@@ -36,13 +34,13 @@ const computeEventDimension = (event: gapi.client.calendar.Event): EventDimensio
     start: time.start,
     end: time.end,
   };
-}
+};
 const computeTransformationStyle = (option: EventsTransformationOption) => (styleMeta: any) => {
   const styleOption = {
     paddingLeft: option.paddingLeft || 0,
     overlapOffset: option.overlapOffset || 10,
     ...option,
-  }
+  };
 
   return ({
     height: `${styleMeta.height}px`,
@@ -50,8 +48,8 @@ const computeTransformationStyle = (option: EventsTransformationOption) => (styl
       translateY(${styleMeta.top | 0}px)
       translateX(${((styleMeta.overlapCounter | 0) * styleOption.overlapOffset) + styleOption.paddingLeft}px)
     `,
-  })
-}
+  });
+};
 
 export const computeEventsTransformation = (
   eventsSource: EventsTransformationEventSource,
@@ -83,4 +81,4 @@ export const computeEventsTransformation = (
   return {
     transformationStyles
   };
-}
+};

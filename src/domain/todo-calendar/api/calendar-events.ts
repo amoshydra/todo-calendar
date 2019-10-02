@@ -17,7 +17,7 @@ export class CalendarEventsAPI {
     end: Date
   }) {
     const { result } = await this.service.client.calendar.events.list({
-      calendarId: calendarId,
+      calendarId,
       timeMin: start.toISOString(),
       timeMax: end.toISOString(),
       showDeleted: false,
@@ -31,7 +31,7 @@ export class CalendarEventsAPI {
     ;
   }
 
-  async insert({
+  insert({
     calendarId = 'primary',
     resource,
   }: {

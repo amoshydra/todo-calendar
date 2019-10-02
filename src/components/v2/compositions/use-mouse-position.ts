@@ -1,4 +1,4 @@
-import { Ref, onMounted, onUnmounted, ref } from "@vue/composition-api";
+import { Ref, onMounted, onUnmounted, ref } from '@vue/composition-api';
 
 interface UseMousePositionOption {
   el: Ref<Element | null>,
@@ -16,7 +16,7 @@ export const useMousePosition = (useMousePositionOption: UseMousePositionOption)
       y: 0,
       ...useMousePositionOption.offset || {},
     }
-  }
+  };
 
   const x = ref(0);
   const y = ref(0);
@@ -24,21 +24,21 @@ export const useMousePosition = (useMousePositionOption: UseMousePositionOption)
   const updateMousePosition = (event: Event) => {
     x.value = (event as MouseEvent).clientX - option.offset.x;
     y.value = (event as MouseEvent).clientY - option.offset.y;
-  }
+  };
 
   onMounted(() => {
     const element = option.el.value;
-    if (!element) return;
+    if (!element) { return; }
     element.addEventListener('mousemove', updateMousePosition);
   });
   onUnmounted(() => {
     const element = option.el.value;
-    if (!element) return;
+    if (!element) { return; }
     element.removeEventListener('mousemove', updateMousePosition);
   });
 
   return {
     x,
     y,
-  }
-}
+  };
+};
