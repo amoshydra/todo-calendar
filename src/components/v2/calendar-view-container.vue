@@ -8,7 +8,7 @@
 </template>
 
 <script lang="ts">
-import { createComponent, inject, ref, watch, Ref } from '@vue/composition-api';
+import { createComponent, inject, ref, watch } from '@vue/composition-api';
 import CalendarViewAgendaPresenter from './calendar-view-agenda-presenter.vue';
 import { TodoCalendarService, TodoCalendarServiceKey } from '~/domain/todo-calendar';
 import { parse } from '~/utilities/url-queries';
