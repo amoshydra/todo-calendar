@@ -53,11 +53,11 @@ export default createComponent<Props>({
   setup(props) {
     const calendarViewAgenda = ref(null);
     const { scale } = useScaleWithMouseWheel({
-      initial: 0.5,
-      min: 0.1,
-      max: 3,
+      initial: 1.5,
+      min: 0.5,
+      max: 20,
       invert: true,
-      scale: 0.0005,
+      scale: 0.002,
       el: calendarViewAgenda
     });
 
