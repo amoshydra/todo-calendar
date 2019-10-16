@@ -1,5 +1,6 @@
 <template>
   <div>
+    <CalendarCommandInput />
     <CalendarDateNavigationInput
       @input="handleDateChanged"
     />
@@ -16,6 +17,7 @@
 import { createComponent, inject, ref, Ref, computed } from '@vue/composition-api';
 import CalendarViewAgendaPresenter from './calendar-view-agenda-presenter.vue';
 import CalendarDateNavigationInput from './calendar-date-navigation-input.vue';
+import CalendarCommandInput from './calendar-command-input.vue';
 import { TodoCalendarService, TodoCalendarServiceKey } from '~/domain/todo-calendar';
 import { getView, add } from '~/data-stores/events';
 
@@ -50,6 +52,7 @@ export default createComponent({
   components: {
     CalendarDateNavigationInput,
     CalendarViewAgendaPresenter,
+    CalendarCommandInput,
   },
   setup() {
     const service = inject(TodoCalendarServiceKey) as TodoCalendarService;

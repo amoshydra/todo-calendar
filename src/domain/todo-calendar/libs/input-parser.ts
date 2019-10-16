@@ -1,4 +1,6 @@
-const makeWordRegex = (array) => {
+import { CommandDetail } from './command-executor';
+
+const makeWordRegex = (array: string[]) => {
   const delimeteredWords = array.join('|');
   return new RegExp(`^(${delimeteredWords})$`);
 };
@@ -25,7 +27,7 @@ const wordMapper = {
   ]),
 };
 
-const mapAction = (input) => {
+const mapAction = (input: string) => {
   switch (true) {
     case wordMapper.break.test(input): return 'break';
     case wordMapper.extend.test(input): return 'break';
@@ -40,13 +42,14 @@ const mapAction = (input) => {
   }
 };
 
-export default class InputParser {
-  parse(rawInput) {
+export class InputParser {
+  parse(rawInput: string): CommandDetail | null {
     const input = rawInput.trim();
 
     const action = mapAction(input.toLowerCase());
-    const task = input;
 
-    return { action, task };
+    if (!action) { return null; }
+
+    return { action, task: input };
   }
 }
