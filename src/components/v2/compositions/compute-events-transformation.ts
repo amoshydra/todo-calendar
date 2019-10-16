@@ -42,12 +42,15 @@ const computeTransformationStyle = (option: EventsTransformationOption) => (styl
     ...option,
   };
 
+  const offsetX = ((styleMeta.overlapCounter | 0) * styleOption.overlapOffset) + styleOption.paddingLeft;
+
   return ({
-    height: `${styleMeta.height}px`,
+    minHeight: `${styleMeta.height}px`,
     transform: `
       translateY(${styleMeta.top | 0}px)
-      translateX(${((styleMeta.overlapCounter | 0) * styleOption.overlapOffset) + styleOption.paddingLeft}px)
+      translateX(${offsetX}px)
     `,
+    marginRight: `${offsetX}px`
   });
 };
 
