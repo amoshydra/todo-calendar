@@ -1,5 +1,8 @@
 <template>
-  <div class="entry-presenter">
+  <div
+    class="entry-presenter"
+    :title="summary"
+  >
     <div class="time">
       <div>{{ startTime }}</div>
       <div class="time-beam" />
