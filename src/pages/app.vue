@@ -1,7 +1,7 @@
 <template>
   <section class="container">
     <div class="index__input">
-      <command-input-wrapper />
+      <div class="command-input-wrapper" />
     </div>
     <div class="index__calendar">
       <calendar-view-wrapper />
@@ -14,13 +14,13 @@
 </template>
 
 <script>
-import CommandInputWrapper from '@/components/index/command-input-wrapper';
+// import CommandInputWrapper from '@/components/index/command-input-wrapper';
 import CalendarViewWrapper from '@/components/index/calendar-view-wrapper';
 import CalendarSummarizer from '@/components/index/calendar-summarizer';
 
 export default {
   components: {
-    CommandInputWrapper,
+    // CommandInputWrapper,
     CalendarViewWrapper,
     CalendarSummarizer,
   },
