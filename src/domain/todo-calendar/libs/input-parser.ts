@@ -50,6 +50,6 @@ export class InputParser {
 
     if (!action) { return null; }
 
-    return { action, task: input };
+    return { action, input };
   }
 }
