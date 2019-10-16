@@ -3,7 +3,7 @@ import { useMousePosition } from './use-mouse-position';
 
 export const maintainScrollPosition = ({ scale, el }: {
   scale: Ref<number>,
-  el: Ref<Element | null>,
+  el: Ref<HTMLElement | null>,
 }) => {
   const mousemove = useMousePosition({ el });
 
@@ -24,7 +24,7 @@ export const maintainScrollPosition = ({ scale, el }: {
   });
 
   const update = (event: Event) => {
-    const target = event.target as Element;
+    const target = event.target as HTMLElement;
     scrollTop.value = target.scrollTop;
     scrollHeight.value = target.scrollHeight;
   };
