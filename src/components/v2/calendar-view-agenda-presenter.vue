@@ -8,6 +8,7 @@
     />
     <CalendarViewAgendaNowIndicator
       :scale="scale"
+      scroll-to-view
     />
     <CalendarViewAgendaCursorIndicator
       v-if="calendarViewAgenda"

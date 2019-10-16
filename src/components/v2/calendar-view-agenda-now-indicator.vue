@@ -1,10 +1,14 @@
 <template>
-  <div class="now-indicator" :style="style" />
+  <div
+    ref="nowIndicator"
+    class="now-indicator"
+    :style="style"
+  />
 </template>
 
 <script lang="ts">
 import Time from 'time-chainer';
-import { createComponent, computed } from '@vue/composition-api';
+import { createComponent, computed, onMounted, ref } from '@vue/composition-api';
 import { useCurrentTime } from './compositions/use-current-time';
 
 export default createComponent({
@@ -12,7 +16,11 @@ export default createComponent({
     scale: {
       type: Number,
       required: true,
-    }
+    },
+    scrollToView: {
+      type: Boolean,
+      default: false,
+    },
   },
   setup(props) {
     const midnight = new Date().setHours(0, 0, 0, 0);
@@ -29,8 +37,16 @@ export default createComponent({
         transform: `translateY(${props.scale * offset}px)`,
       };
     });
+
+    const nowIndicator = ref<HTMLElement>(null);
+    onMounted(() => {
+      if (!props.scrollToView) { return; }
+      (nowIndicator.value as HTMLElement).scrollIntoView();
+    });
+
     return {
-      style
+      style,
+      nowIndicator,
     };
   }
 });
