@@ -31,37 +31,39 @@ export class CalendarEventsAPI {
     ;
   }
 
-  insert({
+  async insert({
     calendarId = 'primary',
     resource,
   }: {
     calendarId?: string
     resource: Google.Calendar.EventWritableBody,
   }) {
-    return this.service.client.calendar.events.insert(
+    const { result } = await this.service.client.calendar.events.insert(
       ({
         calendarId,
         resource,
       } as any)
     );
+    return result;
   }
 
-  update({
+  async update({
     calendarId = 'primary',
     eventId,
     resource,
   }: {
     calendarId: string,
     eventId: string,
-    resource: Google.Calendar.EventWritableBody,
+    resource: Partial<Google.Calendar.EventWritableBody>,
   }) {
-    return this.service.client.calendar.events.update((
+    const { result } = await this.service.client.calendar.events.patch((
       {
         calendarId,
         eventId,
         resource,
       } as any)
     );
+    return result;
   }
 
   remove({
