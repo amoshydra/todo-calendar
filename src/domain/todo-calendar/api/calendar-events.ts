@@ -11,18 +11,23 @@ export class CalendarEventsAPI {
     calendarId = 'primary',
     start,
     end,
+    showDeleted = true,
+    maxResults,
   }: {
     calendarId?: string
     start: Date
     end: Date
+    showDeleted?: boolean
+    maxResults?: number
   }) {
     const { result } = await this.service.client.calendar.events.list({
       calendarId,
       timeMin: start.toISOString(),
       timeMax: end.toISOString(),
-      showDeleted: true,
+      showDeleted,
       singleEvents: true,
       orderBy: 'startTime',
+      maxResults,
     });
 
     return (result.items as gapi.client.calendar.Event[])
