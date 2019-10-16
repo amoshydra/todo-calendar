@@ -13,8 +13,14 @@ import { TodoCalendarService, TodoCalendarServiceKey } from '~/domain/todo-calen
 import { InputParser } from '~/domain/todo-calendar/libs/input-parser';
 import { CommandExecutor } from '~/domain/todo-calendar/libs/command-executor';
 
-export default createComponent({
-  setup() {
+export default createComponent<{ range: { start: Date, end: Date }}>({
+  props: {
+    range: {
+      type: Object,
+      required: true,
+    },
+  },
+  setup(props) {
     const input = ref('');
     const service = inject(TodoCalendarServiceKey) as TodoCalendarService;
     const inputParser = new InputParser();
@@ -27,7 +33,7 @@ export default createComponent({
       if (!detail) { return; }
 
       input.value = '';
-      commandExecutor.exec(detail);
+      commandExecutor.exec(props.range, detail);
     };
 
     return {

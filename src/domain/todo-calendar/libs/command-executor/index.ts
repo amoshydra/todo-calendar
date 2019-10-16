@@ -2,7 +2,13 @@ import { TodoCalendarService } from '../..';
 
 export interface CommandDetail {
   action: string,
-  task: string,
+  input: string,
+}
+
+export interface ExecutionContext {
+  service: TodoCalendarService,
+  start: Date,
+  end: Date,
 }
 
 export class CommandExecutor {
@@ -11,7 +17,18 @@ export class CommandExecutor {
     this.service = service;
   }
 
-  exec(detail: CommandDetail) {
-    console.log(detail);
+  async exec(range: { start: Date, end: Date }, detail: CommandDetail) {
+    const action = detail.action;
+    try {
+      const importedModule = await import('./command/' + action);
+      const execution = importedModule[action];
+      return execution({
+        service: this.service,
+        start: range.start,
+        end: range.end,
+      }, detail);
+    } catch (error) {
+      alert(`The command "${action}" is not implemented yet`);
+    }
   }
 };

@@ -1,6 +1,8 @@
 <template>
   <div>
-    <CalendarCommandInput />
+    <CalendarCommandInput
+      :range="dates"
+    />
     <CalendarDateNavigationInput
       @input="handleDateChanged"
     />
@@ -53,6 +55,7 @@ export default createComponent({
 
     return {
       events,
+      dates,
       handleDateChanged,
     };
   },
