@@ -20,8 +20,7 @@ export class CommandExecutor {
   async exec(range: { start: Date, end: Date }, detail: CommandDetail) {
     const action = detail.action;
     try {
-      const importedModule = await import('./command/' + action);
-      const execution = importedModule[action];
+      const { default: execution } = await import('./command/' + action);
       return execution({
         service: this.service,
         start: range.start,

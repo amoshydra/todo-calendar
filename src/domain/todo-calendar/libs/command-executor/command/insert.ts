@@ -2,7 +2,7 @@ import Time from 'time-chainer';
 import { ExecutionContext, CommandDetail } from '..';
 import { add } from '~/data-stores/events';
 
-export const insert = async (context: ExecutionContext, detail: CommandDetail) => {
+export default async (context: ExecutionContext, detail: CommandDetail) => {
   const now = new Date();
   const later = new Date(now.valueOf() + Time.hours(1));
   const calendarId = 'primary';
