@@ -20,7 +20,7 @@ export class CalendarEventsAPI {
       calendarId,
       timeMin: start.toISOString(),
       timeMax: end.toISOString(),
-      showDeleted: false,
+      showDeleted: true,
       singleEvents: true,
       orderBy: 'startTime',
     });
