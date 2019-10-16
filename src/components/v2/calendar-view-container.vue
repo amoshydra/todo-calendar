@@ -59,10 +59,12 @@ export default createComponent({
     });
 
     const events = computed(() => {
-      const id = `day-view-${dates.value.start && dates.value.start.valueOf()}`;
+      const { start, end } = dates.value;
+
+      const id = `view-${start && start.valueOf()}-${end && end.valueOf()}`;
       return getView(id, (events: gapi.client.calendar.Event[]) => events
         .filter(event => event.status !== 'cancelled')
-        .filter(filterBetweenDate(dates.value))
+        .filter(filterBetweenDate({ start, end }))
         .sort(sortEventByStartTime)
       );
     });
