@@ -21,32 +21,10 @@ import CalendarCommandInput from './calendar-command-input.vue';
 import { TodoCalendarService, TodoCalendarServiceKey } from '~/domain/todo-calendar';
 import { getView, add } from '~/data-stores/events';
 
-const sortEventByStartTime = (a: gapi.client.calendar.Event, b: gapi.client.calendar.Event) => (
-  (new Date((a.start && a.start.dateTime) as string)).valueOf() -
-  (new Date((b.start && b.start.dateTime) as string)).valueOf()
-);
-
-interface DatePackage {
+interface DateRange {
   start: Date,
   end: Date,
 }
-
-const filterBetweenDate = ({ start, end }: DatePackage) => (event: gapi.client.calendar.Event) => {
-  const startDateString = (event.start && event.start.dateTime);
-  const endDateString = (event.end && event.end.dateTime);
-
-  if (!(
-    startDateString &&
-    endDateString &&
-    start &&
-    end
-  )) { return false; }
-
-  return (
-    Date.parse(startDateString) >= start.valueOf() &&
-    Date.parse(endDateString) <= end.valueOf()
-  );
-};
 
 export default createComponent({
   components: {
@@ -56,23 +34,14 @@ export default createComponent({
   },
   setup() {
     const service = inject(TodoCalendarServiceKey) as TodoCalendarService;
-    const dates = ref<DatePackage>({
+    const dates = ref<DateRange>({
       start: null,
       end: null,
     });
 
-    const events = computed(() => {
-      const { start, end } = dates.value;
+    const events = computed(() => getView(dates.value));
 
-      const id = `view-${start && start.valueOf()}-${end && end.valueOf()}`;
-      return getView(id, (events: gapi.client.calendar.Event[]) => events
-        .filter(event => event.status !== 'cancelled')
-        .filter(filterBetweenDate({ start, end }))
-        .sort(sortEventByStartTime)
-      );
-    });
-
-    const handleDateChanged = async (changedDates: Ref<DatePackage>) => {
+    const handleDateChanged = async (changedDates: Ref<DateRange>) => {
       dates.value = changedDates.value;
       const newEvents = (await service.events.list({
         calendarId: 'primary',
