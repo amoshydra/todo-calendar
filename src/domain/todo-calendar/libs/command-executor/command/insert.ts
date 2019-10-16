@@ -12,6 +12,7 @@ export default async (context: ExecutionContext, detail: CommandDetail) => {
       calendarId,
       start: now,
       end: later,
+      showDeleted: false,
     }),
     context.service.events.insert({
       calendarId,
@@ -32,7 +33,6 @@ export default async (context: ExecutionContext, detail: CommandDetail) => {
   const createdEventStartValue = Date.parse(createdEventStart);
 
   const updatePromises = intersectionEvents
-    .filter(event => event.status !== 'cancelled')
     .filter(event => event.id !== createdEvent.id)
     .filter((event) => {
       const start = event.start && event.start.dateTime;
