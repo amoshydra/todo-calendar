@@ -1,24 +1,15 @@
 import { ref, Ref, onMounted, onUnmounted } from '@vue/composition-api';
 
 const getDistanceBetweenTouches = (touches: Touch[]) => {
-  let tMinX = Infinity;
-  let tMaxX = -Infinity;
   let tMinY = Infinity;
   let tMaxY = -Infinity;
   touches.forEach((touch) => {
-    tMinX = Math.min(tMinX, touch.clientX);
-    tMaxX = Math.max(tMaxX, touch.clientX);
     tMinY = Math.min(tMinY, touch.clientY);
     tMaxY = Math.max(tMaxY, touch.clientY);
   });
 
-  const distanceX = tMinX - tMaxX;
-  const distanceY = tMinY - tMaxY;
-
-  const distanceX2 = distanceX * distanceX;
-  const distanceY2 = distanceY * distanceY;
-
-  return Math.sqrt(distanceX2 + distanceY2);
+  const distanceY = tMaxY - tMinY;
+  return distanceY;
 };
 
 export const getTouchPinchValue = (element: Ref<HTMLElement | null>) => {
