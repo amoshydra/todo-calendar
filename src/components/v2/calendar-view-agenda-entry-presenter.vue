@@ -1,7 +1,6 @@
 <template>
   <div
     class="entry-presenter"
-    :title="summary"
   >
     <div class="time">
       <div>{{ startTime }}</div>
