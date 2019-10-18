@@ -46,10 +46,10 @@ const computeTransformationStyle = (option: EventsTransformationOption) => (styl
 
   return ({
     minHeight: `${styleMeta.height}px`,
-    transform: `
-      translateY(${styleMeta.top | 0}px)
-      translateX(${offsetX}px)
-    `,
+    transform: {
+      translateY: `${styleMeta.top | 0}px`,
+      translateX: `${offsetX}px`,
+    },
     marginRight: `${offsetX}px`
   });
 };
