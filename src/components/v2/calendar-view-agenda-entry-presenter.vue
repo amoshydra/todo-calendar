@@ -57,7 +57,7 @@ export default createComponent({
   border-radius: 0.25em;
   border: 1px solid rgba(0,0,0,0.15);
 
-  background-color: #91fdcbe0;
+  background-color: #91fdcbf1;
   // backdrop-filter: blur(1px);
   // Disable filter for better performance
   transition:
