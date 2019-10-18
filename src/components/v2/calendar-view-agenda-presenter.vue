@@ -15,29 +15,31 @@
       v-if="calendarViewAgenda"
       :el="calendarViewAgenda"
     />
-    <div
+    <CalendarViewAgendaEntryPositioner
       v-for="(event, index) in events"
       :key="event.id"
-      class="entry-presenter-positioner"
-      :style="{
-        transform: `translateY(${transformationStyles[index].transform.translateY})`,
+      v-slot="{
+        isFocused,
+        isHovered,
       }"
+      class="entry-presenter-positioner"
+      :transformation="transformationStyles[index]"
     >
       <CalendarViewAgendaEntryPresenter
-        :style="{
-          marginRight: transformationStyles[index].marginRight,
-          minHeight: transformationStyles[index].minHeight,
-          transform: `translateX(${transformationStyles[index].transform.translateX})`,
+        :class="{
+          focus: isFocused,
+          hover: isHovered,
         }"
         :event="event"
       />
-    </div>
+    </CalendarViewAgendaEntryPositioner>
   </div>
 </template>
 
 <script lang="ts">
 import { createComponent, computed, ref, watch } from '@vue/composition-api';
 import CalendarViewAgendaEntryPresenter from './calendar-view-agenda-entry-presenter.vue';
+import CalendarViewAgendaEntryPositioner from './calendar-view-agenda-entry-positioner.vue';
 import CalendarViewAgendaNowIndicator from './calendar-view-agenda-now-indicator.vue';
 import CalendarViewAgendaCursorIndicator from './calendar-view-agenda-cursor-indicator.vue';
 import CalendarViewAgendaGridLine from './calendar-view-agenda-grid-line.vue';
@@ -52,6 +54,7 @@ interface Props {
 
 export default createComponent<Props>({
   components: {
+    CalendarViewAgendaEntryPositioner,
     CalendarViewAgendaEntryPresenter,
     CalendarViewAgendaNowIndicator,
     CalendarViewAgendaCursorIndicator,
@@ -81,7 +84,6 @@ export default createComponent<Props>({
       { scale },
       {
         minHeight: 60,
-        paddingLeft: 50,
       }
     );
 
@@ -108,9 +110,13 @@ $animation-speed: 0.5s linear;
 
 .calendar-view-agenda {
   position: relative;
+  overflow-x: hidden;
 }
 .entry-presenter-positioner {
+  $marginLeft: 30px;
+
   position: absolute;
-  max-width: calc(100% - 64px);
+  max-width: calc(100% - #{$marginLeft + 10px});
+  margin-left: $marginLeft;
 }
 </style>

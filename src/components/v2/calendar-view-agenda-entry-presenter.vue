@@ -2,7 +2,6 @@
   <div
     class="entry-presenter"
     :title="summary"
-    tabindex="0"
   >
     <div class="time">
       <div>{{ startTime }}</div>
@@ -64,16 +63,17 @@ export default createComponent({
   transition:
     box-shadow 0.25s ease-in-out,
     background-color 0.25s ease-in-out,
-    transform 0.25s ease-in-out,
   ;
+  height: 100%;
+  min-height: 100%;
 
-  &:hover {
+  &.hover {
     box-shadow: 2px 2px 16px 0 rgba(0,0,0,0.1);
   }
-  &:focus {
+  &.focus {
     z-index: 2;
     box-shadow: 16px 16px 64px 0 rgba(#91fdcbe0 ,0.3);
-    height: auto !important;
+    height: initial;
     background-color: #95fd91fb;
 
     .summary {
@@ -107,13 +107,14 @@ export default createComponent({
 }
 .summary {
   font-family: 'Roboto Mono', monospace;
-  font-weight: 600;
+  font-weight: 500;
   color: rgba(black, 0.85);
   font-size: 0.8rem;
   padding: 8px;
   padding-right: 16px;
-  white-space: nowrap;
-  text-overflow: ellipsis;
+  // white-space: nowrap;
+  // text-overflow: ellipsis;
+  line-height: 1.5;
   overflow: hidden;
 }
 </style>

@@ -2,7 +2,6 @@ import { computed, Ref } from '@vue/composition-api';
 
 interface EventsTransformationOption {
   minHeight: number,
-  paddingLeft?: number,
   overlapOffset?: number,
 }
 interface EventsTransformationEventSource {
@@ -37,20 +36,16 @@ const computeEventDimension = (event: gapi.client.calendar.Event): EventDimensio
 };
 const computeTransformationStyle = (option: EventsTransformationOption) => (styleMeta: any) => {
   const styleOption = {
-    paddingLeft: option.paddingLeft || 0,
     overlapOffset: option.overlapOffset || 10,
     ...option,
   };
 
-  const offsetX = ((styleMeta.overlapCounter | 0) * styleOption.overlapOffset) + styleOption.paddingLeft;
+  const offsetX = ((styleMeta.overlapCounter | 0) * styleOption.overlapOffset);
 
   return ({
-    minHeight: `${styleMeta.height}px`,
-    transform: {
-      translateY: `${styleMeta.top | 0}px`,
-      translateX: `${offsetX}px`,
-    },
-    marginRight: `${offsetX}px`
+    height: styleMeta.height,
+    y: styleMeta.top | 0,
+    x: offsetX,
   });
 };
 
