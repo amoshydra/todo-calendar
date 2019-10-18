@@ -2,6 +2,7 @@
   <div
     ref="calendarViewAgenda"
     class="calendar-view-agenda"
+    style="touch-action: pan;"
   >
     <CalendarViewAgendaGridLine
       :scale="scale"
@@ -26,7 +27,7 @@
 </template>
 
 <script lang="ts">
-import { createComponent, computed, ref } from '@vue/composition-api';
+import { createComponent, computed, ref, watch } from '@vue/composition-api';
 import CalendarViewAgendaEntryPresenter from './calendar-view-agenda-entry-presenter.vue';
 import CalendarViewAgendaNowIndicator from './calendar-view-agenda-now-indicator.vue';
 import CalendarViewAgendaCursorIndicator from './calendar-view-agenda-cursor-indicator.vue';
@@ -34,6 +35,7 @@ import CalendarViewAgendaGridLine from './calendar-view-agenda-grid-line.vue';
 import { useScaleWithMouseWheel } from './compositions/use-scale-with-mouse-wheel';
 import { computeEventsTransformation } from './compositions/compute-events-transformation';
 import { maintainScrollPosition } from './compositions/maintain-scroll-position';
+import { getTouchPinchValue } from './compositions/get-touch-pinch-value';
 
 interface Props {
   events: gapi.client.calendar.Event[]
@@ -73,6 +75,14 @@ export default createComponent<Props>({
         paddingLeft: 50,
       }
     );
+
+    const { pinchValue } = getTouchPinchValue(calendarViewAgenda);
+    const clamp = (value: number) => Math.min(20, Math.max(0.5, value));
+    watch(() => pinchValue.value, () => {
+      const pinchFactor = pinchValue.value * 0.0005;
+
+      scale.value = clamp(scale.value + (pinchFactor));
+    });
 
     return {
       calendarViewAgenda,
