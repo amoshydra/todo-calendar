@@ -24,21 +24,14 @@
       }"
       class="entry-presenter-positioner"
       :transformation="transformationStyles[index]"
-    >
-      <CalendarViewAgendaEntryPresenter
-        :class="{
-          focus: isFocused,
-          hover: isHovered,
-        }"
-        :event="event"
-      />
-    </CalendarViewAgendaEntryPositioner>
+      :event="event"
+      :root-element="calendarViewAgenda"
+    />
   </div>
 </template>
 
 <script lang="ts">
 import { createComponent, computed, ref, watch } from '@vue/composition-api';
-import CalendarViewAgendaEntryPresenter from './calendar-view-agenda-entry-presenter.vue';
 import CalendarViewAgendaEntryPositioner from './calendar-view-agenda-entry-positioner.vue';
 import CalendarViewAgendaNowIndicator from './calendar-view-agenda-now-indicator.vue';
 import CalendarViewAgendaCursorIndicator from './calendar-view-agenda-cursor-indicator.vue';
@@ -55,7 +48,6 @@ interface Props {
 export default createComponent<Props>({
   components: {
     CalendarViewAgendaEntryPositioner,
-    CalendarViewAgendaEntryPresenter,
     CalendarViewAgendaNowIndicator,
     CalendarViewAgendaCursorIndicator,
     CalendarViewAgendaGridLine,
