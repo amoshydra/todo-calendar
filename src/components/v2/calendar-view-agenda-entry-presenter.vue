@@ -2,7 +2,7 @@
   <div
     class="entry-presenter"
     :title="summary"
-    tabindex="-1"
+    tabindex="0"
   >
     <div class="time">
       <div>{{ startTime }}</div>
