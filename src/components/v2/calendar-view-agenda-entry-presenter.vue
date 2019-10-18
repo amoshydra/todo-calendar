@@ -25,11 +25,11 @@ const extractHourAndMinute = (dateTime: string) => {
   );
 };
 
-export default createComponent({
+export default createComponent<{ event: gapi.client.calendar.Event }>({
   props: {
     event: Object
   },
-  setup(props: { event: gapi.client.calendar.Event }) {
+  setup(props) {
     const startTime = computed(() => {
       const dateTime = (props.event.start && props.event.start.dateTime) as string;
       return extractHourAndMinute(dateTime);
