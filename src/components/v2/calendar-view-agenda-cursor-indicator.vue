@@ -6,7 +6,7 @@
 import { createComponent, computed } from '@vue/composition-api';
 import { useMousePosition } from './compositions/use-mouse-position';
 
-export default createComponent<{ el: Element }>({
+export default createComponent<{ el: HTMLElement }>({
   props: {
     el: {
       required: true,
