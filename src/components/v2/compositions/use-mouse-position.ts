@@ -1,4 +1,4 @@
-import { Ref, onMounted, onUnmounted, ref } from '@vue/composition-api';
+import { Ref, onMounted, onUnmounted, ref, computed } from '@vue/composition-api';
 
 interface UseMousePositionOption {
   el: Ref<HTMLElement | null>,
@@ -30,22 +30,21 @@ export const useMousePosition = (useMousePositionOption: UseMousePositionOption)
       ...useMousePositionOption.offset || {},
     }
   };
-
-  const x = ref(0);
-  const y = ref(0);
-  const offset = ref({
-    x: 0,
-    y: 0,
-  });
+  const clientX = ref(0);
+  const clientY = ref(0);
+  const scrollX = ref(0);
+  const scrollY = ref(0);
+  const offsetX = ref(0);
+  const offsetY = ref(0);
 
   const isTouching = ref(false);
   const updateIsTouchingStatus = (event: TouchEvent) => {
     isTouching.value = event.touches.length > 0;
   };
-  const updateMousePosition = (event: Event) => {
+  const updateMousePosition = (event: MouseEvent) => {
     if (isTouching.value) { return; }
-    x.value = (event as MouseEvent).clientX - offset.value.x;
-    y.value = (event as MouseEvent).clientY - offset.value.y;
+    clientX.value = event.clientX;
+    clientY.value = event.clientY;
   };
   const updateTouchPosition = (event: TouchEvent) => {
     const cum = Array.from(event.touches).reduce((acc, touch) => {
@@ -57,8 +56,13 @@ export const useMousePosition = (useMousePositionOption: UseMousePositionOption)
       y: 0,
     });
 
-    x.value = (cum.x / event.touches.length) - offset.value.x;
-    y.value = (cum.y / event.touches.length) - offset.value.y;
+    clientX.value = (cum.x / event.touches.length);
+    clientY.value = (cum.y / event.touches.length);
+  };
+  const handleScroll = (event: Event) => {
+    const el = (event.target as HTMLElement);
+    scrollX.value = el.scrollLeft;
+    scrollY.value = el.scrollTop;
   };
 
   onMounted(() => {
@@ -66,13 +70,14 @@ export const useMousePosition = (useMousePositionOption: UseMousePositionOption)
     if (!element) { return; }
 
     const { x, y } = accumulateParentOffset(element);
-    offset.value.x = x + option.offset.x;
-    offset.value.y = y + option.offset.y;
+    offsetX.value = x + option.offset.x;
+    offsetY.value = y + option.offset.y;
 
     element.addEventListener('mousemove', updateMousePosition);
     element.addEventListener('touchstart', updateIsTouchingStatus);
     element.addEventListener('touchend', updateIsTouchingStatus);
     element.addEventListener('touchmove', updateTouchPosition);
+    element.addEventListener('scroll', handleScroll);
   });
   onUnmounted(() => {
     const element = option.el.value;
@@ -81,10 +86,17 @@ export const useMousePosition = (useMousePositionOption: UseMousePositionOption)
     element.removeEventListener('touchstart', updateIsTouchingStatus);
     element.removeEventListener('touchend', updateIsTouchingStatus);
     element.removeEventListener('touchmove', updateTouchPosition);
+    element.removeEventListener('scroll', handleScroll);
   });
 
   return {
-    x,
-    y,
+    x: computed(() => clientX.value + scrollX.value - offsetX.value),
+    y: computed(() => clientY.value + scrollY.value - offsetY.value),
+    offsetX,
+    offsetY,
+    clientX,
+    clientY,
+    scrollX,
+    scrollY,
   };
 };

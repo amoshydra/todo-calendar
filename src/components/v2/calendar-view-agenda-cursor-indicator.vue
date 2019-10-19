@@ -17,7 +17,7 @@ export default createComponent<{ el: HTMLElement }>({
 
     const { y } = useMousePosition({ el: element });
     const style = computed(() => ({
-      transform: `translateY(${y.value + element.value.scrollTop}px)`,
+      transform: `translateY(${y.value}px)`,
     }));
     return {
       style

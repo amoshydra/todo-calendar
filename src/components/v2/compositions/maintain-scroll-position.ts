@@ -9,13 +9,13 @@ export const maintainScrollPosition = ({ scale, el }: {
 
   const scrollTop = ref(0);
   const scrollHeight = ref(0);
-  const scrollRatio = computed(() => (scrollTop.value + mousemove.y.value) / scrollHeight.value);
+  const scrollRatio = computed(() => mousemove.y.value / scrollHeight.value);
 
   watch(() => scale.value, () => {
     const target = el.value;
     if (!target) { return; }
 
-    const desiredScrollTop = (scrollRatio.value * target.scrollHeight) - mousemove.y.value;
+    const desiredScrollTop = (scrollRatio.value * target.scrollHeight) - (mousemove.y.value - mousemove.scrollY.value);
     target.scrollTo({
       left: 0,
       top: desiredScrollTop,
