@@ -3,8 +3,7 @@
     ref="entryController"
     tabindex="-1"
     class="entry-controller"
-    @mousedown="mousedown"
-    @mouseup="mouseup"
+    @pointerdown="mousedown"
   >
     <div class="indicator">
       {{ travelled }}
@@ -32,31 +31,34 @@ export default createComponent<{
     let downValue = 0;
     const travelled = ref(0);
 
-    const mouseMove = () => {
+    const mousemove = (_event: PointerEvent) => {
       travelled.value = mousePosition.y.value - downValue;
-      context.emit('travel', travelled.value);
+      context.emit('travel', travelled.value | 0);
     };
     const mouseup = () => {
-      context.emit('input', travelled.value);
+      context.emit('input', travelled.value | 0);
       travelled.value = 0;
-      window.removeEventListener('mousemove', mouseMove);
-      window.removeEventListener('mouseup', mouseup);
+      document.body.removeEventListener('pointerup', mouseup);
+      document.body.removeEventListener('pointermove', mousemove);
+      el.value && el.value.setAttribute('style', 'touch-action: pan;');
     };
     const mousedown = () => {
       downValue = mousePosition.y.value;
-      window.addEventListener('mousemove', mouseMove);
-      window.addEventListener('mouseup', mouseup);
+      el.value && el.value.setAttribute('style', 'touch-action: none;');
+      document.body.addEventListener('pointerup', mouseup);
+      document.body.addEventListener('pointermove', mousemove);
     };
 
     onUnmounted(() => {
-      window.removeEventListener('mousemove', mouseMove);
-      window.removeEventListener('mouseup', mouseup);
+      document.body.removeEventListener('pointermove', mousemove);
+      document.body.removeEventListener('pointerup', mouseup);
     });
 
     return {
       entryController,
       mousedown,
       mouseup,
+      mousemove,
       travelled,
     };
   }
@@ -65,8 +67,8 @@ export default createComponent<{
 
 <style lang="scss" scoped>
 .entry-controller {
-  border-bottom: 0.5em solid rgba(0,0,0,0.05);
-  width: 100%;
+  border-bottom: 2em solid rgba(0,0,0,0.05);
+  width: 52px;
   bottom: 0;
   transform: translateY(-100%);
   user-select: none;
