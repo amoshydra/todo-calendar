@@ -21,22 +21,32 @@ const getDates = (search: string, target: string) => {
   const dateQuery = parse(search)[target] || '';
   const splitant = dateQuery.split('-');
   const today = new Date();
-  const [month, thisDay, nextDay] = [
-    splitant[0] || today.getMonth() + 1,
-    splitant[1] || today.getDate(),
-    splitant[2] || today.getDate() + 1,
+
+  const [year, month, thisDay, nextDay] = [
+    splitant[0] || today.getFullYear(),
+    splitant[1] || today.getMonth() + 1,
+    ...(
+      splitant[2]
+        ? [
+          splitant[2],
+          parseInt(splitant[2], 10) + 1,
+        ]
+        : [
+          today.getDate(),
+          today.getDate() + 1,
+        ]
+    )
   ]
     .map(x => `${x}`.padStart(2, '0'))
   ;
 
   return ref<{ start: Date, end: Date }>({
-    start: new Date(`2019-${month}-${thisDay}T00:00:00.000+0800`),
-    end: new Date(`2019-${month}-${nextDay}T00:00:00.000+0800`),
+    start: new Date(`${year}-${month}-${thisDay}T00:00:00.000+0800`),
+    end: new Date(`${year}-${month}-${nextDay}T00:00:00.000+0800`),
   });
 };
 
 export default createComponent({
-
   setup(_props, context) {
     const dates = getDates(location.search, 's');
 
