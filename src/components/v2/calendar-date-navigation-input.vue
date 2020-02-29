@@ -49,7 +49,7 @@ export default createComponent({
     const friendlyDate = computed(() => {
       const startDate = dates.value.start;
       const day = startDate.toLocaleString(navigator.language, { weekday: 'long' });
-      const date = startDate.toLocaleString(navigator.language, { dateStyle: 'long' });
+      const date = startDate.toLocaleString(navigator.language, { year: 'numeric', month: 'long', day: 'numeric' });
 
       return `${date} (${day})`;
     });
