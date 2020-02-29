@@ -16,6 +16,7 @@
 import { ref, createComponent, watch, computed } from '@vue/composition-api';
 import T from 'time-chainer';
 import { parse } from '~/utilities/url-queries';
+import { toLocalIsoDateString } from '~/utilities/date';
 
 const getDates = (search: string, target: string) => {
   const dateQuery = parse(search)[target] || '';
@@ -46,11 +47,19 @@ const getDates = (search: string, target: string) => {
   });
 };
 
+const DATE_QUERY_NAME = 's';
+
 export default createComponent({
   setup(_props, context) {
-    const dates = getDates(location.search, 's');
+    const dates = getDates(location.search, DATE_QUERY_NAME);
 
     watch(() => dates.value.start && dates.value.end, () => {
+      const localDateString = toLocalIsoDateString(dates.value.start);
+
+      const url = new URL(location.href);
+      url.searchParams.set(DATE_QUERY_NAME, localDateString);
+      history.replaceState({}, document.title, url.href);
+
       context.emit('input', dates);
     });
 
