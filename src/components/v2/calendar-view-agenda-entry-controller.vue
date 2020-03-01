@@ -31,6 +31,8 @@ export default createComponent<{
     let downValue = 0;
     const travelled = ref(0);
 
+    const inhibitEvent = (e: Event) => e.preventDefault();
+
     const mousemove = (_event: PointerEvent) => {
       travelled.value = mousePosition.y.value - downValue;
       context.emit('travel', travelled.value | 0);
@@ -40,11 +42,11 @@ export default createComponent<{
       travelled.value = 0;
       document.body.removeEventListener('pointerup', mouseup);
       document.body.removeEventListener('pointermove', mousemove);
-      el.value && el.value.setAttribute('style', 'touch-action: pan;');
+      el.value && el.value.removeEventListener('touchmove', inhibitEvent);
     };
     const mousedown = () => {
       downValue = mousePosition.y.value;
-      el.value && el.value.setAttribute('style', 'touch-action: none;');
+      el.value && el.value.addEventListener('touchmove', inhibitEvent);
       document.body.addEventListener('pointerup', mouseup);
       document.body.addEventListener('pointermove', mousemove);
     };
