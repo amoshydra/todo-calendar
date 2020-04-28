@@ -46,6 +46,7 @@ export default createComponent<{
   },
   event: gapi.client.calendar.Event,
   rootElement: HTMLElement | null,
+  scale: number,
 }>({
   components: {
     CalendarViewAgendaEntryPresenter,
@@ -55,6 +56,7 @@ export default createComponent<{
     transformation: Object,
     event: Object,
     rootElement: process.server ? Object : Element,
+    scale: Number,
   },
   setup(props, context) {
     const isHovered = ref(false);
@@ -72,16 +74,29 @@ export default createComponent<{
         return props.event.end!.dateTime!;
       }
 
-      const startMs = Date.parse(props.event.start!.dateTime!);
-      const endMs = Date.parse(props.event.end!.dateTime!);
-      const intervalMs = endMs - startMs;
-      const msPerPx = intervalMs / props.transformation.height;
+      const convertDateToInt = (date: Date) => date.getHours() * 100 + (date.getMinutes() / 3 * 5);
+      const convertIntToDate = (value: number, base: Date) => {
+        const newDate = new Date(base);
+        newDate.setHours(value / 100 | 0);
+        newDate.setMinutes(value % 100 / 5 * 3);
+        return newDate;
+      };
 
-      const travelledMs = travelledPx * msPerPx;
+      const startDate = new Date(props.event.start!.dateTime!);
+      const startInt = convertDateToInt(startDate);
+      const endInt = convertDateToInt(new Date(props.event.end!.dateTime!));
 
-      const destinationMs = endMs + travelledMs;
-
-      return new Date((destinationMs <= startMs) ? startMs : destinationMs).toISOString();
+      /*
+        height = (endInt - startInt) * props.scale;
+        height + travelledPx = ((endInt + moreInt) - startInt) * props.scale;
+        (height + travelledPx)/props.scale = (endInt + moreInt - startInt);
+        (height + travelledPx)/props.scale = (endInt - startInt) + moreInt;
+        (height + travelledPx)/props.scale - (endInt - startInt) = moreInt
+        moreInt = (height + travelledPx)/props.scale - (endInt - startInt)
+      */
+      const moreInt = (props.transformation.height + travelledPx) / props.scale - (endInt - startInt);
+      const expectedInt = Math.max(startInt, endInt + moreInt);
+      return convertIntToDate(expectedInt, startDate).toISOString();
     });
 
     const transformedEvent: Ref<gapi.client.calendar.Event> = computed(() => ({
