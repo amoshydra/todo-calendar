@@ -43,6 +43,7 @@ const computeTransformationStyle = (option: EventsTransformationOption) => (styl
   const offsetX = ((styleMeta.overlapCounter | 0) * styleOption.overlapOffset);
 
   return ({
+    minHeight: option.minHeight,
     height: styleMeta.height,
     y: styleMeta.top | 0,
     x: offsetX,
@@ -69,7 +70,7 @@ export const computeEventsTransformation = (
 
         return [...acc, {
           top,
-          height: Math.max(option.minHeight, height),
+          height,
           overlapCounter: !isOverlappingPrevious ? 0 : ((prevNode && prevNode.overlapCounter) || 0) + 1
         }];
       }, [])

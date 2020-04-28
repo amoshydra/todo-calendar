@@ -4,11 +4,7 @@
     tabindex="-1"
     class="entry-controller"
     @pointerdown="mousedown"
-  >
-    <div class="indicator">
-      {{ travelled }}
-    </div>
-  </div>
+  />
 </template>
 
 <script lang="ts">
@@ -69,11 +65,13 @@ export default createComponent<{
 
 <style lang="scss" scoped>
 .entry-controller {
-  border-bottom: 2em solid rgba(0,0,0,0.05);
+  position: absolute;
+
+  border-bottom: 1.5em solid rgba(0,0,0,0.05);
   width: 52px;
   bottom: 0;
-  transform: translateY(-100%);
   user-select: none;
+  cursor: row-resize;
 }
 
 .indicator {

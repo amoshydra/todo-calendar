@@ -10,6 +10,7 @@
       <CalendarViewAgendaPresenter
         class="calendar-view-agenda-presenter"
         :events="events"
+        @input="handleEventUpdated"
       />
     </div>
   </div>
@@ -53,10 +54,31 @@ export default createComponent({
       add(newEvents);
     };
 
+    interface EventWithDateTimes {
+      id: string
+      start: { dateTime: string }
+      end: { dateTime: string }
+    }
+    const handleEventUpdated = async (updatedEvent: EventWithDateTimes) => {
+      const event = await service.events.update({
+        calendarId: 'primary',
+        eventId: updatedEvent.id as string,
+        resource: {
+          end: {
+            dateTime: updatedEvent.end && updatedEvent.end.dateTime as string
+          }
+        },
+      });
+
+      add(event);
+    };
+
     return {
       events,
       dates,
+
       handleDateChanged,
+      handleEventUpdated,
     };
   },
 });

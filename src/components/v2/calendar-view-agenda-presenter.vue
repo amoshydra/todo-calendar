@@ -18,14 +18,14 @@
     <CalendarViewAgendaEntryPositioner
       v-for="(event, index) in events"
       :key="event.id"
-      v-slot="{
-        isFocused,
-        isHovered,
-      }"
       class="entry-presenter-positioner"
+
       :transformation="transformationStyles[index]"
       :event="event"
       :root-element="calendarViewAgenda"
+      :scale="scale"
+
+      @input="$emit('input', $event)"
     />
   </div>
 </template>

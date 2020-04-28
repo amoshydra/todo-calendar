@@ -19,7 +19,7 @@
           focus: isFocused,
           hover: isHovered,
         }"
-        :event="event"
+        :event="transformedEvent"
       />
       <CalendarViewAgendaEntryController
         v-show="isHovered"
@@ -33,12 +33,13 @@
 </template>
 
 <script lang="ts">
-import { createComponent, ref, computed, Ref } from '@vue/composition-api';
+import { createComponent, ref, computed, Ref, watch } from '@vue/composition-api';
 import CalendarViewAgendaEntryPresenter from './calendar-view-agenda-entry-presenter.vue';
 import CalendarViewAgendaEntryController from './calendar-view-agenda-entry-controller.vue';
 
 export default createComponent<{
   transformation: {
+    minHeight: number,
     height: number,
     y: number,
     x: number,
@@ -55,33 +56,69 @@ export default createComponent<{
     event: Object,
     rootElement: process.server ? Object : Element,
   },
-  setup(props) {
+  setup(props, context) {
     const isHovered = ref(false);
     const isFocused = ref(false);
 
     const travelled = ref(0);
-    const handleTravel = (travelledValue: number) => {
-      travelled.value = travelledValue;
-    };
-    const handleInput = (_travelledValue: number) => {
-      setTimeout(() => {
-        travelled.value = 0;
-      }, 1000);
-    };
+    watch(() => props.event, () => {
+      // Reset travelled once prop changed
+      travelled.value = 0;
+    });
+
+    const transformedEndDate = computed(() => {
+      const travelledPx = travelled.value;
+      if (travelledPx === 0) {
+        return props.event.end!.dateTime!;
+      }
+
+      const startMs = Date.parse(props.event.start!.dateTime!);
+      const endMs = Date.parse(props.event.end!.dateTime!);
+      const intervalMs = endMs - startMs;
+      const msPerPx = intervalMs / props.transformation.height;
+
+      const travelledMs = travelledPx * msPerPx;
+
+      const destinationMs = endMs + travelledMs;
+
+      return new Date((destinationMs <= startMs) ? startMs : destinationMs).toISOString();
+    });
+
+    const transformedEvent: Ref<gapi.client.calendar.Event> = computed(() => ({
+      ...props.event,
+      end: {
+        dateTime: transformedEndDate.value,
+      }
+    }));
 
     const positionStyle = computed(() => ({
       marginRight: `${isFocused.value ? props.transformation.x : 0}px`,
-      height: `${Math.max(58, props.transformation.height + travelled.value)}px`,
-      minHeight: `${props.transformation.height + travelled.value}px`,
+      height: `${Math.max(props.transformation.minHeight, props.transformation.height + travelled.value)}px`,
+      minHeight: `${props.transformation.minHeight}px`,
       transform: `translateX(${props.transformation.x}px)`,
     }));
 
     return {
       isHovered,
       isFocused,
+
+      transformedEvent,
       positionStyle,
-      handleTravel,
-      handleInput,
+
+      handleTravel(travelledValue: number) {
+        travelled.value = travelledValue;
+      },
+      handleInput() {
+        context.emit('input', {
+          id: transformedEvent.value.id,
+          start: {
+            dateTime: transformedEvent.value.start!.dateTime
+          },
+          end: {
+            dateTime: transformedEvent.value.end!.dateTime
+          }
+        });
+      },
     };
   },
 });
@@ -99,6 +136,7 @@ export default createComponent<{
 
 .entry-presenter-positioner {
   pointer-events: none;
+  user-select: none;
 }
 .inner {
   transition: transform 0.25s ease-in-out;
