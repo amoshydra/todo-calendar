@@ -34,7 +34,7 @@
   }
   li span {
     display: inline-block;
-    width: calc(100% - 1em);
+    width: calc(100% - 4em);
     vertical-align: top;
   }
 }
