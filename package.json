@@ -13,7 +13,9 @@
     "lint": "eslint --ext .js,.vue,.ts --ignore-path .gitignore .",
     "precommit": "npm run lint",
     "publish-dist": "surge --project=dist --domain=https://todo-calendar.surge.sh",
-    "build:publish": "yarn run build && yarn run publish-dist"
+    "build:publish": "yarn run build && yarn run publish-dist",
+    "snyk-protect": "snyk protect",
+    "prepare": "yarn run snyk-protect"
   },
   "dependencies": {
     "@nuxt/typescript-runtime": "^0.1.7",
@@ -24,7 +26,7 @@
     "dotenv": "^8.1.0",
     "emoji-mart-vue": "^2.6.6",
     "fullcalendar": "^3.4.0",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "moment": "^2.22.2",
     "nuxt": "^2.9.2",
     "quill": "^1.3.7",
@@ -32,7 +34,8 @@
     "vue": "^2.6.10",
     "vue-full-calendar": "^2.7.0",
     "vue-quill-editor": "^3.0.6",
-    "vue-typer": "^1.2.0"
+    "vue-typer": "^1.2.0",
+    "snyk": "^1.316.1"
   },
   "devDependencies": {
     "@nuxt/typescript-build": "^0.2.10",
@@ -49,5 +52,6 @@
     "require-extension-hooks-vue": "^3.0.0",
     "sass-loader": "^8.0.0",
     "surge": "^0.21.3"
-  }
+  },
+  "snyk": true
 }
