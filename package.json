@@ -16,9 +16,9 @@
     "build:publish": "yarn run build && yarn run publish-dist"
   },
   "dependencies": {
-    "@nuxt/typescript-runtime": "^0.1.7",
+    "@nuxt/typescript-runtime": "^1.0.0",
     "@nuxtjs/auth": "^4.8.4",
-    "@nuxtjs/axios": "^5.6.0",
+    "@nuxtjs/axios": "^5.12.4",
     "@nuxtjs/dotenv": "^1.4.1",
     "@vue/composition-api": "^0.3.2",
     "dotenv": "^8.1.0",
